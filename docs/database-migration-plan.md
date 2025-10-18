@@ -329,25 +329,60 @@ export class MenuRepository {
   }
 
   async getFilteredDishes(filters: FilterState) {
-    // Implementation for complex filtering using Prisma
+    // Build complex filtering logic for all filter types
     const where: any = {};
+    const optionFilters: any[] = [];
 
-    if (filters.spiceLevel) {
+    // 1. Spice level filter (single select) - Direct dish property
+    if (filters.spiceLevel !== null) {
       where.spice_level = filters.spiceLevel;
     }
 
+    // 2. Categories filter (multi-select) - Need to map category names to UUIDs
     if (filters.categories.length > 0) {
-      where.category_id = { in: filters.categories };
+      const categoryIds = await this.mapCategoryNamesToIds(filters.categories);
+      if (categoryIds.length > 0) {
+        where.category_id = { in: categoryIds };
+      } else {
+        // No matching categories found, return empty result
+        return [];
+      }
     }
 
+    // 3. Dish types filter (multi-select) - Check if any option has matching types
     if (filters.dishTypes.length > 0) {
-      where.options = {
+      optionFilters.push({
         some: {
           dish_type: {
-            hasSome: filters.dishTypes
+            hasSome: filters.dishTypes // PostgreSQL array overlap operator
           }
         }
-      };
+      });
+    }
+
+    // 4. Calorie range filter (single select) - Check if any option matches
+    if (filters.calorieRange !== null) {
+      optionFilters.push({
+        some: {
+          calorie_range: filters.calorieRange
+        }
+      });
+    }
+
+    // 5. Allergens filter (multi-select EXCLUSION) - Exclude if any option has these allergens
+    if (filters.allergens.length > 0) {
+      optionFilters.push({
+        none: {
+          allergens: {
+            hasSome: filters.allergens // Exclude dishes with these allergens
+          }
+        }
+      });
+    }
+
+    // Combine all option-based filters with AND logic
+    if (optionFilters.length > 0) {
+      where.options = { AND: optionFilters };
     }
 
     return await this.prisma.dish.findMany({
@@ -355,8 +390,73 @@ export class MenuRepository {
       include: {
         options: true,
         category: true
+      },
+      orderBy: [
+        { category: { name: 'asc' } },
+        { title: 'asc' }
+      ]
+    });
+  }
+
+  // Helper method to map category names to UUIDs
+  private async mapCategoryNamesToIds(categoryNames: string[]): Promise<string[]> {
+    const categories = await this.prisma.category.findMany({
+      where: { 
+        name: { 
+          in: categoryNames 
+        } 
+      },
+      select: { id: true }
+    });
+    return categories.map(cat => cat.id);
+  }
+
+  // Get available filter options for the frontend
+  async getAvailableFilterOptions() {
+    const [categories, allOptions] = await Promise.all([
+      // Get all categories with their names
+      this.prisma.category.findMany({
+        select: { name: true },
+        orderBy: { name: 'asc' }
+      }),
+      
+      // Get all dish options for extracting unique values
+      this.prisma.dishOption.findMany({
+        select: {
+          dish_type: true,
+          allergens: true,
+          calorie_range: true
+        }
+      })
+    ]);
+
+    // Extract unique values
+    const dishTypes = new Set<string>();
+    const allergens = new Set<string>();
+    const calorieRanges = new Set<string>();
+
+    allOptions.forEach(option => {
+      if (option.dish_type) {
+        option.dish_type.forEach(type => dishTypes.add(type));
+      }
+      if (option.allergens) {
+        option.allergens.forEach(allergen => {
+          if (allergen !== 'None') {
+            allergens.add(allergen);
+          }
+        });
+      }
+      if (option.calorie_range) {
+        calorieRanges.add(option.calorie_range);
       }
     });
+
+    return {
+      categories: categories.map(cat => cat.name),
+      dishTypes: Array.from(dishTypes).sort(),
+      allergens: Array.from(allergens).sort(),
+      calorieRanges: Array.from(calorieRanges).sort()
+    };
   }
 }
 ```
@@ -365,26 +465,177 @@ export class MenuRepository {
 
 ```typescript
 // src/controllers/MenuController.ts
+import { Request, Response } from 'express';
+
+interface FilterQueryParams {
+  spiceLevel?: string;
+  dishTypes?: string;
+  categories?: string;
+  allergens?: string;
+  calorieRange?: string;
+}
+
+interface FilterState {
+  spiceLevel: number | null;
+  dishTypes: string[];
+  categories: string[];
+  allergens: string[];
+  calorieRange: string | null;
+}
+
 export class MenuController {
   constructor(private menuRepo: MenuRepository) {}
 
   async getMenu(req: Request, res: Response) {
     try {
       const menu = await this.menuRepo.getFullMenu();
-      res.json(menu);
+      res.json({ success: true, data: menu });
     } catch (error) {
+      console.error('Error fetching menu:', error);
       res.status(500).json({ error: 'Failed to fetch menu' });
     }
   }
 
-  async getFilteredMenu(req: Request, res: Response) {
+  async getFilteredMenu(req: Request<{}, {}, {}, FilterQueryParams>, res: Response) {
     try {
-      const filters = req.query;
+      // Parse and validate query parameters
+      const filters = this.parseFilterParams(req.query);
+      
       const dishes = await this.menuRepo.getFilteredDishes(filters);
-      res.json(dishes);
+      res.json({ success: true, data: dishes });
     } catch (error) {
+      console.error('Error filtering menu:', error);
       res.status(500).json({ error: 'Failed to filter menu' });
     }
+  }
+
+  async getFilterOptions(req: Request, res: Response) {
+    try {
+      const options = await this.menuRepo.getAvailableFilterOptions();
+      res.json({ success: true, data: options });
+    } catch (error) {
+      console.error('Error fetching filter options:', error);
+      res.status(500).json({ error: 'Failed to fetch filter options' });
+    }
+  }
+
+  private parseFilterParams(query: FilterQueryParams): FilterState {
+    return {
+      spiceLevel: query.spiceLevel ? parseInt(query.spiceLevel) : null,
+      dishTypes: query.dishTypes ? query.dishTypes.split(',') : [],
+      categories: query.categories ? query.categories.split(',') : [],
+      allergens: query.allergens ? query.allergens.split(',') : [],
+      calorieRange: query.calorieRange || null
+    };
+  }
+}
+```
+
+#### 3. Prisma Schema Updates
+
+Create or update your `prisma/schema.prisma` file to match the PostgreSQL schema:
+
+```prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  dishes    Dish[]
+  
+  @@map("categories")
+}
+
+model Dish {
+  id          String   @id @default(uuid()) @db.Uuid
+  categoryId  String   @map("category_id") @db.Uuid
+  title       String
+  spiceLevel  Int      @map("spice_level") // 1-3
+  pairings    Json?    // JSON array
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  category    Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  options     DishOption[]
+  
+  @@map("dishes")
+}
+
+model DishOption {
+  id                  String   @id @default(uuid()) @db.Uuid
+  dishId              String   @map("dish_id") @db.Uuid
+  optionName          String   @map("option_name")
+  description         String?
+  detailedDescription String?  @map("detailed_description")
+  imageUrl            String?  @map("image_url")
+  price               Decimal  @db.Decimal(10, 2)
+  dishType            String[] @map("dish_type") // Array of dish types
+  ingredients         String[] // Array of ingredients
+  allergens           String[] // Array of allergens
+  calorieRange        String?  @map("calorie_range")
+  nutrition           Json     // JSON object with nutrition info
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+  
+  dish Dish @relation(fields: [dishId], references: [id], onDelete: Cascade)
+  
+  @@map("dish_options")
+}
+```
+
+#### 4. Frontend API Updates
+
+Update your frontend data loading to use the new API endpoints:
+
+```typescript
+// frontend/src/utils/apiUtils.ts
+export class MenuAPI {
+  private baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+
+  async getFullMenu() {
+    const response = await fetch(`${this.baseURL}/menu`);
+    const result = await response.json();
+    return result.data;
+  }
+
+  async getFilteredDishes(filters: FilterState) {
+    const params = new URLSearchParams();
+    
+    if (filters.spiceLevel !== null) {
+      params.append('spiceLevel', filters.spiceLevel.toString());
+    }
+    if (filters.dishTypes.length > 0) {
+      params.append('dishTypes', filters.dishTypes.join(','));
+    }
+    if (filters.categories.length > 0) {
+      params.append('categories', filters.categories.join(','));
+    }
+    if (filters.allergens.length > 0) {
+      params.append('allergens', filters.allergens.join(','));
+    }
+    if (filters.calorieRange !== null) {
+      params.append('calorieRange', filters.calorieRange);
+    }
+
+    const response = await fetch(`${this.baseURL}/menu/filter?${params}`);
+    const result = await response.json();
+    return result.data;
+  }
+
+  async getFilterOptions() {
+    const response = await fetch(`${this.baseURL}/menu/filter-options`);
+    const result = await response.json();
+    return result.data;
   }
 }
 ```
@@ -493,12 +744,196 @@ async function validateMigration() {
 }
 ```
 
-#### 2. Application Testing
+#### 2. Filtering Logic Testing
+
+Create comprehensive tests for all filtering scenarios:
+
+```javascript
+// migration/test-filtering.js
+const { PrismaClient } = require('@prisma/client');
+
+async function testAllFilters() {
+  const prisma = new PrismaClient();
+  
+  try {
+    console.log('🧪 Testing all filter combinations...');
+    
+    // Test 1: Spice Level Filter
+    console.log('\n1. Testing Spice Level Filter:');
+    const mildDishes = await prisma.dish.findMany({
+      where: { spice_level: 1 },
+      include: { options: true, category: true }
+    });
+    console.log(`Found ${mildDishes.length} mild dishes`);
+    
+    // Test 2: Category Filter
+    console.log('\n2. Testing Category Filter:');
+    const categoryIds = await prisma.category.findMany({
+      where: { name: { in: ['Traditional Curry'] } },
+      select: { id: true }
+    });
+    const categoryDishes = await prisma.dish.findMany({
+      where: { category_id: { in: categoryIds.map(c => c.id) } },
+      include: { options: true, category: true }
+    });
+    console.log(`Found ${categoryDishes.length} Traditional Curry dishes`);
+    
+    // Test 3: Dish Types Filter
+    console.log('\n3. Testing Dish Types Filter:');
+    const meatDishes = await prisma.dish.findMany({
+      where: {
+        options: {
+          some: {
+            dish_type: { hasSome: ['Meat'] }
+          }
+        }
+      },
+      include: { options: true, category: true }
+    });
+    console.log(`Found ${meatDishes.length} dishes with Meat options`);
+    
+    // Test 4: Calorie Range Filter
+    console.log('\n4. Testing Calorie Range Filter:');
+    const lowCalDishes = await prisma.dish.findMany({
+      where: {
+        options: {
+          some: {
+            calorie_range: '100-200'
+          }
+        }
+      },
+      include: { options: true, category: true }
+    });
+    console.log(`Found ${lowCalDishes.length} dishes with 100-200 calorie options`);
+    
+    // Test 5: Allergens Filter (Exclusion)
+    console.log('\n5. Testing Allergens Filter (Exclusion):');
+    const allergenFreeDishes = await prisma.dish.findMany({
+      where: {
+        options: {
+          none: {
+            allergens: { hasSome: ['Dairy'] }
+          }
+        }
+      },
+      include: { options: true, category: true }
+    });
+    console.log(`Found ${allergenFreeDishes.length} dishes without Dairy allergens`);
+    
+    // Test 6: Combined Filters
+    console.log('\n6. Testing Combined Filters:');
+    const combinedResult = await prisma.dish.findMany({
+      where: {
+        AND: [
+          { spice_level: 2 },
+          { category_id: { in: categoryIds.map(c => c.id) } },
+          {
+            options: {
+              some: {
+                dish_type: { hasSome: ['Meat'] }
+              }
+            }
+          }
+        ]
+      },
+      include: { options: true, category: true }
+    });
+    console.log(`Found ${combinedResult.length} medium spicy Traditional Curry dishes with Meat options`);
+    
+    console.log('\n✅ All filter tests completed successfully!');
+    
+  } catch (error) {
+    console.error('❌ Filter testing failed:', error);
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+testAllFilters();
+```
+
+#### 3. API Endpoint Testing
 
 ```bash
-# Test API endpoints
-curl http://localhost:3000/api/menu
-curl "http://localhost:3000/api/menu/filter?spiceLevel=2&categories=Traditional%20Curry"
+# Test all API endpoints with proper filtering
+echo "Testing full menu endpoint..."
+curl -s http://localhost:3001/api/menu | jq '.data | length'
+
+echo "Testing filter options endpoint..."
+curl -s http://localhost:3001/api/menu/filter-options | jq '.data'
+
+echo "Testing single spice level filter..."
+curl -s "http://localhost:3001/api/menu/filter?spiceLevel=2" | jq '.data | length'
+
+echo "Testing category filter..."
+curl -s "http://localhost:3001/api/menu/filter?categories=Traditional%20Curry" | jq '.data | length'
+
+echo "Testing dish types filter..."
+curl -s "http://localhost:3001/api/menu/filter?dishTypes=Meat,Vegetarian" | jq '.data | length'
+
+echo "Testing calorie range filter..."
+curl -s "http://localhost:3001/api/menu/filter?calorieRange=200-300" | jq '.data | length'
+
+echo "Testing allergens exclusion filter..."
+curl -s "http://localhost:3001/api/menu/filter?allergens=Dairy" | jq '.data | length'
+
+echo "Testing combined filters..."
+curl -s "http://localhost:3001/api/menu/filter?spiceLevel=2&categories=Traditional%20Curry&dishTypes=Meat" | jq '.data | length'
+```
+
+#### 4. Performance Testing
+
+```javascript
+// migration/performance-test.js
+async function testFilterPerformance() {
+  const prisma = new PrismaClient();
+  
+  try {
+    console.log('⚡ Testing filter performance...');
+    
+    const startTime = Date.now();
+    
+    // Test complex combined query
+    await prisma.dish.findMany({
+      where: {
+        AND: [
+          { spice_level: 2 },
+          {
+            options: {
+              some: {
+                dish_type: { hasSome: ['Meat', 'Vegetarian'] }
+              }
+            }
+          },
+          {
+            options: {
+              none: {
+                allergens: { hasSome: ['Dairy', 'Gluten'] }
+              }
+            }
+          }
+        ]
+      },
+      include: {
+        options: true,
+        category: true
+      }
+    });
+    
+    const endTime = Date.now();
+    console.log(`Complex filter query took: ${endTime - startTime}ms`);
+    
+    // Performance should be under 200ms for complex filters
+    if (endTime - startTime > 200) {
+      console.warn('⚠️  Filter performance is slower than expected. Consider adding more indexes.');
+    } else {
+      console.log('✅ Filter performance is acceptable.');
+    }
+    
+  } finally {
+    await prisma.$disconnect();
+  }
+}
 ```
 
 ### Phase 6: Rollback Plan
