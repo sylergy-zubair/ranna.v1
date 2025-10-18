@@ -1,17 +1,20 @@
 export interface Nutrition {
-  calories: number;
-  protein: number;
-  carbs: number;
+  energy_kj: number;
+  energy_kcal: number;
   fat: number;
-  fiber: number;
+  of_which_saturates: number;
+  carbohydrate: number;
+  of_which_sugars: number;
+  protein: number;
+  salt: number;
+  total_weight_grams: number;
 }
 
 export interface Option {
   option_id: string;
   option_name: string;
-  description: string;
+  short_description: string;
   detailed_description: string;
-  image_url: string;
   price: number;
   dish_type: string[];
   ingredients: string[];
@@ -24,7 +27,7 @@ export interface Dish {
   dish_id: string;
   dish_title: string;
   spice_level: number;
-  pairings: string[];
+  image_url: string;
   options: Option[];
 }
 
@@ -70,4 +73,47 @@ export interface MoreInfoModalProps {
   dish: Dish | null;
   isOpen: boolean;
   onClose: () => void;
+}
+
+// Admin types
+export interface AdminApiResponse<T = any> {
+  success: boolean;
+  data?: T;
+  message?: string;
+  error?: string;
+  details?: string[];
+  timestamp?: string;
+}
+
+export interface CreateDishRequest {
+  categoryId: string;
+  dishData: Dish;
+}
+
+export interface UpdateDishRequest {
+  dishId: string;
+  dishData: Partial<Dish>;
+}
+
+export interface CreateCategoryRequest {
+  categoryData: Category;
+}
+
+export interface UpdateMenuRequest {
+  menuData: CuisineData;
+}
+
+// Admin form types
+export interface AdminFormState {
+  selectedCategory: string | null;
+  selectedDish: string | null;
+  isEditing: boolean;
+  loading: boolean;
+  error: string | null;
+}
+
+export interface AdminMenuState {
+  menu: CuisineData | null;
+  loading: boolean;
+  error: string | null;
 }

@@ -9,18 +9,12 @@
           "dish_id": "4f8d60b5-fb59-44c5-988b-17f16e39b949",
           "dish_title": "Bhuna",
           "spice_level": 2,
-          "pairings": [
-            "Naan Bread",
-            "Basmati Rice",
-            "Raita"
-          ],
           "options": [
             {
               "option_id": "c0680b34-aa5e-414a-b891-b1f1df5926c2",
               "option_name": "Chicken",
-              "description": "A rich and aromatic curry where the meat is slow-cooked with onions, tomatoes, and a blend of traditional spices until the sauce is thick and flavorful.",
+              "short_description": "A rich and aromatic curry where the meat is slow-cooked with onions, tomatoes, and a blend of traditional spices until the sauce is thick and flavorful.",
               "detailed_description": "Tender chicken breast pieces are marinated and then slow-cooked in a rich tomato and onion base with traditional Indian spices. The slow cooking process allows the flavors to develop deeply, creating a thick, aromatic sauce that coats each piece of chicken perfectly.",
-              "image_url": "https://example.com/images/bhuna-chicken.jpg",
               "price": 10.95,
               "dish_type": [
                 "Meat"
@@ -42,19 +36,22 @@
               ],
               "calorie_range": "300-400",
               "nutrition": {
-                "calories": 320,
-                "protein": 28,
-                "carbs": 12,
+                "energy_kj": 1339,
+                "energy_kcal": 320,
                 "fat": 18,
-                "fiber": 3
+                "of_which_saturates": 5,
+                "carbohydrate": 12,
+                "of_which_sugars": 2,
+                "protein": 28,
+                "salt": 0.5,
+                "total_weight_grams": 350
               }
             },
             {
               "option_id": "f19f028f-3fa7-43f4-9b90-77ee9e562a10",
               "option_name": "Lamb",
-              "description": "A rich and aromatic curry where the meat is slow-cooked with onions, tomatoes, and a blend of traditional spices until the sauce is thick and flavorful.",
+              "short_description": "A rich and aromatic curry where the meat is slow-cooked with onions, tomatoes, and a blend of traditional spices until the sauce is thick and flavorful.",
               "detailed_description": "Succulent lamb shoulder is braised slowly in a fragrant blend of onions, tomatoes, and traditional spices. The longer cooking time allows the lamb to become incredibly tender while absorbing all the complex flavors of the aromatic sauce.",
-              "image_url": "https://example.com/images/bhuna-lamb.jpg",
               "price": 11.45,
               "dish_type": [
                 "Meat"
@@ -76,19 +73,22 @@
               ],
               "calorie_range": "300-400",
               "nutrition": {
-                "calories": 380,
-                "protein": 32,
-                "carbs": 12,
+                "energy_kj": 1590,
+                "energy_kcal": 380,
                 "fat": 24,
-                "fiber": 3
+                "of_which_saturates": 7,
+                "carbohydrate": 12,
+                "of_which_sugars": 2,
+                "protein": 32,
+                "salt": 0.5,
+                "total_weight_grams": 350
               }
             },
             {
               "option_id": "353afe6a-9643-4e24-b114-b702b7160cfc",
               "option_name": "Paneer",
-              "description": "A rich and aromatic curry where the meat is slow-cooked with onions, tomatoes, and a blend of traditional spices until the sauce is thick and flavorful.",
+              "short_description": "A rich and aromatic curry where the meat is slow-cooked with onions, tomatoes, and a blend of traditional spices until the sauce is thick and flavorful.",
               "detailed_description": "Fresh paneer cubes are gently cooked in the same rich, aromatic sauce. The soft cheese absorbs the flavors beautifully while maintaining its delicate texture, creating a satisfying vegetarian option that's equally rich and flavorful.",
-              "image_url": "https://example.com/images/bhuna-paneer.jpg",
               "price": 9.95,
               "dish_type": [
                 "Vegetarian"
@@ -110,31 +110,30 @@
               ],
               "calorie_range": "200-300",
               "nutrition": {
-                "calories": 280,
-                "protein": 18,
-                "carbs": 15,
+                "energy_kj": 1172,
+                "energy_kcal": 280,
                 "fat": 16,
-                "fiber": 4
+                "of_which_saturates": 5,
+                "carbohydrate": 15,
+                "of_which_sugars": 3,
+                "protein": 18,
+                "salt": 0.5,
+                "total_weight_grams": 350
               }
             }
-          ]
+          ],
+          "image_url": "https://example.com/images/bhuna-chicken.jpg"
         },
         {
           "dish_id": "01e014fd-b4a4-4504-b9eb-af9326b01683",
           "dish_title": "Rogan Josh",
           "spice_level": 3,
-          "pairings": [
-            "Basmati Rice",
-            "Naan Bread",
-            "Pickled onions"
-          ],
           "options": [
             {
               "option_id": "9a3c4b44-3e75-49fe-995b-21f273b0b3bc",
               "option_name": "Lamb",
-              "description": "A classic Kashmiri curry known for its deep red color and rich, aromatic flavor. The meat is braised in a sauce made with yogurt, onions, and a special blend of spices.",
+              "short_description": "A classic Kashmiri curry known for its deep red color and rich, aromatic flavor. The meat is braised in a sauce made with yogurt, onions, and a special blend of spices.",
               "detailed_description": "Tender lamb leg is slow-braised in a luxurious sauce featuring yogurt, caramelized onions, and the distinctive Kashmiri red chili that gives this dish its signature deep red color. The complex blend of cardamom, cinnamon, and bay leaves creates an unforgettable aromatic experience.",
-              "image_url": "https://example.com/images/rogan-josh-lamb.jpg",
               "price": 12.95,
               "dish_type": [
                 "Meat"
@@ -157,19 +156,22 @@
               ],
               "calorie_range": "400-500",
               "nutrition": {
-                "calories": 420,
-                "protein": 35,
-                "carbs": 8,
+                "energy_kj": 1757,
+                "energy_kcal": 420,
                 "fat": 28,
-                "fiber": 2
+                "of_which_saturates": 8,
+                "carbohydrate": 8,
+                "of_which_sugars": 2,
+                "protein": 35,
+                "salt": 0.5,
+                "total_weight_grams": 350
               }
             },
             {
               "option_id": "4279dd33-d412-42d2-bc25-dabb728d4dc1",
               "option_name": "Chicken",
-              "description": "A classic Kashmiri curry known for its deep red color and rich, aromatic flavor. The meat is braised in a sauce made with yogurt, onions, and a special blend of spices.",
+              "short_description": "A classic Kashmiri curry known for its deep red color and rich, aromatic flavor. The meat is braised in a sauce made with yogurt, onions, and a special blend of spices.",
               "detailed_description": "Juicy chicken thighs are marinated and then braised in the same traditional Kashmiri sauce. The yogurt tenderizes the meat while the Kashmiri red chili imparts its distinctive color and mild heat, creating a perfect balance of flavors.",
-              "image_url": "https://example.com/images/rogan-josh-chicken.jpg",
               "price": 11.95,
               "dish_type": [
                 "Meat"
@@ -192,19 +194,22 @@
               ],
               "calorie_range": "300-400",
               "nutrition": {
-                "calories": 350,
-                "protein": 30,
-                "carbs": 8,
+                "energy_kj": 1464,
+                "energy_kcal": 350,
                 "fat": 22,
-                "fiber": 2
+                "of_which_saturates": 7,
+                "carbohydrate": 8,
+                "of_which_sugars": 2,
+                "protein": 30,
+                "salt": 0.5,
+                "total_weight_grams": 350
               }
             },
             {
               "option_id": "bb4e652a-9c77-49c4-aa69-c58e7fb4018a",
               "option_name": "Mushroom",
-              "description": "A classic Kashmiri curry known for its deep red color and rich, aromatic flavor. The meat is braised in a sauce made with yogurt, onions, and a special blend of spices.",
+              "short_description": "A classic Kashmiri curry known for its deep red color and rich, aromatic flavor. The meat is braised in a sauce made with yogurt, onions, and a special blend of spices.",
               "detailed_description": "A hearty mix of mushrooms is cooked in a vegan version of the traditional Rogan Josh sauce, using coconut yogurt instead of dairy. The mushrooms absorb the rich flavors beautifully, creating a satisfying plant-based alternative that maintains the authentic taste and appearance.",
-              "image_url": "https://example.com/images/rogan-josh-mushroom.jpg",
               "price": 10.95,
               "dish_type": [
                 "Vegan"
@@ -227,14 +232,19 @@
               ],
               "calorie_range": "200-300",
               "nutrition": {
-                "calories": 220,
-                "protein": 12,
-                "carbs": 15,
+                "energy_kj": 920,
+                "energy_kcal": 220,
                 "fat": 12,
-                "fiber": 4
+                "of_which_saturates": 4,
+                "carbohydrate": 15,
+                "of_which_sugars": 3,
+                "protein": 12,
+                "salt": 0.5,
+                "total_weight_grams": 350
               }
             }
-          ]
+          ],
+          "image_url": "https://example.com/images/rogan-josh-lamb.jpg"
         }
       ]
     },
@@ -246,19 +256,12 @@
           "dish_id": "8ba25914-e949-43e6-99fd-78dace19f221",
           "dish_title": "Tandoori Chicken",
           "spice_level": 2,
-          "pairings": [
-            "Mint chutney",
-            "Onion rings",
-            "Lemon wedges",
-            "Naan bread"
-          ],
           "options": [
             {
               "option_id": "28717738-2853-419d-9dff-d58856fd4327",
               "option_name": "Chicken Breast",
-              "description": "Succulent chicken marinated in yogurt and aromatic spices, then cooked in a traditional clay tandoor oven for a smoky, charred flavor.",
+              "short_description": "Succulent chicken marinated in yogurt and aromatic spices, then cooked in a traditional clay tandoor oven for a smoky, charred flavor.",
               "detailed_description": "Lean chicken breast is marinated overnight in a blend of yogurt, ginger, garlic, and traditional tandoori spices. Cooked in our clay tandoor oven, it develops a beautiful charred exterior while remaining incredibly tender and juicy inside, with that signature smoky flavor.",
-              "image_url": "https://example.com/images/tandoori-chicken-breast.jpg",
               "price": 13.95,
               "dish_type": [
                 "Meat",
@@ -281,19 +284,22 @@
               ],
               "calorie_range": "200-300",
               "nutrition": {
-                "calories": 280,
-                "protein": 35,
-                "carbs": 4,
+                "energy_kj": 1172,
+                "energy_kcal": 280,
                 "fat": 12,
-                "fiber": 1
+                "of_which_saturates": 4,
+                "carbohydrate": 4,
+                "of_which_sugars": 1,
+                "protein": 35,
+                "salt": 0.5,
+                "total_weight_grams": 350
               }
             },
             {
               "option_id": "f6236c7f-831f-46c5-a875-44e1615b5d34",
               "option_name": "Chicken Thigh",
-              "description": "Succulent chicken marinated in yogurt and aromatic spices, then cooked in a traditional clay tandoor oven for a smoky, charred flavor.",
+              "short_description": "Succulent chicken marinated in yogurt and aromatic spices, then cooked in a traditional clay tandoor oven for a smoky, charred flavor.",
               "detailed_description": "Juicy chicken thighs are marinated in the same traditional tandoori spice blend. The higher fat content of the thigh meat makes it incredibly moist and flavorful, with the tandoor cooking method creating perfect char marks and that distinctive smoky aroma.",
-              "image_url": "https://example.com/images/tandoori-chicken-thigh.jpg",
               "price": 12.95,
               "dish_type": [
                 "Meat"
@@ -315,19 +321,22 @@
               ],
               "calorie_range": "300-400",
               "nutrition": {
-                "calories": 320,
-                "protein": 32,
-                "carbs": 4,
+                "energy_kj": 1339,
+                "energy_kcal": 320,
                 "fat": 18,
-                "fiber": 1
+                "of_which_saturates": 5,
+                "carbohydrate": 4,
+                "of_which_sugars": 1,
+                "protein": 32,
+                "salt": 0.5,
+                "total_weight_grams": 350
               }
             },
             {
               "option_id": "1c51d203-3d4a-4ada-bef6-aa3c86a17cd3",
               "option_name": "Tofu",
-              "description": "Succulent chicken marinated in yogurt and aromatic spices, then cooked in a traditional clay tandoor oven for a smoky, charred flavor.",
+              "short_description": "Succulent chicken marinated in yogurt and aromatic spices, then cooked in a traditional clay tandoor oven for a smoky, charred flavor.",
               "detailed_description": "Firm tofu is marinated in a vegan version of our tandoori spice blend using coconut yogurt. The tofu absorbs all the aromatic flavors and develops a beautiful charred exterior when cooked in the tandoor, creating a satisfying plant-based alternative with authentic tandoori taste.",
-              "image_url": "https://example.com/images/tandoori-tofu.jpg",
               "price": 11.95,
               "dish_type": [
                 "Vegan",
@@ -350,32 +359,30 @@
               ],
               "calorie_range": "100-200",
               "nutrition": {
-                "calories": 180,
-                "protein": 18,
-                "carbs": 8,
+                "energy_kj": 753,
+                "energy_kcal": 180,
                 "fat": 8,
-                "fiber": 2
+                "of_which_saturates": 2,
+                "carbohydrate": 8,
+                "of_which_sugars": 2,
+                "protein": 18,
+                "salt": 0.5,
+                "total_weight_grams": 350
               }
             }
-          ]
+          ],
+          "image_url": "https://example.com/images/tandoori-chicken-breast.jpg"
         },
         {
           "dish_id": "a0a06e43-0b08-4077-89de-f17648922a5f",
           "dish_title": "Tandoori Fish",
           "spice_level": 1,
-          "pairings": [
-            "Mint chutney",
-            "Lemon rice",
-            "Cucumber salad",
-            "Raita"
-          ],
           "options": [
             {
               "option_id": "a8ce21c9-8b12-4d92-be10-f83522c4abcf",
               "option_name": "Salmon",
-              "description": "Fresh fish fillets marinated in a blend of spices and yogurt, then grilled in the tandoor for a perfect smoky flavor and tender texture.",
+              "short_description": "Fresh fish fillets marinated in a blend of spices and yogurt, then grilled in the tandoor for a perfect smoky flavor and tender texture.",
               "detailed_description": "Premium salmon fillets are marinated in our signature tandoori spice blend with yogurt, ginger, and garlic. The high heat of the tandoor oven creates a perfectly seared exterior while keeping the fish incredibly moist and flaky inside, with a subtle smoky flavor that complements the rich salmon taste.",
-              "image_url": "https://example.com/images/tandoori-salmon.jpg",
               "price": 16.95,
               "dish_type": [
                 "Seafood"
@@ -398,19 +405,22 @@
               ],
               "calorie_range": "300-400",
               "nutrition": {
-                "calories": 350,
-                "protein": 38,
-                "carbs": 6,
+                "energy_kj": 1464,
+                "energy_kcal": 350,
                 "fat": 18,
-                "fiber": 1
+                "of_which_saturates": 5,
+                "carbohydrate": 6,
+                "of_which_sugars": 1,
+                "protein": 38,
+                "salt": 0.5,
+                "total_weight_grams": 350
               }
             },
             {
               "option_id": "75d421ee-8b7c-497d-bb0c-532c95ed423b",
               "option_name": "Cod",
-              "description": "Fresh fish fillets marinated in a blend of spices and yogurt, then grilled in the tandoor for a perfect smoky flavor and tender texture.",
+              "short_description": "Fresh fish fillets marinated in a blend of spices and yogurt, then grilled in the tandoor for a perfect smoky flavor and tender texture.",
               "detailed_description": "Mild and flaky cod fillets are marinated in the same aromatic tandoori spices. The gentle flavor of cod allows the spices to shine through, while the tandoor cooking method gives it a beautiful char and that distinctive smoky aroma. Perfect for those who prefer a lighter fish option.",
-              "image_url": "https://example.com/images/tandoori-cod.jpg",
               "price": 15.95,
               "dish_type": [
                 "Seafood",
@@ -434,19 +444,22 @@
               ],
               "calorie_range": "200-300",
               "nutrition": {
-                "calories": 280,
-                "protein": 32,
-                "carbs": 6,
+                "energy_kj": 1172,
+                "energy_kcal": 280,
                 "fat": 12,
-                "fiber": 1
+                "of_which_saturates": 4,
+                "carbohydrate": 6,
+                "of_which_sugars": 1,
+                "protein": 32,
+                "salt": 0.5,
+                "total_weight_grams": 350
               }
             },
             {
               "option_id": "b2dba7f9-bd4f-4228-8b1b-b32292640739",
               "option_name": "Cauliflower",
-              "description": "Fresh fish fillets marinated in a blend of spices and yogurt, then grilled in the tandoor for a perfect smoky flavor and tender texture.",
+              "short_description": "Fresh fish fillets marinated in a blend of spices and yogurt, then grilled in the tandoor for a perfect smoky flavor and tender texture.",
               "detailed_description": "Large cauliflower florets are marinated in our tandoori spice blend and roasted in the tandoor oven. The high heat caramelizes the edges while keeping the center tender, creating a delicious vegetarian alternative that captures all the smoky, aromatic flavors of traditional tandoori cooking.",
-              "image_url": "https://example.com/images/tandoori-cauliflower.jpg",
               "price": 12.95,
               "dish_type": [
                 "Vegetarian",
@@ -469,14 +482,19 @@
               ],
               "calorie_range": "100-200",
               "nutrition": {
-                "calories": 120,
-                "protein": 8,
-                "carbs": 12,
+                "energy_kj": 502,
+                "energy_kcal": 120,
                 "fat": 4,
-                "fiber": 4
+                "of_which_saturates": 1,
+                "carbohydrate": 12,
+                "of_which_sugars": 2,
+                "protein": 8,
+                "salt": 0.5,
+                "total_weight_grams": 350
               }
             }
-          ]
+          ],
+          "image_url": "https://example.com/images/tandoori-salmon.jpg"
         }
       ]
     }

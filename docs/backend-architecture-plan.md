@@ -1,7 +1,9 @@
-# Ranna Backend Architecture Plan
+# Ranna Backend Architecture Plan - V2.0
 
 ## Overview
-A scalable, RESTful API backend for the Ranna Indian cuisine ordering platform, designed to handle menu management, orders, user authentication, and real-time updates.
+A comprehensive, scalable, RESTful API backend for the Ranna Indian cuisine ordering platform, designed to handle advanced menu management, orders, user authentication, real-time updates, and enterprise features. This is the long-term architecture plan.
+
+**Note**: This is the V2.0 comprehensive plan. For immediate implementation, see `backend-v1-plan.md` which focuses on the current stack: Node.js + Express + MongoDB + Redis + AWS S3.
 
 ## Technology Stack
 

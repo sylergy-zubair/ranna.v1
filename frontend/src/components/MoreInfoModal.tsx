@@ -68,22 +68,7 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
         <div className="p-6">
           
 
-          {/* Pairings */}
-          {dish.pairings.length > 0 && (
-            <div className="mb-6">
-              <h3 className="text-sm font-medium text-gray-700 mb-2">Recommended Pairings</h3>
-              <div className="flex flex-wrap gap-2">
-                {dish.pairings.map((pairing, index) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
-                  >
-                    {pairing}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
+          
 
           {/* Selected Option Details */}
           <div className="border border-gray-200 rounded-lg p-6">
@@ -114,7 +99,7 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
             </div>
 
             <div className="mb-6">
-              <p className="text-gray-600 text-base mb-3">{selectedOption.description}</p>
+              <p className="text-gray-600 text-base mb-3">{selectedOption.short_description}</p>
               <p className="text-gray-700 text-base leading-relaxed">{selectedOption.detailed_description}</p>
             </div>
 
@@ -157,26 +142,42 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
             {/* Nutrition Info */}
             <div className="pt-6 border-t border-gray-200">
               <h5 className="text-lg font-medium text-gray-700 mb-4">Nutrition (per serving)</h5>
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                 <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <div className="text-2xl font-bold text-gray-800">{selectedOption.nutrition.calories}</div>
-                  <div className="text-gray-600 text-sm">Calories</div>
+                  <div className="text-2xl font-bold text-gray-800">{selectedOption.nutrition.energy_kj}</div>
+                  <div className="text-gray-600 text-sm">Energy (kJ)</div>
                 </div>
                 <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <div className="text-2xl font-bold text-gray-800">{selectedOption.nutrition.protein}g</div>
-                  <div className="text-gray-600 text-sm">Protein</div>
-                </div>
-                <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <div className="text-2xl font-bold text-gray-800">{selectedOption.nutrition.carbs}g</div>
-                  <div className="text-gray-600 text-sm">Carbs</div>
+                  <div className="text-2xl font-bold text-gray-800">{selectedOption.nutrition.energy_kcal}</div>
+                  <div className="text-gray-600 text-sm">Energy (kcal)</div>
                 </div>
                 <div className="text-center p-4 bg-gray-50 rounded-lg">
                   <div className="text-2xl font-bold text-gray-800">{selectedOption.nutrition.fat}g</div>
                   <div className="text-gray-600 text-sm">Fat</div>
                 </div>
                 <div className="text-center p-4 bg-gray-50 rounded-lg">
-                  <div className="text-2xl font-bold text-gray-800">{selectedOption.nutrition.fiber}g</div>
-                  <div className="text-gray-600 text-sm">Fiber</div>
+                  <div className="text-2xl font-bold text-gray-800">{selectedOption.nutrition.of_which_saturates}g</div>
+                  <div className="text-gray-600 text-sm">of which saturates</div>
+                </div>
+                <div className="text-center p-4 bg-gray-50 rounded-lg">
+                  <div className="text-2xl font-bold text-gray-800">{selectedOption.nutrition.carbohydrate}g</div>
+                  <div className="text-gray-600 text-sm">Carbohydrate</div>
+                </div>
+                <div className="text-center p-4 bg-gray-50 rounded-lg">
+                  <div className="text-2xl font-bold text-gray-800">{selectedOption.nutrition.of_which_sugars}g</div>
+                  <div className="text-gray-600 text-sm">of which sugars</div>
+                </div>
+                <div className="text-center p-4 bg-gray-50 rounded-lg">
+                  <div className="text-2xl font-bold text-gray-800">{selectedOption.nutrition.protein}g</div>
+                  <div className="text-gray-600 text-sm">Protein</div>
+                </div>
+                <div className="text-center p-4 bg-gray-50 rounded-lg">
+                  <div className="text-2xl font-bold text-gray-800">{selectedOption.nutrition.salt}g</div>
+                  <div className="text-gray-600 text-sm">Salt</div>
+                </div>
+                <div className="text-center p-4 bg-gray-50 rounded-lg">
+                  <div className="text-2xl font-bold text-gray-800">{selectedOption.nutrition.total_weight_grams}g</div>
+                  <div className="text-gray-600 text-sm">Total Weight</div>
                 </div>
               </div>
             </div>

@@ -19,9 +19,9 @@ export function getLowestPrice(dish: Dish): number {
   return Math.min(...dish.options.map(option => option.price));
 }
 
-// Get the first option's description for the dish card
+// Get the first option's short description for the dish card
 export function getDishDescription(dish: Dish): string {
-  return dish.options[0]?.description || '';
+  return dish.options[0]?.short_description || '';
 }
 
 // Process dishes to add computed properties
