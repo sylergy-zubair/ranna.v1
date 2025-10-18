@@ -7,6 +7,7 @@ export interface Nutrition {
 }
 
 export interface Option {
+  option_id: string;
   option_name: string;
   description: string;
   detailed_description: string;
@@ -20,6 +21,7 @@ export interface Option {
 }
 
 export interface Dish {
+  dish_id: string;
   dish_title: string;
   spice_level: number;
   pairings: string[];
@@ -32,6 +34,7 @@ export interface Category {
 }
 
 export interface CuisineData {
+  _id?: string;
   categories: Category[];
 }
 
