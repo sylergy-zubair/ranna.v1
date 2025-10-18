@@ -2,6 +2,7 @@
   "_id": "menu-collection",
   "categories": [
     {
+      "category_id": "a04ed04f-6194-4878-bdb0-9e6f456a74df",
       "category": "Traditional Curry",
       "dishes": [
         {
@@ -238,6 +239,7 @@
       ]
     },
     {
+      "category_id": "35c3139f-0290-4381-97b1-356cade88b08",
       "category": "Tandoori",
       "dishes": [
         {
