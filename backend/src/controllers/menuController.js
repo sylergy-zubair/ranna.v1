@@ -64,12 +64,30 @@ const getFilterOptions = async (req, res) => {
 
 // Health check
 const healthCheck = async (req, res) => {
-  res.status(CONSTANTS.STATUS.SUCCESS).json({
+  const mongoose = require('mongoose');
+  
+  const dbStatus = mongoose.connection.readyState;
+  const dbStates = {
+    0: 'disconnected',
+    1: 'connected',
+    2: 'connecting',
+    3: 'disconnecting'
+  };
+
+  const health = {
     success: true,
     message: 'Ranna Backend API is running',
     timestamp: new Date().toISOString(),
-    version: '1.0.0'
-  });
+    version: '1.0.0',
+    database: {
+      status: dbStates[dbStatus],
+      connected: dbStatus === 1,
+      host: mongoose.connection.host || 'unknown',
+      name: mongoose.connection.name || 'unknown'
+    }
+  };
+
+  res.status(CONSTANTS.STATUS.SUCCESS).json(health);
 };
 
 module.exports = {

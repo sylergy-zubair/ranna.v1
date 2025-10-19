@@ -17,21 +17,41 @@ const connectDB = async () => {
 
 const seedMenu = async () => {
   try {
-    // Read the JSON data from frontend
-    const dataPath = path.join(__dirname, '../../frontend/public/data/indian_cuisine.json');
+    // Read the JSON data from root data folder
+    const dataPath = path.join(__dirname, '../../../data/indian_cuisine.json');
+    
+    // Check if file exists
+    if (!fs.existsSync(dataPath)) {
+      console.error('❌ Data file not found at:', dataPath);
+      console.error('Current directory:', __dirname);
+      return;
+    }
+    
+    console.log('📁 Reading data from:', dataPath);
     const data = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 
     // Clear existing menu data
-    await Menu.deleteMany({});
+    console.log('🗑️ Clearing existing menu data...');
+    const deleteResult = await Menu.deleteMany({});
+    console.log('Deleted documents:', deleteResult.deletedCount);
 
     // Create new menu document
+    console.log('📝 Creating new menu document...');
+    // Don't use the _id from JSON data as it's not a valid ObjectId
     const menu = new Menu({
-      _id: data._id || new mongoose.Types.ObjectId(),
       categories: data.categories
     });
 
-    await menu.save();
-    console.log('✅ Menu seeded successfully');
+    const savedMenu = await menu.save();
+    console.log('✅ Menu seeded successfully with ID:', savedMenu._id);
+    
+    // Verify the data was saved
+    const verifyMenu = await Menu.findOne();
+    if (verifyMenu) {
+      console.log('✅ Verification: Menu found in database with', verifyMenu.categories.length, 'categories');
+    } else {
+      console.log('❌ Verification: No menu found in database after save');
+    }
     
     // Display summary
     const totalDishes = data.categories.reduce((total, category) => 
@@ -46,9 +66,15 @@ const seedMenu = async () => {
     console.log(`📊 Seeded ${data.categories.length} categories, ${totalDishes} dishes, ${totalOptions} options`);
     
   } catch (error) {
-    console.error('Seeding error:', error);
+    console.error('❌ Seeding error:', error);
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    });
   } finally {
-    mongoose.connection.close();
+    await mongoose.connection.close();
+    console.log('🔌 Database connection closed');
   }
 };
 
