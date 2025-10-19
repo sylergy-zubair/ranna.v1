@@ -21,9 +21,8 @@ const connectDB = async (retries = 5, delay = 3000) => {
       retryReads: true,
       // SSL/TLS configuration for Vercel compatibility
       ssl: true,
-      // Buffer commands handling - different for Vercel vs local
-      bufferCommands: isVercel ? true : false,
-      bufferMaxEntries: isVercel ? 100 : 0,
+      bufferCommands: false,
+      bufferMaxEntries: 0,
     };
 
     // Ensure proper SSL handling in connection string for Vercel
