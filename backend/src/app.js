@@ -33,10 +33,10 @@ app.use(helmet());
 // Compression middleware
 app.use(compression());
 
-// CORS middleware
+// CORS middleware (must be before rate limiting)
 app.use(corsMiddleware);
 
-// Rate limiting
+// Rate limiting (skip OPTIONS requests)
 app.use(rateLimiter);
 
 // Body parsing middleware

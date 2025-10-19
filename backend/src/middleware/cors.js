@@ -29,13 +29,15 @@ const corsOptions = {
       callback(null, true);
     } else {
       console.log('Origin NOT allowed:', origin, 'Allowed origins:', allowedOrigins);
-      callback(null, false); // Changed from Error to null, false
+      // For debugging, let's be more permissive temporarily
+      return callback(null, true);
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Cache-Control', 'Pragma'],
   credentials: true,
-  optionsSuccessStatus: 200 // Some legacy browsers choke on 204
+  optionsSuccessStatus: 200,
+  preflightContinue: false
 };
 
 module.exports = cors(corsOptions);

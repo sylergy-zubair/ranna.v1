@@ -19,6 +19,10 @@ const limiter = rateLimit({
   skipSuccessfulRequests: false,
   // Skip failed requests from rate limiting count (optional)
   skipFailedRequests: false,
+  // Skip preflight requests from rate limiting
+  skip: (req) => {
+    return req.method === 'OPTIONS';
+  },
 });
 
 module.exports = limiter;
