@@ -21,9 +21,11 @@ const connectDB = async (retries = 5, delay = 3000) => {
       retryReads: true,
       // SSL/TLS configuration for Vercel compatibility
       ssl: true,
-      bufferCommands: false,
-      bufferMaxEntries: 0,
     };
+
+    // Set buffer options globally for mongoose (not in connection options)
+    mongoose.set('bufferCommands', false);
+    mongoose.set('bufferMaxEntries', 0);
 
     // Ensure proper SSL handling in connection string for Vercel
     let mongoUri = process.env.MONGODB_URI;
@@ -38,7 +40,8 @@ const connectDB = async (retries = 5, delay = 3000) => {
       serverSelectionTimeoutMS: options.serverSelectionTimeoutMS,
       connectTimeoutMS: options.connectTimeoutMS,
       ssl: options.ssl,
-      bufferCommands: options.bufferCommands
+      bufferCommands: 'set globally',
+      bufferMaxEntries: 'set globally'
     });
 
     const conn = await mongoose.connect(mongoUri, options);
