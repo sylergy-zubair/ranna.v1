@@ -9,15 +9,22 @@ const ensureConnection = async () => {
   const mongoose = require('mongoose');
   const isVercel = process.env.VERCEL === '1';
   
+  // If already connected, return immediately
   if (mongoose.connection.readyState === 1) {
-    return; // Already connected
+    return;
   }
   
+  // If connecting, wait for it to complete
   if (mongoose.connection.readyState === 2) {
-    // Connecting, wait for it with longer timeout for Vercel
-    const timeoutDuration = isVercel ? 15000 : 10000;
+    const timeoutDuration = isVercel ? 20000 : 15000;
     await new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => reject(new Error('Connection timeout')), timeoutDuration);
+      const timeout = setTimeout(() => {
+        reject(new Error('Connection timeout - waiting for MongoDB connection'));
+      }, timeoutDuration);
+      
+      // Remove any existing listeners to avoid duplicates
+      mongoose.connection.removeAllListeners('connected');
+      mongoose.connection.removeAllListeners('error');
       
       mongoose.connection.once('connected', () => {
         clearTimeout(timeout);
@@ -32,9 +39,33 @@ const ensureConnection = async () => {
     return;
   }
   
-  // Not connected, try to connect
+  // If disconnected or uninitialized, establish connection
   const connectDB = require('../config/database');
   await connectDB();
+  
+  // Double-check that we're actually connected before proceeding
+  if (mongoose.connection.readyState !== 1) {
+    await new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        reject(new Error('Connection not ready after connectDB - readyState: ' + mongoose.connection.readyState));
+      }, isVercel ? 10000 : 5000);
+      
+      mongoose.connection.once('connected', () => {
+        clearTimeout(timeout);
+        resolve();
+      });
+      
+      mongoose.connection.once('error', (err) => {
+        clearTimeout(timeout);
+        reject(err);
+      });
+    });
+  }
+  
+  // Final check - ensure we're actually connected
+  if (mongoose.connection.readyState !== 1) {
+    throw new Error(`MongoDB connection not ready. ReadyState: ${mongoose.connection.readyState}`);
+  }
 };
 
 const getFullMenu = async () => {
@@ -48,6 +79,12 @@ const getFullMenu = async () => {
 
     // Ensure database connection before querying
     await ensureConnection();
+    
+    // Final verification before query
+    const mongoose = require('mongoose');
+    if (mongoose.connection.readyState !== 1) {
+      throw new Error(`Cannot query database: MongoDB connection not ready (readyState: ${mongoose.connection.readyState})`);
+    }
     
     // Fetch from database
     const menu = await Menu.findOne().lean();
