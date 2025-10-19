@@ -224,6 +224,9 @@ const deleteDish = async (req, res) => {
       );
     }
 
+    // Ensure database connection before querying
+    await ensureConnection();
+    
     const menu = await Menu.findOne();
     if (!menu) {
       return res.status(CONSTANTS.STATUS.NOT_FOUND).json(
@@ -279,6 +282,9 @@ const addCategory = async (req, res) => {
       categoryData.category_id = uuidv4();
     }
 
+    // Ensure database connection before querying
+    await ensureConnection();
+    
     const menu = await Menu.findOne();
     if (!menu) {
       return res.status(CONSTANTS.STATUS.NOT_FOUND).json(
@@ -336,6 +342,9 @@ const updateMenu = async (req, res) => {
       });
     });
 
+    // Ensure database connection before querying
+    await ensureConnection();
+    
     const menu = await Menu.findOne();
     if (!menu) {
       return res.status(CONSTANTS.STATUS.NOT_FOUND).json(
