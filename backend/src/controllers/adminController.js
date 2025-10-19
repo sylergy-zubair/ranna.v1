@@ -3,10 +3,82 @@ const CONSTANTS = require('../utils/constants');
 const { formatResponse, sanitizeMongoResponse } = require('../utils/helpers');
 const cacheService = require('../services/cacheService');
 const { v4: uuidv4 } = require('uuid');
+const mongoose = require('mongoose');
+
+// Ensure database connection before making queries
+const ensureConnection = async () => {
+  const isVercel = process.env.VERCEL === '1';
+  
+  // If already connected, return immediately
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
+  
+  // If connecting, wait for it to complete
+  if (mongoose.connection.readyState === 2) {
+    const timeoutDuration = isVercel ? 20000 : 15000;
+    await new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        reject(new Error('Connection timeout - waiting for MongoDB connection'));
+      }, timeoutDuration);
+      
+      // Remove any existing listeners to avoid duplicates
+      mongoose.connection.removeAllListeners('connected');
+      mongoose.connection.removeAllListeners('error');
+      
+      mongoose.connection.once('connected', () => {
+        clearTimeout(timeout);
+        resolve();
+      });
+      
+      mongoose.connection.once('error', (err) => {
+        clearTimeout(timeout);
+        reject(err);
+      });
+    });
+    return;
+  }
+  
+  // If disconnected or uninitialized, establish connection
+  const connectDB = require('../config/database');
+  await connectDB();
+  
+  // Double-check that we're actually connected before proceeding
+  if (mongoose.connection.readyState !== 1) {
+    await new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        reject(new Error('Connection not ready after connectDB - readyState: ' + mongoose.connection.readyState));
+      }, isVercel ? 10000 : 5000);
+      
+      mongoose.connection.once('connected', () => {
+        clearTimeout(timeout);
+        resolve();
+      });
+      
+      mongoose.connection.once('error', (err) => {
+        clearTimeout(timeout);
+        reject(err);
+      });
+    });
+  }
+  
+  // Final check - ensure we're actually connected
+  if (mongoose.connection.readyState !== 1) {
+    throw new Error(`MongoDB connection not ready. ReadyState: ${mongoose.connection.readyState}`);
+  }
+};
 
 // Get full menu (admin version with more details)
 const getMenu = async (req, res) => {
   try {
+    // Ensure database connection before querying
+    await ensureConnection();
+    
+    // Final verification before query
+    if (mongoose.connection.readyState !== 1) {
+      throw new Error(`Cannot query database: MongoDB connection not ready (readyState: ${mongoose.connection.readyState})`);
+    }
+    
     const menu = await Menu.findOne().lean();
     if (!menu) {
       return res.status(CONSTANTS.STATUS.NOT_FOUND).json(
@@ -48,6 +120,9 @@ const addDish = async (req, res) => {
       option_id: option.option_id || uuidv4()
     }));
 
+    // Ensure database connection before querying
+    await ensureConnection();
+    
     const menu = await Menu.findOne();
     if (!menu) {
       return res.status(CONSTANTS.STATUS.NOT_FOUND).json(
@@ -91,6 +166,9 @@ const updateDish = async (req, res) => {
       );
     }
 
+    // Ensure database connection before querying
+    await ensureConnection();
+    
     const menu = await Menu.findOne();
     if (!menu) {
       return res.status(CONSTANTS.STATUS.NOT_FOUND).json(
