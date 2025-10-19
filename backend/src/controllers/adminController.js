@@ -283,6 +283,44 @@ const updateMenu = async (req, res) => {
   }
 };
 
+// Admin login
+const login = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    
+    if (!username || !password) {
+      return res.status(CONSTANTS.STATUS.BAD_REQUEST).json(
+        formatResponse(false, null, 'Username and password are required')
+      );
+    }
+
+    // Simple hardcoded credentials (for development)
+    // In production, you should hash passwords and store in database
+    const validCredentials = {
+      username: process.env.ADMIN_USERNAME || 'admin',
+      password: process.env.ADMIN_PASSWORD || 'admin123'
+    };
+
+    if (username === validCredentials.username && password === validCredentials.password) {
+      // Simple token (in production, use proper JWT)
+      const token = process.env.ADMIN_TOKEN || 'simple-admin-token';
+      
+      res.status(CONSTANTS.STATUS.SUCCESS).json(
+        formatResponse(true, { token }, 'Login successful')
+      );
+    } else {
+      res.status(CONSTANTS.STATUS.UNAUTHORIZED).json(
+        formatResponse(false, null, 'Invalid credentials')
+      );
+    }
+  } catch (error) {
+    console.error('Admin login error:', error);
+    res.status(CONSTANTS.STATUS.INTERNAL_ERROR).json(
+      formatResponse(false, null, 'Login failed', error.message)
+    );
+  }
+};
+
 // Clear cache (admin utility)
 const clearCache = async (req, res) => {
   try {
@@ -305,5 +343,6 @@ module.exports = {
   deleteDish,
   addCategory,
   updateMenu,
-  clearCache
+  clearCache,
+  login
 };

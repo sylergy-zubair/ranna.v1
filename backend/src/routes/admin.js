@@ -7,9 +7,17 @@ const {
   deleteDish,
   addCategory,
   updateMenu,
-  clearCache
+  clearCache,
+  login
 } = require('../controllers/adminController');
 const { validateBody, validateParams, addDishSchema, updateDishSchema, addCategorySchema, updateMenuSchema, dishIdsSchema } = require('../utils/adminValidators');
+const { authenticateAdmin } = require('../middleware/auth');
+
+// Public login route (not protected)
+router.post('/login', login);
+
+// Protect all other admin routes
+router.use(authenticateAdmin);
 
 // Admin menu routes
 router.get('/menu', getMenu);
