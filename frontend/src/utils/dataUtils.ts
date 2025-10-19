@@ -1,9 +1,5 @@
 import { CuisineData, Dish, FilterState, Category } from '@/types';
-
-// API configuration
-const API_BASE = process.env.NODE_ENV === 'production' 
-  ? '/api/v1' 
-  : 'http://localhost:5000/api/v1';
+import { API_BASE } from '@/config/api';
 
 // Load cuisine data from backend API
 export async function loadCuisineData(): Promise<CuisineData> {
@@ -43,10 +39,10 @@ export async function loadCuisineData(): Promise<CuisineData> {
     const errorWithName = error as Error & { name?: string };
     if (errorWithName.name === 'AbortError') {
       console.error('Request timeout - backend server may not be running');
-      throw new Error('Request timeout: Backend server may not be running. Please check if the server is started on port 5000.');
+      throw new Error('Request timeout: Backend server may not be responding. Please try again later.');
     } else if (errorWithName.name === 'TypeError' && err.message?.includes('Failed to fetch')) {
       console.error('Network error:', err.message);
-      throw new Error('Cannot connect to backend server. Please ensure the backend is running on http://localhost:5000');
+      throw new Error('Cannot connect to backend server. Please check your internet connection and try again.');
     }
     console.error('Error loading cuisine data from API:', error);
     throw error;
@@ -127,10 +123,10 @@ export async function loadFilterOptions() {
     const errorWithName = error as Error & { name?: string };
     if (errorWithName.name === 'AbortError') {
       console.error('Filter options request timeout - backend server may not be running');
-      throw new Error('Request timeout: Backend server may not be running. Please check if the server is started on port 5000.');
+      throw new Error('Request timeout: Backend server may not be responding. Please try again later.');
     } else if (errorWithName.name === 'TypeError' && err.message?.includes('Failed to fetch')) {
       console.error('Filter options network error:', err.message);
-      throw new Error('Cannot connect to backend server. Please ensure the backend is running on http://localhost:5000');
+      throw new Error('Cannot connect to backend server. Please check your internet connection and try again.');
     }
     console.error('Error loading filter options from API:', error);
     throw error;

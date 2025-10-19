@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { API_BASE } from '@/config/api';
 
 export default function AdminLogin() {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -15,10 +16,6 @@ export default function AdminLogin() {
     setError('');
 
     try {
-      const API_BASE = process.env.NODE_ENV === 'production' 
-        ? '/api/v1' 
-        : 'http://localhost:5000/api/v1';
-
       const response = await fetch(`${API_BASE}/admin/login`, {
         method: 'POST',
         headers: { 

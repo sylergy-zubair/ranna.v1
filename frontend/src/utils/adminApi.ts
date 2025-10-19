@@ -6,10 +6,7 @@ import {
   CreateCategoryRequest, 
   UpdateMenuRequest 
 } from '@/types';
-
-const API_BASE = process.env.NODE_ENV === 'production' 
-  ? '/api/v1' 
-  : 'http://localhost:5000/api/v1';
+import { API_BASE } from '@/config/api';
 
 // Helper function for API calls
 async function apiCall<T>(endpoint: string, options: RequestInit = {}): Promise<AdminApiResponse<T>> {

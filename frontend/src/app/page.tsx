@@ -59,8 +59,7 @@ export default function Home() {
             error.message?.includes('Failed to fetch') ||
             errorWithName.name === 'TypeError') {
           setError(
-            'Cannot connect to backend server. Please ensure the backend is running on port 5000. ' +
-            'You can start it with: cd backend && npm run dev'
+            'Cannot connect to backend server. Please check your internet connection and try again later.'
           );
         } else if (error.message?.includes('Request timeout')) {
           setError('Backend server is not responding. Please check if it\'s running and try again.');
