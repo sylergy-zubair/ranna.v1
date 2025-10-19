@@ -4,6 +4,37 @@ const { generateCacheKey, formatResponse, sanitizeMongoResponse } = require('../
 const CONSTANTS = require('../utils/constants');
 const cacheService = require('./cacheService');
 
+// Ensure database connection before making queries
+const ensureConnection = async () => {
+  const mongoose = require('mongoose');
+  
+  if (mongoose.connection.readyState === 1) {
+    return; // Already connected
+  }
+  
+  if (mongoose.connection.readyState === 2) {
+    // Connecting, wait for it
+    await new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => reject(new Error('Connection timeout')), 10000);
+      
+      mongoose.connection.once('connected', () => {
+        clearTimeout(timeout);
+        resolve();
+      });
+      
+      mongoose.connection.once('error', (err) => {
+        clearTimeout(timeout);
+        reject(err);
+      });
+    });
+    return;
+  }
+  
+  // Not connected, try to connect
+  const connectDB = require('../config/database');
+  await connectDB();
+};
+
 const getFullMenu = async () => {
   try {
     // Check cache first
@@ -13,6 +44,9 @@ const getFullMenu = async () => {
       return formatResponse(true, cached, 'Menu retrieved from cache');
     }
 
+    // Ensure database connection before querying
+    await ensureConnection();
+    
     // Fetch from database
     const menu = await Menu.findOne().lean();
     if (!menu) {

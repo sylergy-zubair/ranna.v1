@@ -14,7 +14,17 @@ const app = express();
 app.set('trust proxy', 1);
 
 // Initialize database connections
-connectDB();
+// For Vercel/serverless, we need to handle connections differently
+const isVercel = process.env.VERCEL === '1';
+
+if (isVercel) {
+  // In serverless, connections are handled per request
+  // Just initialize without awaiting to prevent blocking
+  connectDB().catch(err => console.error('Database connection failed:', err));
+} else {
+  // In regular server mode, await connections
+  connectDB();
+}
 connectRedis();
 
 // Security middleware

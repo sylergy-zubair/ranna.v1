@@ -1,7 +1,13 @@
 const mongoose = require('mongoose');
 
-// Disable mongoose buffering globally for better error handling
-mongoose.set('bufferCommands', false);
+// Configure mongoose for serverless compatibility
+// In production on Vercel, we need to handle connection pooling better
+const isVercel = process.env.VERCEL === '1';
+
+if (!isVercel) {
+  mongoose.set('bufferCommands', false);
+  mongoose.set('bufferMaxEntries', 0);
+}
 
 const connectDB = async (retries = 5, delay = 3000) => {
   try {
