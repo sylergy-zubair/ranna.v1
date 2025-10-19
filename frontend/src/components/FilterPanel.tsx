@@ -1,7 +1,6 @@
 import { FilterPanelProps } from '@/types';
 import SpiceLevelFilter from './SpiceLevelFilter';
 import DishTypeFilter from './DishTypeFilter';
-import CategoryFilter from './CategoryFilter';
 import AllergenFilter from './AllergenFilter';
 import CalorieRangeFilter from './CalorieRangeFilter';
 
@@ -32,12 +31,6 @@ export default function FilterPanel({
         <SpiceLevelFilter
           value={filters.spiceLevel}
           onChange={(value) => onFiltersChange({ ...filters, spiceLevel: value })}
-        />
-
-        <CategoryFilter
-          value={filters.categories}
-          options={availableOptions.categories}
-          onChange={(value) => onFiltersChange({ ...filters, categories: value })}
         />
 
         <DishTypeFilter

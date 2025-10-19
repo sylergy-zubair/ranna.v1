@@ -12,6 +12,7 @@ import {
 import { useFilters } from '@/hooks/useFilters';
 import DishCard from '@/components/DishCard';
 import FilterPanel from '@/components/FilterPanel';
+import CategoryButtonFilter from '@/components/CategoryButtonFilter';
 import MoreInfoModal from '@/components/MoreInfoModal';
 
 export default function Home() {
@@ -168,12 +169,19 @@ export default function Home() {
           <div className="lg:col-span-3">
             <div className="mb-6">
               <h2 className="text-2xl font-bold text-gray-800 mb-2">Our Menu</h2>
-              <p className="text-gray-600">
+              <p className="text-gray-600 mb-4">
                 Showing {filteredDishes.length} dish{filteredDishes.length !== 1 ? 'es' : ''}
                 {Object.values(filters).some(filter => 
                   Array.isArray(filter) ? filter.length > 0 : filter !== null
                 ) && ' (filtered)'}
               </p>
+              
+              {/* Category Filter Buttons */}
+              <CategoryButtonFilter
+                value={filters.categories}
+                options={availableOptions.categories}
+                onChange={(value) => updateFilters({ ...filters, categories: value })}
+              />
             </div>
 
             {filteredDishes.length === 0 ? (
