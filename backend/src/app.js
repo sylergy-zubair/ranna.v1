@@ -27,14 +27,40 @@ if (isVercel) {
 }
 connectRedis();
 
-// Security middleware
-app.use(helmet());
+// Security middleware - configure to not interfere with CORS
+app.use(helmet({
+  crossOriginEmbedderPolicy: false,
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
 
 // Compression middleware
 app.use(compression());
 
 // CORS middleware (must be before rate limiting)
 app.use(corsMiddleware);
+
+// Explicit OPTIONS handler for preflight requests
+app.options('*', (req, res) => {
+  console.log('Handling preflight OPTIONS request for:', req.path);
+  const origin = req.headers.origin;
+  const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    'https://ranna-v1.vercel.app',
+    'http://localhost:3000',
+    'http://localhost:3001'
+  ].filter(Boolean);
+
+  // Set CORS headers
+  if (!origin || allowedOrigins.includes(origin) || (origin && origin.includes('.vercel.app'))) {
+    res.setHeader('Access-Control-Allow-Origin', origin || '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Max-Age', '86400');
+  }
+  
+  res.status(200).end();
+});
 
 // Rate limiting (skip OPTIONS requests)
 app.use(rateLimiter);
