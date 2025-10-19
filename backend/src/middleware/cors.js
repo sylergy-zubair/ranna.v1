@@ -4,7 +4,7 @@ const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = [
       process.env.FRONTEND_URL,
-      'http://localhost:3000',
+      'https://ranna-v1.vercel.app',
       'http://localhost:3001'
     ];
 
