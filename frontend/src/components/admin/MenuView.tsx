@@ -84,7 +84,7 @@ export default function MenuView({ menu }: MenuViewProps) {
                         <div className="space-y-1">
                           <div className="text-xs font-medium text-gray-500">Options:</div>
                           <div className="flex flex-wrap gap-1">
-                            {dish.options.slice(0, 3).map((option, index) => (
+                            {dish.options.slice(0, 3).map((option) => (
                               <span
                                 key={option.option_id}
                                 className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded"

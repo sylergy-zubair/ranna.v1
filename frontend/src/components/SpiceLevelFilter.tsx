@@ -14,7 +14,7 @@ export default function SpiceLevelFilter({ value, onChange }: SpiceLevelFilterPr
     <div>
       <h3 className="text-sm font-medium text-gray-700 mb-3">Spice Level</h3>
       <div className="space-y-2">
-        {spiceLevels.map(({ level, label, chilis }) => (
+        {spiceLevels.map(({ level, chilis }) => (
           <label key={level} className="flex items-center cursor-pointer">
             <input
               type="radio"

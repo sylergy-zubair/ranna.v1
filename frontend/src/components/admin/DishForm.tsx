@@ -56,17 +56,22 @@ export default function DishForm({
 
   const [options, setOptions] = useState<Option[]>(dish?.options || []);
 
-  const [showOptionForm, setShowOptionForm] = useState(false);
-  const [editingOption, setEditingOption] = useState<Option | null>(null);
-
   useEffect(() => {
     if (dish) {
       setFormData({
-        dish_title: dish.dish_title,
-        spice_level: dish.spice_level,
-        image_url: dish.image_url,
+        dish_title: dish.dish_title || '',
+        spice_level: dish.spice_level || 1,
+        image_url: dish.image_url || '',
       });
-      setOptions(dish.options);
+      setOptions(dish.options || []);
+    } else {
+      // Reset to empty state when creating new dish
+      setFormData({
+        dish_title: '',
+        spice_level: 1,
+        image_url: '',
+      });
+      setOptions([]);
     }
   }, [dish]);
 
@@ -86,7 +91,7 @@ export default function DishForm({
     }
   };
 
-  const handleOptionChange = (optionId: string, field: string, value: any) => {
+  const handleOptionChange = (optionId: string, field: string, value: string | number | string[] | Nutrition) => {
     setOptions(prev => prev.map(option => 
       option.option_id === optionId 
         ? { ...option, [field]: value }
@@ -164,7 +169,7 @@ export default function DishForm({
                 type="text"
                 id="dish_title"
                 name="dish_title"
-                value={formData.dish_title}
+                value={formData.dish_title || ''}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
                 placeholder="e.g., Chicken Biryani"
@@ -180,7 +185,7 @@ export default function DishForm({
               <select
                 id="spice_level"
                 name="spice_level"
-                value={formData.spice_level}
+                value={formData.spice_level || 1}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
                 required
@@ -202,7 +207,7 @@ export default function DishForm({
               type="url"
               id="image_url"
               name="image_url"
-              value={formData.image_url}
+              value={formData.image_url || ''}
               onChange={handleChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
               placeholder="https://example.com/image.jpg"
@@ -226,7 +231,7 @@ export default function DishForm({
 
             {options.length === 0 ? (
               <div className="text-center py-8 text-gray-500 border-2 border-dashed border-gray-300 rounded-lg">
-                <p>No options yet. Click "Add Option" to get started.</p>
+                <p>No options yet. Click &quot;Add Option&quot; to get started.</p>
               </div>
             ) : (
               <div className="space-y-4">
@@ -291,13 +296,13 @@ export default function DishForm({
 interface OptionFormProps {
   option: Option;
   index: number;
-  onUpdate: (field: string, value: any) => void;
+  onUpdate: (field: string, value: string | number | string[] | Nutrition) => void;
   onRemove: () => void;
   disabled: boolean;
 }
 
 function OptionForm({ option, index, onUpdate, onRemove, disabled }: OptionFormProps) {
-  const handleChange = (field: string, value: any) => {
+  const handleChange = (field: string, value: string | number | string[] | Nutrition) => {
     onUpdate(field, value);
   };
 

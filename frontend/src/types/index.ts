@@ -27,7 +27,7 @@ export interface Dish {
   dish_id: string;
   dish_title: string;
   spice_level: number;
-  image_url: string;
+  image_url?: string;
   options: Option[];
 }
 
@@ -76,7 +76,7 @@ export interface MoreInfoModalProps {
 }
 
 // Admin types
-export interface AdminApiResponse<T = any> {
+export interface AdminApiResponse<T = unknown> {
   success: boolean;
   data?: T;
   message?: string;
@@ -108,6 +108,7 @@ export interface AdminFormState {
   selectedCategory: string | null;
   selectedDish: string | null;
   isEditing: boolean;
+  isAddingNewCategory: boolean;
   loading: boolean;
   error: string | null;
 }

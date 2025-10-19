@@ -1,15 +1,54 @@
 import { CuisineData, Dish, FilterState, Category } from '@/types';
 
-// Load cuisine data from JSON file
+// API configuration
+const API_BASE = process.env.NODE_ENV === 'production' 
+  ? '/api/v1' 
+  : 'http://localhost:5000/api/v1';
+
+// Load cuisine data from backend API
 export async function loadCuisineData(): Promise<CuisineData> {
   try {
-    const response = await fetch('/data/indian_cuisine.json');
+    const url = `${API_BASE}/menu`;
+    console.log('Fetching menu data from:', url);
+    
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+      },
+      // Add timeout to prevent hanging
+      signal: AbortSignal.timeout(10000), // 10 second timeout
+    });
+    
+    console.log('Response status:', response.status, response.statusText);
+    
     if (!response.ok) {
-      throw new Error('Failed to load cuisine data');
+      const errorText = await response.text();
+      console.error('API Error Response:', errorText);
+      throw new Error(`Failed to load menu data: ${response.status} ${response.statusText} - ${errorText}`);
     }
-    return await response.json();
-  } catch (error) {
-    console.error('Error loading cuisine data:', error);
+    
+    const result = await response.json();
+    console.log('API Response received:', result.success ? 'Success' : 'Failed', result.message);
+    
+    if (!result.success) {
+      throw new Error(result.message || 'Failed to load menu data from server');
+    }
+    
+    // Backend returns data in { success: true, data: CuisineData } format
+    return result.data;
+  } catch (error: unknown) {
+    const err = error as Error;
+    const errorWithName = error as Error & { name?: string };
+    if (errorWithName.name === 'AbortError') {
+      console.error('Request timeout - backend server may not be running');
+      throw new Error('Request timeout: Backend server may not be running. Please check if the server is started on port 5000.');
+    } else if (errorWithName.name === 'TypeError' && err.message?.includes('Failed to fetch')) {
+      console.error('Network error:', err.message);
+      throw new Error('Cannot connect to backend server. Please ensure the backend is running on http://localhost:5000');
+    }
+    console.error('Error loading cuisine data from API:', error);
     throw error;
   }
 }
@@ -25,7 +64,7 @@ export function getDishDescription(dish: Dish): string {
 }
 
 // Process dishes to add computed properties
-export function processDishes(categories: Category[]) {
+export function processDishes(categories: Category[]): (Dish & { description: string; lowestPrice: number; category: string })[] {
   return categories.flatMap(category => 
     category.dishes.map(dish => ({
       ...dish,
@@ -50,7 +89,55 @@ export function getUniqueValues<T>(data: T[], key: keyof T): string[] {
   return Array.from(values).sort();
 }
 
-// Get all available filter options from the data
+// Load filter options from backend API
+export async function loadFilterOptions() {
+  try {
+    const url = `${API_BASE}/menu/filter-options`;
+    console.log('Fetching filter options from:', url);
+    
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+      },
+      // Add timeout to prevent hanging
+      signal: AbortSignal.timeout(10000), // 10 second timeout
+    });
+    
+    console.log('Filter options response status:', response.status, response.statusText);
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Filter options API Error Response:', errorText);
+      throw new Error(`Failed to load filter options: ${response.status} ${response.statusText} - ${errorText}`);
+    }
+    
+    const result = await response.json();
+    console.log('Filter options API Response received:', result.success ? 'Success' : 'Failed', result.message);
+    
+    if (!result.success) {
+      throw new Error(result.message || 'Failed to load filter options from server');
+    }
+    
+    // Backend returns data in { success: true, data: filterOptions } format
+    return result.data;
+  } catch (error: unknown) {
+    const err = error as Error;
+    const errorWithName = error as Error & { name?: string };
+    if (errorWithName.name === 'AbortError') {
+      console.error('Filter options request timeout - backend server may not be running');
+      throw new Error('Request timeout: Backend server may not be running. Please check if the server is started on port 5000.');
+    } else if (errorWithName.name === 'TypeError' && err.message?.includes('Failed to fetch')) {
+      console.error('Filter options network error:', err.message);
+      throw new Error('Cannot connect to backend server. Please ensure the backend is running on http://localhost:5000');
+    }
+    console.error('Error loading filter options from API:', error);
+    throw error;
+  }
+}
+
+// Get all available filter options from the data (fallback function)
 export function getAvailableFilterOptions(categories: Category[]) {
   const allDishes = categories.flatMap(cat => cat.dishes);
   const allOptions = allDishes.flatMap(dish => dish.options);
@@ -64,7 +151,7 @@ export function getAvailableFilterOptions(categories: Category[]) {
 }
 
 // Filter dishes based on selected criteria
-export function filterDishes(dishes: (Dish & { category: string })[], filters: FilterState) {
+export function filterDishes(dishes: (Dish & { category: string; description: string; lowestPrice: number })[], filters: FilterState): (Dish & { category: string; description: string; lowestPrice: number })[] {
   return dishes.filter(dish => {
     // Spice level match (single)
     if (filters.spiceLevel !== null && dish.spice_level !== filters.spiceLevel) {

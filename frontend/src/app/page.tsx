@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { CuisineData, Dish, FilterState } from '@/types';
+import { CuisineData, Dish } from '@/types';
 import { 
   loadCuisineData, 
+  loadFilterOptions,
   processDishes, 
   filterDishes, 
   getAvailableFilterOptions 
@@ -15,6 +16,12 @@ import MoreInfoModal from '@/components/MoreInfoModal';
 
 export default function Home() {
   const [data, setData] = useState<CuisineData | null>(null);
+  const [filterOptions, setFilterOptions] = useState<{
+    dishTypes: string[];
+    categories: string[];
+    allergens: string[];
+    calorieRanges: string[];
+  } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
@@ -27,11 +34,38 @@ export default function Home() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const cuisineData = await loadCuisineData();
+        setError(null);
+        
+        // Load both menu data and filter options from backend
+        const [cuisineData, options] = await Promise.all([
+          loadCuisineData(),
+          loadFilterOptions().catch(err => {
+            console.warn('Failed to load filter options from API, will use fallback:', err);
+            return null;
+          })
+        ]);
+        
         setData(cuisineData);
-      } catch (err) {
-        setError('Failed to load menu data. Please try again later.');
+        setFilterOptions(options);
+      } catch (err: unknown) {
         console.error('Error loading data:', err);
+        
+        const error = err as Error;
+        const errorWithName = err as Error & { name?: string };
+        
+        // Provide more specific error messages based on the error type
+        if (error.message?.includes('Cannot connect to backend server') || 
+            error.message?.includes('Failed to fetch') ||
+            errorWithName.name === 'TypeError') {
+          setError(
+            'Cannot connect to backend server. Please ensure the backend is running on port 5000. ' +
+            'You can start it with: cd backend && npm run dev'
+          );
+        } else if (error.message?.includes('Request timeout')) {
+          setError('Backend server is not responding. Please check if it\'s running and try again.');
+        } else {
+          setError(error.message || 'Failed to load menu data. Please try again later.');
+        }
       } finally {
         setLoading(false);
       }
@@ -50,11 +84,19 @@ export default function Home() {
     return filterDishes(processedDishes, filters);
   }, [processedDishes, filters]);
 
-  // Get available filter options
+  // Get available filter options - prefer API data, fallback to computed
   const availableOptions = useMemo(() => {
+    if (filterOptions) {
+      return {
+        dishTypes: filterOptions.dishTypes || [],
+        categories: filterOptions.categories || [],
+        allergens: filterOptions.allergens || [],
+        calorieRanges: filterOptions.calorieRanges || []
+      };
+    }
     if (!data) return { dishTypes: [], categories: [], allergens: [], calorieRanges: [] };
     return getAvailableFilterOptions(data.categories);
-  }, [data]);
+  }, [filterOptions, data]);
 
   const handleMoreInfo = (dish: Dish) => {
     console.log('More Info clicked for dish:', dish.dish_title);

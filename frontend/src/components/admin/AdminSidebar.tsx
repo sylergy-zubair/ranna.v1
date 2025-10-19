@@ -1,6 +1,7 @@
 'use client';
 
-import { CuisineData, Category, Dish } from '@/types';
+import { CuisineData } from '@/types';
+import { useEffect } from 'react';
 
 interface AdminSidebarProps {
   menu: CuisineData | null;
@@ -19,6 +20,15 @@ export default function AdminSidebar({
   onDishSelect,
   onNewCategory,
 }: AdminSidebarProps) {
+  // Log menu data changes for debugging
+  useEffect(() => {
+    console.log('🔍 AdminSidebar - Menu data updated:', {
+      hasMenu: !!menu,
+      categoriesCount: menu?.categories?.length || 0,
+      categories: menu?.categories?.map(cat => cat.category) || []
+    });
+  }, [menu]);
+
   if (!menu) {
     return (
       <div className="p-4">

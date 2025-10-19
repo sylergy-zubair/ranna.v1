@@ -14,9 +14,22 @@ const API_BASE = process.env.NODE_ENV === 'production'
 // Helper function for API calls
 async function apiCall<T>(endpoint: string, options: RequestInit = {}): Promise<AdminApiResponse<T>> {
   try {
-    const response = await fetch(`${API_BASE}${endpoint}`, {
+    // Add cache-busting for GET requests to ensure fresh data
+    let url = `${API_BASE}${endpoint}`;
+    if (!options.method || options.method === 'GET') {
+      const separator = endpoint.includes('?') ? '&' : '?';
+      url += `${separator}_t=${Date.now()}`;
+    }
+    
+    // Get auth token from localStorage
+    const token = typeof window !== 'undefined' ? localStorage.getItem('adminToken') : null;
+    
+    const response = await fetch(url, {
       headers: {
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+        ...(token && { 'Authorization': `Bearer ${token}` }),
         ...options.headers,
       },
       ...options,

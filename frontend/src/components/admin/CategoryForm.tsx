@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Category } from '@/types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,6 +10,7 @@ interface CategoryFormProps {
   loading: boolean;
   onSave: (categoryData: Category) => void;
   onNewDish: () => void;
+  onCancel?: () => void;
 }
 
 export default function CategoryForm({
@@ -18,10 +19,18 @@ export default function CategoryForm({
   loading,
   onSave,
   onNewDish,
+  onCancel,
 }: CategoryFormProps) {
   const [formData, setFormData] = useState({
     category: category?.category || '',
   });
+
+  // Reset form data when category prop changes
+  useEffect(() => {
+    setFormData({
+      category: category?.category || '',
+    });
+  }, [category]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -92,6 +101,17 @@ export default function CategoryForm({
             </div>
             
             <div className="flex gap-3">
+              {onCancel && (
+                <button
+                  type="button"
+                  onClick={onCancel}
+                  className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 disabled:opacity-50"
+                  disabled={loading}
+                >
+                  Cancel
+                </button>
+              )}
+              
               {isEditing && category && (
                 <button
                   type="button"

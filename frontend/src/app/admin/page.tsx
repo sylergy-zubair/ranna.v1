@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { CuisineData, Category, Dish, AdminMenuState, AdminFormState } from '@/types';
+import { useRouter } from 'next/navigation';
+import { Category, Dish, AdminMenuState, AdminFormState } from '@/types';
 import { adminApi } from '@/utils/adminApi';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 import CategoryForm from '@/components/admin/CategoryForm';
@@ -9,6 +10,10 @@ import DishForm from '@/components/admin/DishForm';
 import MenuView from '@/components/admin/MenuView';
 
 export default function AdminPage() {
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
+
   const [menuState, setMenuState] = useState<AdminMenuState>({
     menu: null,
     loading: true,
@@ -19,28 +24,46 @@ export default function AdminPage() {
     selectedCategory: null,
     selectedDish: null,
     isEditing: false,
+    isAddingNewCategory: false,
     loading: false,
     error: null,
   });
 
-  // Load menu data on mount
+  // Check authentication on mount
   useEffect(() => {
-    loadMenu();
-  }, []);
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      router.push('/admin/login');
+    } else {
+      setIsAuthenticated(true);
+      setAuthLoading(false);
+    }
+  }, [router]);
+
+  // Load menu data on mount (only if authenticated)
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadMenu();
+    }
+  }, [isAuthenticated]);
 
   const loadMenu = async () => {
     setMenuState(prev => ({ ...prev, loading: true, error: null }));
     
     try {
+      console.log('🔄 Loading menu data...');
       const response = await adminApi.getMenu();
+      console.log('📡 Menu API response:', response);
       
       if (response.success && response.data) {
+        console.log('✅ Menu loaded successfully, categories:', response.data.categories?.length);
         setMenuState({
           menu: response.data,
           loading: false,
           error: null,
         });
       } else {
+        console.error('❌ Menu load failed:', response.error || response.message);
         setMenuState({
           menu: null,
           loading: false,
@@ -48,6 +71,7 @@ export default function AdminPage() {
         });
       }
     } catch (error) {
+      console.error('❌ Menu load error:', error);
       setMenuState({
         menu: null,
         loading: false,
@@ -56,12 +80,18 @@ export default function AdminPage() {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem('adminToken');
+    router.push('/admin/login');
+  };
+
   const handleCategorySelect = (categoryId: string | null) => {
     setFormState(prev => ({
       ...prev,
       selectedCategory: categoryId,
       selectedDish: null,
       isEditing: false,
+      isAddingNewCategory: false,
       error: null,
     }));
   };
@@ -71,6 +101,7 @@ export default function AdminPage() {
       ...prev,
       selectedDish: dishId,
       isEditing: true,
+      isAddingNewCategory: false,
       error: null,
     }));
   };
@@ -79,6 +110,7 @@ export default function AdminPage() {
     setFormState(prev => ({ ...prev, loading: true, error: null }));
 
     try {
+      console.log('💾 Saving category:', categoryData);
       let response;
       if (formState.isEditing && formState.selectedCategory) {
         // Update existing category (implement if needed)
@@ -88,15 +120,20 @@ export default function AdminPage() {
         response = await adminApi.addCategory({ categoryData });
       }
 
+      console.log('📡 Category save response:', response);
+
       if (response.success) {
+        console.log('✅ Category saved successfully, refreshing menu...');
         await loadMenu(); // Refresh menu
         setFormState(prev => ({
           ...prev,
           loading: false,
           isEditing: false,
+          isAddingNewCategory: false,
           selectedCategory: null,
         }));
       } else {
+        console.error('❌ Category save failed:', response.error || response.message);
         setFormState(prev => ({
           ...prev,
           loading: false,
@@ -104,6 +141,7 @@ export default function AdminPage() {
         }));
       }
     } catch (error) {
+      console.error('❌ Category save error:', error);
       setFormState(prev => ({
         ...prev,
         loading: false,
@@ -198,6 +236,21 @@ export default function AdminPage() {
     dish => dish.dish_id === formState.selectedDish
   );
 
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return null; // Will redirect to login
+  }
+
   if (menuState.loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -255,6 +308,12 @@ export default function AdminPage() {
               >
                 Clear Cache
               </button>
+              <button
+                onClick={logout}
+                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+              >
+                Logout
+              </button>
             </div>
           </div>
         </div>
@@ -273,7 +332,8 @@ export default function AdminPage() {
               ...prev, 
               selectedCategory: null, 
               selectedDish: null, 
-              isEditing: false 
+              isEditing: false,
+              isAddingNewCategory: true 
             }))}
           />
         </div>
@@ -286,7 +346,7 @@ export default function AdminPage() {
             </div>
           )}
 
-          {!formState.selectedCategory && !formState.selectedDish && (
+          {!formState.selectedCategory && !formState.selectedDish && !formState.isAddingNewCategory && (
             <div className="text-center py-12">
               <div className="text-gray-400 text-6xl mb-4">🍽️</div>
               <h2 className="text-xl font-semibold text-gray-900 mb-2">Welcome to Menu Management</h2>
@@ -297,16 +357,24 @@ export default function AdminPage() {
             </div>
           )}
 
-          {formState.selectedCategory && !formState.selectedDish && (
+          {((formState.selectedCategory && !formState.selectedDish) || formState.isAddingNewCategory) && (
             <CategoryForm
               category={selectedCategoryData || null}
-              isEditing={!!selectedCategoryData}
+              isEditing={!!selectedCategoryData && !formState.isAddingNewCategory}
               loading={formState.loading}
               onSave={handleCategorySave}
               onNewDish={() => setFormState(prev => ({ 
                 ...prev, 
-                selectedDish: 'new' 
+                selectedDish: 'new',
+                isAddingNewCategory: false
               }))}
+              onCancel={formState.isAddingNewCategory ? () => setFormState(prev => ({
+                ...prev,
+                isAddingNewCategory: false,
+                selectedCategory: null,
+                selectedDish: null,
+                error: null
+              })) : undefined}
             />
           )}
 
