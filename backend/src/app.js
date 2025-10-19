@@ -39,8 +39,8 @@ app.use(compression());
 // CORS middleware (must be before rate limiting)
 app.use(corsMiddleware);
 
-// Explicit OPTIONS handler for preflight requests
-app.options('*', (req, res) => {
+// Handle preflight OPTIONS requests for API routes specifically
+app.options('/api/*', (req, res) => {
   console.log('Handling preflight OPTIONS request for:', req.path);
   const origin = req.headers.origin;
   const allowedOrigins = [
@@ -60,6 +60,30 @@ app.options('*', (req, res) => {
   }
   
   res.status(200).end();
+});
+
+// Handle other OPTIONS requests via middleware
+app.use((req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    console.log('Handling OPTIONS request for:', req.path);
+    const origin = req.headers.origin;
+    const allowedOrigins = [
+      process.env.FRONTEND_URL,
+      'https://ranna-v1.vercel.app',
+      'http://localhost:3000',
+      'http://localhost:3001'
+    ].filter(Boolean);
+
+    if (!origin || allowedOrigins.includes(origin) || (origin && origin.includes('.vercel.app'))) {
+      res.setHeader('Access-Control-Allow-Origin', origin || '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+      res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma');
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+      res.setHeader('Access-Control-Max-Age', '86400');
+      return res.status(200).end();
+    }
+  }
+  next();
 });
 
 // Rate limiting (skip OPTIONS requests)

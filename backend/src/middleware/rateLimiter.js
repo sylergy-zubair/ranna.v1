@@ -11,10 +11,8 @@ const limiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
-  // Custom key generator for proper IP detection behind proxy
-  keyGenerator: (req) => {
-    return req.ip || req.connection.remoteAddress || req.socket.remoteAddress;
-  },
+  // Use default keyGenerator to avoid IPv6 validation issues
+  // The default keyGenerator handles IPv6 properly
   // Skip successful requests from rate limiting count (optional)
   skipSuccessfulRequests: false,
   // Skip failed requests from rate limiting count (optional)

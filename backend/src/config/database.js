@@ -23,9 +23,8 @@ const connectDB = async (retries = 5, delay = 3000) => {
       ssl: true,
     };
 
-    // Set buffer options globally for mongoose (not in connection options)
-    mongoose.set('bufferCommands', false);
-    mongoose.set('bufferMaxEntries', 0);
+    // Buffer options are set globally above, only in non-Vercel environments
+    // Don't set them again here to avoid the SetOptionError
 
     // Ensure proper SSL handling in connection string for Vercel
     let mongoUri = process.env.MONGODB_URI;
@@ -40,8 +39,8 @@ const connectDB = async (retries = 5, delay = 3000) => {
       serverSelectionTimeoutMS: options.serverSelectionTimeoutMS,
       connectTimeoutMS: options.connectTimeoutMS,
       ssl: options.ssl,
-      bufferCommands: 'set globally',
-      bufferMaxEntries: 'set globally'
+      bufferCommands: !isVercel ? 'false (global)' : 'default',
+      bufferMaxEntries: !isVercel ? '0 (global)' : 'default'
     });
 
     const conn = await mongoose.connect(mongoUri, options);
