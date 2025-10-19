@@ -11,16 +11,37 @@ if (!isVercel) {
 
 const connectDB = async (retries = 5, delay = 3000) => {
   try {
-    // Enhanced connection options for better reliability
+    // Enhanced connection options for better reliability and SSL compatibility
     const options = {
       maxPoolSize: 10, // Maintain up to 10 socket connections
-      serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
+      serverSelectionTimeoutMS: isVercel ? 10000 : 5000, // Longer timeout for Vercel
       socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+      connectTimeoutMS: isVercel ? 15000 : 10000, // Longer connection timeout for Vercel
       retryWrites: true,
       retryReads: true,
+      // SSL/TLS configuration for Vercel compatibility
+      ssl: true,
+      bufferCommands: false,
+      bufferMaxEntries: 0,
     };
 
-    const conn = await mongoose.connect(process.env.MONGODB_URI, options);
+    // Ensure proper SSL handling in connection string for Vercel
+    let mongoUri = process.env.MONGODB_URI;
+    
+    // Add SSL parameters if in Vercel/production and they're not already present
+    if (isVercel && mongoUri && !mongoUri.includes('ssl=')) {
+      const separator = mongoUri.includes('?') ? '&' : '?';
+      mongoUri += `${separator}ssl=true&tlsAllowInvalidCertificates=false`;
+    }
+
+    console.log('Connecting to MongoDB with options:', {
+      serverSelectionTimeoutMS: options.serverSelectionTimeoutMS,
+      connectTimeoutMS: options.connectTimeoutMS,
+      ssl: options.ssl,
+      bufferCommands: options.bufferCommands
+    });
+
+    const conn = await mongoose.connect(mongoUri, options);
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
     console.log(`📊 Database: ${conn.connection.name}`);
   } catch (error) {

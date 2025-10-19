@@ -7,15 +7,17 @@ const cacheService = require('./cacheService');
 // Ensure database connection before making queries
 const ensureConnection = async () => {
   const mongoose = require('mongoose');
+  const isVercel = process.env.VERCEL === '1';
   
   if (mongoose.connection.readyState === 1) {
     return; // Already connected
   }
   
   if (mongoose.connection.readyState === 2) {
-    // Connecting, wait for it
+    // Connecting, wait for it with longer timeout for Vercel
+    const timeoutDuration = isVercel ? 15000 : 10000;
     await new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => reject(new Error('Connection timeout')), 10000);
+      const timeout = setTimeout(() => reject(new Error('Connection timeout')), timeoutDuration);
       
       mongoose.connection.once('connected', () => {
         clearTimeout(timeout);
