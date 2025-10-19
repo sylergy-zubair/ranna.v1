@@ -4,8 +4,21 @@ let client;
 
 const connectRedis = async () => {
   try {
+    // Skip Redis in production if no REDIS_URL is provided
+    if (process.env.NODE_ENV === 'production' && !process.env.REDIS_URL) {
+      console.log('Redis disabled in production - no REDIS_URL provided');
+      return null;
+    }
+
+    // Skip Redis if URL is localhost and we're in production
+    const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
+    if (process.env.NODE_ENV === 'production' && redisUrl.includes('localhost')) {
+      console.log('Redis disabled in production - localhost URL detected');
+      return null;
+    }
+
     client = redis.createClient({
-      url: process.env.REDIS_URL || 'redis://localhost:6379'
+      url: redisUrl
     });
 
     client.on('error', (err) => {

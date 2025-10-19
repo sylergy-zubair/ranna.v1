@@ -10,6 +10,9 @@ const { errorHandler, notFound } = require('./middleware/errorHandler');
 
 const app = express();
 
+// Trust proxy for Vercel deployment (fixes rate limiting issues)
+app.set('trust proxy', 1);
+
 // Initialize database connections
 connectDB();
 connectRedis();

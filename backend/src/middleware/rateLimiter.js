@@ -11,6 +11,14 @@ const limiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  // Custom key generator for proper IP detection behind proxy
+  keyGenerator: (req) => {
+    return req.ip || req.connection.remoteAddress || req.socket.remoteAddress;
+  },
+  // Skip successful requests from rate limiting count (optional)
+  skipSuccessfulRequests: false,
+  // Skip failed requests from rate limiting count (optional)
+  skipFailedRequests: false,
 });
 
 module.exports = limiter;
