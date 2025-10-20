@@ -1,215 +1,100 @@
-'use client';
-
-import { useState, useEffect, useMemo } from 'react';
-import { CuisineData, Dish } from '@/types';
-import { 
-  loadCuisineData, 
-  loadFilterOptions,
-  processDishes, 
-  filterDishes, 
-  getAvailableFilterOptions 
-} from '@/utils/dataUtils';
-import { useFilters } from '@/hooks/useFilters';
-import DishCard from '@/components/DishCard';
-import FilterPanel from '@/components/FilterPanel';
-import CategoryButtonFilter from '@/components/CategoryButtonFilter';
-import MoreInfoModal from '@/components/MoreInfoModal';
+import Link from 'next/link';
 
 export default function Home() {
-  const [data, setData] = useState<CuisineData | null>(null);
-  const [filterOptions, setFilterOptions] = useState<{
-    dishTypes: string[];
-    categories: string[];
-    allergens: string[];
-    calorieRanges: string[];
-  } | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  const { filters, updateFilters } = useFilters();
-
-  // Load data on component mount
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        
-        // Load both menu data and filter options from backend
-        const [cuisineData, options] = await Promise.all([
-          loadCuisineData(),
-          loadFilterOptions().catch(err => {
-            console.warn('Failed to load filter options from API, will use fallback:', err);
-            return null;
-          })
-        ]);
-        
-        setData(cuisineData);
-        setFilterOptions(options);
-      } catch (err: unknown) {
-        console.error('Error loading data:', err);
-        
-        const error = err as Error;
-        const errorWithName = err as Error & { name?: string };
-        
-        // Provide more specific error messages based on the error type
-        if (error.message?.includes('Cannot connect to backend server') || 
-            error.message?.includes('Failed to fetch') ||
-            errorWithName.name === 'TypeError') {
-          setError(
-            'Cannot connect to backend server. Please check your internet connection and try again later.'
-          );
-        } else if (error.message?.includes('Request timeout')) {
-          setError('Backend server is not responding. Please check if it\'s running and try again.');
-        } else {
-          setError(error.message || 'Failed to load menu data. Please try again later.');
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  // Process and filter dishes
-  const processedDishes = useMemo(() => {
-    if (!data) return [];
-    return processDishes(data.categories);
-  }, [data]);
-
-  const filteredDishes = useMemo(() => {
-    return filterDishes(processedDishes, filters);
-  }, [processedDishes, filters]);
-
-  // Get available filter options - prefer API data, fallback to computed
-  const availableOptions = useMemo(() => {
-    if (filterOptions) {
-      return {
-        dishTypes: filterOptions.dishTypes || [],
-        categories: filterOptions.categories || [],
-        allergens: filterOptions.allergens || [],
-        calorieRanges: filterOptions.calorieRanges || []
-      };
-    }
-    if (!data) return { dishTypes: [], categories: [], allergens: [], calorieRanges: [] };
-    return getAvailableFilterOptions(data.categories);
-  }, [filterOptions, data]);
-
-  const handleMoreInfo = (dish: Dish) => {
-    console.log('More Info clicked for dish:', dish.dish_title);
-    setSelectedDish(dish);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedDish(null);
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading menu...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-red-500 text-6xl mb-4">⚠️</div>
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">Oops!</h1>
-          <p className="text-gray-600">{error}</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex justify-between items-center">
-            <div className="text-center flex-1">
-              <h1 className="text-3xl font-bold text-gray-900">Ranna</h1>
-              <p className="text-gray-600 mt-2">Authentic Indian Cuisine</p>
-            </div>
-            <a
-              href="/admin"
-              className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition-colors"
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-orange-600 to-red-600 text-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">Welcome to Ranna</h1>
+          <p className="text-xl md:text-2xl mb-8 text-orange-100">Authentic Indian Cuisine</p>
+          <p className="text-lg mb-10 max-w-2xl mx-auto">
+            Experience the rich flavors and aromatic spices of traditional Indian cooking with our carefully crafted menu.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/menu"
+              className="px-8 py-3 bg-white text-orange-600 rounded-lg font-semibold hover:bg-orange-50 transition-colors"
             >
-              Admin Panel
-            </a>
+              View Menu
+            </Link>
+            <Link
+              href="/order"
+              className="px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition-colors"
+            >
+              Order Now
+            </Link>
           </div>
         </div>
-      </header>
+      </section>
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Filter Panel */}
-          <div className="lg:col-span-1">
-            <FilterPanel
-              filters={filters}
-              onFiltersChange={updateFilters}
-              availableOptions={availableOptions}
-            />
+      {/* Features Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose Ranna?</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              We bring you the authentic taste of India with fresh ingredients and traditional recipes.
+            </p>
           </div>
-
-          {/* Dishes Grid */}
-          <div className="lg:col-span-3">
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Our Menu</h2>
-              <p className="text-gray-600 mb-4">
-                Showing {filteredDishes.length} dish{filteredDishes.length !== 1 ? 'es' : ''}
-                {Object.values(filters).some(filter => 
-                  Array.isArray(filter) ? filter.length > 0 : filter !== null
-                ) && ' (filtered)'}
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">🍛</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Authentic Recipes</h3>
+              <p className="text-gray-600">
+                Traditional recipes passed down through generations, cooked with love and passion.
               </p>
-              
-              {/* Category Filter Buttons */}
-              <CategoryButtonFilter
-                value={filters.categories}
-                options={availableOptions.categories}
-                onChange={(value) => updateFilters({ ...filters, categories: value })}
-              />
             </div>
-
-            {filteredDishes.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="text-gray-400 text-6xl mb-4">🍽️</div>
-                <h3 className="text-xl font-semibold text-gray-600 mb-2">No dishes found</h3>
-                <p className="text-gray-500">Try adjusting your filters to see more options.</p>
+            
+            <div className="text-center">
+              <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">🌿</span>
               </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredDishes.map((dish, index) => (
-                  <DishCard
-                    key={`${dish.dish_title}-${index}`}
-                    dish={dish}
-                    onMoreInfo={handleMoreInfo}
-                  />
-                ))}
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Fresh Ingredients</h3>
+              <p className="text-gray-600">
+                We use only the freshest ingredients and authentic spices to ensure the best taste.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">🚚</span>
               </div>
-            )}
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Fast Delivery</h3>
+              <p className="text-gray-600">
+                Enjoy your delicious meal delivered fresh and hot to your doorstep.
+              </p>
+            </div>
           </div>
         </div>
-      </main>
+      </section>
 
-      {/* More Info Modal */}
-      <MoreInfoModal
-        dish={selectedDish}
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-      />
+      {/* CTA Section */}
+      <section className="py-16 bg-orange-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Experience Authentic Indian Cuisine?</h2>
+          <p className="text-lg text-gray-600 mb-8">
+            Explore our menu and discover your new favorite dish today.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/menu"
+              className="px-8 py-3 bg-orange-600 text-white rounded-lg font-semibold hover:bg-orange-700 transition-colors"
+            >
+              Explore Menu
+            </Link>
+            <Link
+              href="/contact"
+              className="px-8 py-3 border-2 border-orange-600 text-orange-600 rounded-lg font-semibold hover:bg-orange-600 hover:text-white transition-colors"
+            >
+              Contact Us
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
