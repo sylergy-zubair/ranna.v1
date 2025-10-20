@@ -8,11 +8,17 @@ export default function DishCard({ dish, onMoreInfo }: DishCardProps) {
     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100 overflow-hidden">
       {/* Image */}
       <div className="w-full h-48 bg-gray-200">
-        <img
-          src="/data/img/Chicken Biryani.png"
-          alt={dish.dish_title}
-          className="w-full h-full object-cover"
-        />
+        {dish.image_url ? (
+          <img
+            src={dish.image_url}
+            alt={dish.dish_title}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-gray-400">
+            <span className="text-sm">No image available</span>
+          </div>
+        )}
       </div>
       
       {/* Content */}
