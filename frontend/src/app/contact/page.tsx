@@ -32,7 +32,7 @@ export default function ContactPage() {
       <section className="bg-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Contact Us</h1>
-          <p className="text-xl text-gray-600">We'd love to hear from you</p>
+          <p className="text-xl text-gray-600">We&apos;d love to hear from you</p>
         </div>
       </section>
 

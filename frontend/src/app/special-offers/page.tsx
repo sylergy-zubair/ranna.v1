@@ -108,7 +108,7 @@ export default function SpecialOffersPage() {
         <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-lg shadow-lg p-8 text-center">
           <h2 className="text-2xl font-bold mb-4">Ready to Save?</h2>
           <p className="text-lg mb-6">
-            Don't miss out on these amazing offers. Order now and experience the authentic taste of India.
+            Don&apos;t miss out on these amazing offers. Order now and experience the authentic taste of India.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
