@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
@@ -26,9 +27,14 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <div className="text-2xl font-bold text-orange-600">
-              Ranna
-            </div>
+            <Image
+              src="/img/Ranna_new_LOGO-For-Sign.png"
+              alt="Ranna Logo"
+              width={120}
+              height={40}
+              className="h-10 w-auto"
+              priority
+            />
           </Link>
 
           {/* Navigation Links */}
