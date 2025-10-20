@@ -314,6 +314,115 @@ const addCategory = async (req, res) => {
   }
 };
 
+// Delete category
+const deleteCategory = async (req, res) => {
+  try {
+    const { categoryId } = req.params;
+    
+    if (!categoryId) {
+      return res.status(CONSTANTS.STATUS.BAD_REQUEST).json(
+        formatResponse(false, null, 'Category ID is required')
+      );
+    }
+
+    // Ensure database connection before querying
+    await ensureConnection();
+    
+    const menu = await Menu.findOne();
+    if (!menu) {
+      return res.status(CONSTANTS.STATUS.NOT_FOUND).json(
+        formatResponse(false, null, 'Menu not found')
+      );
+    }
+
+    // Find and remove the category
+    const categoryIndex = menu.categories.findIndex(cat => cat.category_id === categoryId);
+    if (categoryIndex === -1) {
+      return res.status(CONSTANTS.STATUS.NOT_FOUND).json(
+        formatResponse(false, null, 'Category not found')
+      );
+    }
+
+    // Store category name for response
+    const categoryName = menu.categories[categoryIndex].category;
+    
+    // Remove the category
+    menu.categories.splice(categoryIndex, 1);
+    await menu.save();
+
+    // Clear menu cache
+    await cacheService.deletePattern('menu:*');
+
+    res.status(CONSTANTS.STATUS.SUCCESS).json(
+      formatResponse(true, null, `Category "${categoryName}" and all its dishes deleted successfully`)
+    );
+  } catch (error) {
+    console.error('Admin deleteCategory error:', error);
+    res.status(CONSTANTS.STATUS.INTERNAL_ERROR).json(
+      formatResponse(false, null, 'Failed to delete category', error.message)
+    );
+  }
+};
+
+// Delete option from a dish
+const deleteOption = async (req, res) => {
+  try {
+    const { dishId, optionId } = req.params;
+    
+    if (!dishId || !optionId) {
+      return res.status(CONSTANTS.STATUS.BAD_REQUEST).json(
+        formatResponse(false, null, 'Dish ID and Option ID are required')
+      );
+    }
+
+    // Ensure database connection before querying
+    await ensureConnection();
+    
+    const menu = await Menu.findOne();
+    if (!menu) {
+      return res.status(CONSTANTS.STATUS.NOT_FOUND).json(
+        formatResponse(false, null, 'Menu not found')
+      );
+    }
+
+    // Find the dish and remove the option
+    let optionFound = false;
+    let optionName = '';
+    
+    menu.categories.forEach(category => {
+      const dish = category.dishes.find(d => d.dish_id === dishId);
+      if (dish) {
+        const optionIndex = dish.options.findIndex(opt => opt.option_id === optionId);
+        if (optionIndex !== -1) {
+          optionFound = true;
+          optionName = dish.options[optionIndex].option_name;
+          dish.options.splice(optionIndex, 1);
+        }
+      }
+    });
+
+    if (!optionFound) {
+      return res.status(CONSTANTS.STATUS.NOT_FOUND).json(
+        formatResponse(false, null, 'Option not found in the specified dish')
+      );
+    }
+
+    await menu.save();
+
+    // Clear menu cache
+    await cacheService.deletePattern('menu:*');
+
+    res.status(CONSTANTS.STATUS.SUCCESS).json(
+      formatResponse(true, null, `Option "${optionName}" deleted successfully`)
+    );
+  } catch (error) {
+    console.error('Admin deleteOption error:', error);
+    res.status(CONSTANTS.STATUS.INTERNAL_ERROR).json(
+      formatResponse(false, null, 'Failed to delete option', error.message)
+    );
+  }
+};
+
 // Update entire menu (bulk operation)
 const updateMenu = async (req, res) => {
   try {
@@ -429,6 +538,8 @@ module.exports = {
   updateDish,
   deleteDish,
   addCategory,
+  deleteCategory,
+  deleteOption,
   updateMenu,
   clearCache,
   login

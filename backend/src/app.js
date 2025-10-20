@@ -91,6 +91,8 @@ app.get('/', (req, res) => {
         updateDish: '/api/v1/admin/menu/dish',
         deleteDish: '/api/v1/admin/menu/dish/:dishId',
         addCategory: '/api/v1/admin/menu/category',
+        deleteCategory: '/api/v1/admin/menu/category/:categoryId',
+        deleteOption: '/api/v1/admin/menu/dish/:dishId/option/:optionId',
         updateMenu: '/api/v1/admin/menu',
         clearCache: '/api/v1/admin/cache/clear'
       }

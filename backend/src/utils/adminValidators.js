@@ -121,6 +121,13 @@ module.exports = {
   dishIdsSchema: Joi.object({
     dishId: Joi.string().required()
   }),
+  categoryIdsSchema: Joi.object({
+    categoryId: Joi.string().required()
+  }),
+  optionIdsSchema: Joi.object({
+    dishId: Joi.string().required(),
+    optionId: Joi.string().required()
+  }),
   categorySchema,
   dishSchema,
   optionSchema

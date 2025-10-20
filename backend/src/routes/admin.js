@@ -6,11 +6,13 @@ const {
   updateDish,
   deleteDish,
   addCategory,
+  deleteCategory,
+  deleteOption,
   updateMenu,
   clearCache,
   login
 } = require('../controllers/adminController');
-const { validateBody, validateParams, addDishSchema, updateDishSchema, addCategorySchema, updateMenuSchema, dishIdsSchema } = require('../utils/adminValidators');
+const { validateBody, validateParams, addDishSchema, updateDishSchema, addCategorySchema, updateMenuSchema, dishIdsSchema, categoryIdsSchema, optionIdsSchema } = require('../utils/adminValidators');
 const { authenticateAdmin } = require('../middleware/auth');
 
 // Public login route (not protected)
@@ -33,6 +35,12 @@ router.delete('/menu/dish/:dishId', validateParams(dishIdsSchema), deleteDish);
 
 // Add new category
 router.post('/menu/category', validateBody(addCategorySchema), addCategory);
+
+// Delete category
+router.delete('/menu/category/:categoryId', validateParams(categoryIdsSchema), deleteCategory);
+
+// Delete option from dish
+router.delete('/menu/dish/:dishId/option/:optionId', validateParams(optionIdsSchema), deleteOption);
 
 // Update entire menu (bulk operation)
 router.put('/menu', validateBody(updateMenuSchema), updateMenu);
