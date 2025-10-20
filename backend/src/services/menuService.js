@@ -185,5 +185,6 @@ module.exports = {
   getFullMenu,
   getFilteredMenu,
   getFilterOptions,
-  clearMenuCache
+  clearMenuCache,
+  ensureConnection
 };

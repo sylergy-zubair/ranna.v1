@@ -66,28 +66,65 @@ const getFilterOptions = async (req, res) => {
 const healthCheck = async (req, res) => {
   const mongoose = require('mongoose');
   
-  const dbStatus = mongoose.connection.readyState;
-  const dbStates = {
-    0: 'disconnected',
-    1: 'connected',
-    2: 'connecting',
-    3: 'disconnecting'
-  };
+  try {
+    // Import the ensureConnection function from menuService
+    const { ensureConnection } = require('../services/menuService');
+    
+    // Ensure database connection is established before checking status
+    await ensureConnection();
+    
+    const dbStatus = mongoose.connection.readyState;
+    const dbStates = {
+      0: 'disconnected',
+      1: 'connected',
+      2: 'connecting',
+      3: 'disconnecting'
+    };
 
-  const health = {
-    success: true,
-    message: 'Ranna Backend API is running',
-    timestamp: new Date().toISOString(),
-    version: '1.0.0',
-    database: {
-      status: dbStates[dbStatus],
-      connected: dbStatus === 1,
-      host: mongoose.connection.host || 'unknown',
-      name: mongoose.connection.name || 'unknown'
-    }
-  };
+    const health = {
+      success: true,
+      message: 'Ranna Backend API is running',
+      timestamp: new Date().toISOString(),
+      version: '1.0.0',
+      database: {
+        status: dbStates[dbStatus],
+        connected: dbStatus === 1,
+        host: mongoose.connection.host || 'unknown',
+        name: mongoose.connection.name || 'unknown',
+        readyState: dbStatus
+      }
+    };
 
-  res.status(CONSTANTS.STATUS.SUCCESS).json(health);
+    res.status(CONSTANTS.STATUS.SUCCESS).json(health);
+  } catch (error) {
+    console.error('Health check error:', error);
+    
+    const mongoose = require('mongoose');
+    const dbStatus = mongoose.connection.readyState;
+    const dbStates = {
+      0: 'disconnected',
+      1: 'connected',
+      2: 'connecting',
+      3: 'disconnecting'
+    };
+
+    const health = {
+      success: false,
+      message: 'Ranna Backend API is running but database connection failed',
+      timestamp: new Date().toISOString(),
+      version: '1.0.0',
+      database: {
+        status: dbStates[dbStatus],
+        connected: false,
+        host: mongoose.connection.host || 'unknown',
+        name: mongoose.connection.name || 'unknown',
+        readyState: dbStatus,
+        error: error.message
+      }
+    };
+
+    res.status(CONSTANTS.STATUS.INTERNAL_ERROR).json(health);
+  }
 };
 
 module.exports = {
