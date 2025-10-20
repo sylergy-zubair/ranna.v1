@@ -86,10 +86,10 @@ export default function MenuPage() {
 
   const availableOptions = useMemo(() => {
     if (!filterOptions) {
-      return getAvailableFilterOptions(processedDishes);
+      return getAvailableFilterOptions(data?.categories || []);
     }
     return filterOptions;
-  }, [filterOptions, processedDishes]);
+  }, [filterOptions, data]);
 
   const handleMoreInfo = (dish: Dish) => {
     setSelectedDish(dish);
