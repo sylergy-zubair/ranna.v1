@@ -20,9 +20,42 @@ const CONSTANTS = {
 
   // Filter options
   SPICE_LEVELS: [1, 2, 3, 4],
-  DISH_TYPES: ['Meat', 'Vegetarian', 'Vegan'],
+  DISH_TYPES: [
+    'Vegetarian',
+    'Vegan', 
+    'Chicken',
+    'Lamb',
+    'Indian Paneer',
+    'Prawn',
+    'Kng Prawn',
+    'Fish',
+    'Meat (Mutton)',
+    'Gluten free',
+    'Sweet',
+    'Sour',
+    'Creamy',
+    'Healthy'
+  ],
   CALORIE_RANGES: ['0-100', '100-200', '200-300', '300-400', '400-500', '500-600', '600+'],
-  ALLERGENS: ['Gluten', 'Dairy', 'Nuts', 'Shellfish', 'Soy', 'None'],
+  ALLERGENS: [
+    'Eggs',
+    'Fish',
+    'Milk',
+    'Mustard',
+    'Tree Nut (Almond / Cashew Nut)',
+    'Sesame Seed',
+    'Sulphur dioxide (sulphites)',
+    'Soya',
+    'Celery',
+    'Cereals (Gluten, Wheat)',
+    'Cereals (Gluten, Barley)',
+    'Cereals (Gluten, Rye)',
+    'Cereals (Gluten, Oats)',
+    'Crustaceans',
+    'Lupin',
+    'Peanut',
+    'Molluscs'
+  ],
 
   // Rate limiting
   RATE_LIMITS: {

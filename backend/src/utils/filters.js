@@ -60,13 +60,15 @@ const filterDishes = (menuData, filters) => {
   });
 };
 
+const CONSTANTS = require('./constants');
+
 const getAvailableFilterOptions = (menuData) => {
   if (!menuData || !menuData.categories) {
     return {
       categories: [],
-      dishTypes: [],
-      allergens: [],
-      calorieRanges: []
+      dishTypes: CONSTANTS.DISH_TYPES, // Use predefined dish types
+      allergens: CONSTANTS.ALLERGENS,  // Use predefined allergens
+      calorieRanges: CONSTANTS.CALORIE_RANGES
     };
   }
 
@@ -74,14 +76,14 @@ const getAvailableFilterOptions = (menuData) => {
   const allOptions = allDishes.flatMap(dish => dish.options);
 
   const categories = [...new Set(menuData.categories.map(cat => cat.category))];
-  const dishTypes = [...new Set(allOptions.flatMap(option => option.dish_type))];
+  // Use predefined dish types and allergens instead of extracting from data
   const allergens = [...new Set(allOptions.flatMap(option => option.allergens))];
   const calorieRanges = [...new Set(allOptions.map(option => option.calorie_range))].filter(Boolean);
 
   return {
     categories: categories.sort(),
-    dishTypes: dishTypes.sort(),
-    allergens: allergens.sort(),
+    dishTypes: CONSTANTS.DISH_TYPES, // Always return all predefined dish types
+    allergens: CONSTANTS.ALLERGENS,  // Always return all predefined allergens
     calorieRanges: calorieRanges.sort()
   };
 };

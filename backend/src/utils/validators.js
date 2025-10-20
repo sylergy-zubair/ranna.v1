@@ -8,11 +8,44 @@ const menuQuerySchema = Joi.object({
     Joi.string()
   ).optional(),
   dishTypes: Joi.alternatives().try(
-    Joi.array().items(Joi.string().valid('Meat', 'Vegetarian', 'Vegan')),
+    Joi.array().items(Joi.string().valid(
+      'Vegetarian',
+      'Vegan', 
+      'Chicken',
+      'Lamb',
+      'Indian Paneer',
+      'Prawn',
+      'Kng Prawn',
+      'Fish',
+      'Meat (Mutton)',
+      'Gluten free',
+      'Sweet',
+      'Sour',
+      'Creamy',
+      'Healthy'
+    )),
     Joi.string()
   ).optional(),
   allergens: Joi.alternatives().try(
-    Joi.array().items(Joi.string()),
+    Joi.array().items(Joi.string().valid(
+      'Eggs',
+      'Fish',
+      'Milk',
+      'Mustard',
+      'Tree Nut (Almond / Cashew Nut)',
+      'Sesame Seed',
+      'Sulphur dioxide (sulphites)',
+      'Soya',
+      'Celery',
+      'Cereals (Gluten, Wheat)',
+      'Cereals (Gluten, Barley)',
+      'Cereals (Gluten, Rye)',
+      'Cereals (Gluten, Oats)',
+      'Crustaceans',
+      'Lupin',
+      'Peanut',
+      'Molluscs'
+    )),
     Joi.string()
   ).optional(),
   calorieRange: Joi.string().optional().valid(

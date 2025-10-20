@@ -1,5 +1,6 @@
 import { CuisineData, Dish, FilterState, Category } from '@/types';
 import { API_BASE } from '@/config/api';
+import { DISH_TYPES, ALLERGENS, CALORIE_RANGES } from './constants';
 
 // Load cuisine data from backend API
 export async function loadCuisineData(): Promise<CuisineData> {
@@ -139,10 +140,10 @@ export function getAvailableFilterOptions(categories: Category[]) {
   const allOptions = allDishes.flatMap(dish => dish.options);
   
   return {
-    dishTypes: getUniqueValues(allOptions, 'dish_type'),
+    dishTypes: DISH_TYPES, // Use predefined dish types instead of extracting from data
     categories: categories.map(cat => cat.category),
-    allergens: getUniqueValues(allOptions, 'allergens'),
-    calorieRanges: getUniqueValues(allOptions, 'calorie_range')
+    allergens: ALLERGENS, // Use predefined allergens instead of extracting from data
+    calorieRanges: getUniqueValues(allOptions, 'calorie_range') || CALORIE_RANGES
   };
 }
 

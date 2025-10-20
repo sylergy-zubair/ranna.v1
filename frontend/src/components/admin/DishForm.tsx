@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Category, Dish, Option, Nutrition } from '@/types';
 import { v4 as uuidv4 } from 'uuid';
+import { DISH_TYPES as DISH_TYPES_CONSTANTS, ALLERGENS as ALLERGENS_CONSTANTS } from '@/utils/constants';
 
 interface DishFormProps {
   category: Category;
@@ -38,6 +39,9 @@ const initialOption: Option = {
   calorie_range: '0-100',
   nutrition: initialNutrition,
 };
+
+const DISH_TYPES = DISH_TYPES_CONSTANTS;
+const ALLERGENS = ALLERGENS_CONSTANTS;
 
 export default function DishForm({
   category,
@@ -125,12 +129,36 @@ export default function DishForm({
       return;
     }
 
+    // Validate that each option has at least one dish type
+    for (const option of options) {
+      if (!option.dish_type || option.dish_type.length === 0) {
+        alert(`Option "${option.option_name || 'Untitled'}" must have at least one dish type selected`);
+        return;
+      }
+    }
+
+    // Clean and validate dish types before sending
+    const cleanedOptions = options.map(option => ({
+      ...option,
+      dish_type: option.dish_type.filter(type => 
+        type && type.trim() && DISH_TYPES.includes(type.trim())
+      )
+    }));
+
+    // Re-validate after cleaning
+    for (const option of cleanedOptions) {
+      if (!option.dish_type || option.dish_type.length === 0) {
+        alert(`Option "${option.option_name || 'Untitled'}" must have at least one valid dish type selected`);
+        return;
+      }
+    }
+
     const dishData: Dish = {
       dish_id: dish?.dish_id || uuidv4(),
       dish_title: formData.dish_title.trim(),
       spice_level: formData.spice_level,
       image_url: formData.image_url.trim(),
-      options: options,
+      options: cleanedOptions,
     };
 
     onSave(dishData);
@@ -318,6 +346,22 @@ function OptionForm({ option, index, onUpdate, onRemove, disabled }: OptionFormP
     });
   };
 
+  const handleDishTypeToggle = (dishType: string) => {
+    const currentTypes = option.dish_type || [];
+    const newTypes = currentTypes.includes(dishType)
+      ? currentTypes.filter(type => type !== dishType)
+      : [...currentTypes, dishType];
+    onUpdate('dish_type', newTypes);
+  };
+
+  const handleAllergenToggle = (allergen: string) => {
+    const currentAllergens = option.allergens || [];
+    const newAllergens = currentAllergens.includes(allergen)
+      ? currentAllergens.filter(a => a !== allergen)
+      : [...currentAllergens, allergen];
+    onUpdate('allergens', newAllergens);
+  };
+
   return (
     <div className="border border-gray-200 rounded-lg p-4">
       <div className="flex justify-between items-center mb-4">
@@ -379,18 +423,28 @@ function OptionForm({ option, index, onUpdate, onRemove, disabled }: OptionFormP
           </select>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Dish Type *</label>
-          <input
-            type="text"
-            value={option.dish_type.join(', ')}
-            onChange={(e) => onUpdate('dish_type', e.target.value.split(',').map(item => item.trim()).filter(item => item))}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
-            placeholder="Meat, Vegetarian, Vegan"
-            required
-            disabled={disabled}
-          />
-          <p className="text-xs text-gray-500 mt-1">Separate multiple types with commas</p>
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Dish Type * ({DISH_TYPES.length} options)</label>
+          <div className="flex flex-wrap gap-3 p-3 border border-gray-200 rounded-md bg-gray-50 min-h-[120px]">
+            {DISH_TYPES.map((dishType, index) => (
+              <label key={dishType} className="flex items-center space-x-2 cursor-pointer p-1">
+                <input
+                  type="checkbox"
+                  checked={option.dish_type.includes(dishType)}
+                  onChange={() => handleDishTypeToggle(dishType)}
+                  disabled={disabled}
+                  className="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 focus:ring-2"
+                />
+                <span className="text-sm text-gray-700">{dishType}</span>
+                {process.env.NODE_ENV === 'development' && (
+                  <span className="text-xs text-gray-400 ml-1">({index + 1})</span>
+                )}
+              </label>
+            ))}
+          </div>
+          {option.dish_type.length === 0 && (
+            <p className="text-xs text-red-500 mt-1">Please select at least one dish type</p>
+          )}
         </div>
       </div>
 
@@ -420,31 +474,34 @@ function OptionForm({ option, index, onUpdate, onRemove, disabled }: OptionFormP
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Ingredients</label>
-          <input
-            type="text"
-            value={option.ingredients.join(', ')}
-            onChange={(e) => handleArrayChange('ingredients', e)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
-            placeholder="Rice, Chicken, Spices"
-            disabled={disabled}
-          />
-          <p className="text-xs text-gray-500 mt-1">Separate with commas</p>
-        </div>
+      <div className="mt-4">
+        <label className="block text-sm font-medium text-gray-700 mb-1">Ingredients</label>
+        <input
+          type="text"
+          value={option.ingredients.join(', ')}
+          onChange={(e) => handleArrayChange('ingredients', e)}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
+          placeholder="Rice, Chicken, Spices"
+          disabled={disabled}
+        />
+        <p className="text-xs text-gray-500 mt-1">Separate with commas</p>
+      </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Allergens</label>
-          <input
-            type="text"
-            value={option.allergens.join(', ')}
-            onChange={(e) => handleArrayChange('allergens', e)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
-            placeholder="Nuts, Dairy, Gluten"
-            disabled={disabled}
-          />
-          <p className="text-xs text-gray-500 mt-1">Separate with commas</p>
+      <div className="mt-4">
+        <label className="block text-sm font-medium text-gray-700 mb-2">Allergens</label>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+          {ALLERGENS.map((allergen) => (
+            <label key={allergen} className="flex items-center space-x-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={option.allergens.includes(allergen)}
+                onChange={() => handleAllergenToggle(allergen)}
+                disabled={disabled}
+                className="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 focus:ring-2"
+              />
+              <span className="text-sm text-gray-700">{allergen}</span>
+            </label>
+          ))}
         </div>
       </div>
 
