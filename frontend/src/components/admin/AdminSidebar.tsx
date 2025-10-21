@@ -10,6 +10,7 @@ interface AdminSidebarProps {
   onCategorySelect: (categoryId: string | null) => void;
   onDishSelect: (dishId: string | null) => void;
   onNewCategory: () => void;
+  onCategoryDelete?: (categoryId: string, categoryName: string) => void;
 }
 
 export default function AdminSidebar({
@@ -19,6 +20,7 @@ export default function AdminSidebar({
   onCategorySelect,
   onDishSelect,
   onNewCategory,
+  onCategoryDelete,
 }: AdminSidebarProps) {
   // Log menu data changes for debugging
   useEffect(() => {
@@ -55,21 +57,42 @@ export default function AdminSidebar({
         <div className="p-2">
           {menu.categories.map((category) => (
             <div key={category.category_id} className="mb-2">
-              <button
-                onClick={() => onCategorySelect(category.category_id)}
-                className={`w-full text-left p-3 rounded-md transition-colors ${
-                  selectedCategory === category.category_id
-                    ? 'bg-orange-100 text-orange-800 border border-orange-200'
-                    : 'hover:bg-gray-50 text-gray-700'
-                }`}
-              >
-                <div className="flex justify-between items-center">
-                  <span className="font-medium">{category.category}</span>
-                  <span className="text-xs text-gray-500">
-                    {category.dishes.length} dish{category.dishes.length !== 1 ? 'es' : ''}
-                  </span>
-                </div>
-              </button>
+              <div className={`flex items-center rounded-md ${
+                selectedCategory === category.category_id
+                  ? 'bg-orange-100 border border-orange-200'
+                  : 'hover:bg-gray-50'
+              }`}>
+                <button
+                  onClick={() => onCategorySelect(category.category_id)}
+                  className={`flex-1 text-left p-3 transition-colors ${
+                    selectedCategory === category.category_id
+                      ? 'text-orange-800'
+                      : 'text-gray-700'
+                  }`}
+                >
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">{category.category}</span>
+                    <span className="text-xs text-gray-500">
+                      {category.dishes.length} dish{category.dishes.length !== 1 ? 'es' : ''}
+                    </span>
+                  </div>
+                </button>
+                
+                {onCategoryDelete && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (confirm(`Are you sure you want to delete the "${category.category}" category? This will also delete all dishes in this category.`)) {
+                        onCategoryDelete(category.category_id, category.category);
+                      }
+                    }}
+                    className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 transition-colors rounded-r-md"
+                    title="Delete category"
+                  >
+                    🗑️
+                  </button>
+                )}
+              </div>
 
               {/* Dishes in selected category */}
               {selectedCategory === category.category_id && (

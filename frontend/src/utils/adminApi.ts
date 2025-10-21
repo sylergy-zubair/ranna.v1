@@ -100,6 +100,13 @@ export const adminApi = {
     });
   },
 
+  // Delete category
+  deleteCategory: async (categoryId: string): Promise<AdminApiResponse> => {
+    return apiCall(`/admin/menu/category/${categoryId}`, {
+      method: 'DELETE',
+    });
+  },
+
   // Update entire menu
   updateMenu: async (request: UpdateMenuRequest): Promise<AdminApiResponse> => {
     return apiCall('/admin/menu', {

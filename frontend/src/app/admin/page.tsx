@@ -226,6 +226,37 @@ export default function AdminPage() {
     }
   };
 
+  const handleDeleteCategory = async (categoryId: string, categoryName: string) => {
+    setFormState(prev => ({ ...prev, loading: true, error: null }));
+
+    try {
+      const response = await adminApi.deleteCategory(categoryId);
+
+      if (response.success) {
+        await loadMenu(); // Refresh menu
+        setFormState(prev => ({
+          ...prev,
+          loading: false,
+          selectedCategory: null,
+          selectedDish: null,
+          isEditing: false,
+        }));
+      } else {
+        setFormState(prev => ({
+          ...prev,
+          loading: false,
+          error: response.error || response.message || 'Failed to delete category',
+        }));
+      }
+    } catch (error) {
+      setFormState(prev => ({
+        ...prev,
+        loading: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      }));
+    }
+  };
+
   // Get selected category data
   const selectedCategoryData = menuState.menu?.categories.find(
     cat => cat.category_id === formState.selectedCategory
@@ -335,6 +366,7 @@ export default function AdminPage() {
               isEditing: false,
               isAddingNewCategory: true 
             }))}
+            onCategoryDelete={handleDeleteCategory}
           />
         </div>
 
