@@ -14,7 +14,7 @@ export default function CategoryButtonFilter({ value, options, onChange }: Categ
   };
 
   return (
-    <div className="mb-6">
+    <div>
       <div className="flex flex-wrap gap-2">
         {options.map((option) => (
           <button

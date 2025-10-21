@@ -139,32 +139,39 @@ export default function MenuPage() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Filter Panel */}
+          {/* Filter Panel - Fixed Position */}
           <div className="lg:col-span-1">
-            <FilterPanel
-              filters={filters}
-              onFiltersChange={updateFilters}
-              availableOptions={availableOptions}
-            />
+            <div className="sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto">
+              <FilterPanel
+                filters={filters}
+                onFiltersChange={updateFilters}
+                availableOptions={availableOptions}
+              />
+            </div>
           </div>
 
           {/* Dishes Grid */}
           <div className="lg:col-span-3">
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Our Menu</h2>
-              <p className="text-gray-600 mb-4">
-                Showing {filteredDishes.length} dish{filteredDishes.length !== 1 ? 'es' : ''}
-                {Object.values(filters).some(filter => 
-                  Array.isArray(filter) ? filter.length > 0 : filter !== null
-                ) && ' (filtered)'}
-              </p>
-              
-              {/* Category Filter Buttons */}
-              <CategoryButtonFilter
-                value={filters.categories}
-                options={availableOptions.categories}
-                onChange={(value) => updateFilters({ ...filters, categories: value })}
-              />
+            {/* Fixed Category and Menu Header */}
+            <div className="sticky top-24 bg-gray-50 z-10 pb-4 -mx-4 px-4">
+              <div className="mb-6">
+                <h2 className="text-2xl font-bold text-gray-800 mb-2">Our Menu</h2>
+                <p className="text-gray-600 mb-4">
+                  Showing {filteredDishes.length} dish{filteredDishes.length !== 1 ? 'es' : ''}
+                  {Object.values(filters).some(filter => 
+                    Array.isArray(filter) ? filter.length > 0 : filter !== null
+                  ) && ' (filtered)'}
+                </p>
+                
+                {/* Category Filter Buttons */}
+                <div className="bg-white rounded-lg p-4 shadow-sm">
+                  <CategoryButtonFilter
+                    value={filters.categories}
+                    options={availableOptions.categories}
+                    onChange={(value) => updateFilters({ ...filters, categories: value })}
+                  />
+                </div>
+              </div>
             </div>
 
             {filteredDishes.length === 0 ? (
