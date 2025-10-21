@@ -46,8 +46,7 @@ app.use((req, res, next) => {
     const origin = req.headers.origin;
     const allowedOrigins = [
       process.env.FRONTEND_URL,
-      'https://ranna-v1.vercel.app',
-      'https://ranna-v1-8357.vercel.app', // Add the specific deployment URL
+      'https://ranna-v1-8357.vercel.app', // Frontend deployment URL
       'http://localhost:3000',
       'http://localhost:3001'
     ].filter(Boolean);
