@@ -139,15 +139,13 @@ export default function MenuPage() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Filter Panel - Fixed Position */}
+          {/* Filter Panel */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto">
-              <FilterPanel
-                filters={filters}
-                onFiltersChange={updateFilters}
-                availableOptions={availableOptions}
-              />
-            </div>
+            <FilterPanel
+              filters={filters}
+              onFiltersChange={updateFilters}
+              availableOptions={availableOptions}
+            />
           </div>
 
           {/* Dishes Grid */}
@@ -155,7 +153,7 @@ export default function MenuPage() {
             {/* Fixed Category and Menu Header */}
             <div className="sticky top-24 bg-gray-50 z-10 pb-4 -mx-4 px-4">
               <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-800 mb-2">Our Menu</h2>
+                
                 <p className="text-gray-600 mb-4">
                   Showing {filteredDishes.length} dish{filteredDishes.length !== 1 ? 'es' : ''}
                   {Object.values(filters).some(filter => 
