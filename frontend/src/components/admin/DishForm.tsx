@@ -137,18 +137,36 @@ export default function DishForm({
       }
     }
 
-    // Clean and validate dish types before sending
+    // Clean and validate dish types AND allergens before sending
     const cleanedOptions = options.map(option => ({
       ...option,
       dish_type: option.dish_type.filter(type => 
         type && type.trim() && DISH_TYPES.includes(type.trim())
-      )
+      ),
+      allergens: option.allergens.filter(allergen =>
+        allergen && allergen.trim() && ALLERGENS.includes(allergen.trim())
+      ),
+      // Ensure required fields are present and trimmed
+      short_description: option.short_description?.trim() || '',
+      detailed_description: option.detailed_description?.trim() || ''
     }));
 
-    // Re-validate after cleaning
+    // Validate all required fields after cleaning
     for (const option of cleanedOptions) {
       if (!option.dish_type || option.dish_type.length === 0) {
         alert(`Option "${option.option_name || 'Untitled'}" must have at least one valid dish type selected`);
+        return;
+      }
+      
+      // Add validation for required short_description
+      if (!option.short_description) {
+        alert(`Option "${option.option_name || 'Untitled'}" must have a short description`);
+        return;
+      }
+      
+      // Add validation for required detailed_description
+      if (!option.detailed_description) {
+        alert(`Option "${option.option_name || 'Untitled'}" must have a detailed description`);
         return;
       }
     }

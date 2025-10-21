@@ -4,10 +4,27 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Category, Dish, AdminMenuState, AdminFormState } from '@/types';
 import { adminApi } from '@/utils/adminApi';
+import { DISH_TYPES, ALLERGENS } from '@/utils/constants';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 import CategoryForm from '@/components/admin/CategoryForm';
 import DishForm from '@/components/admin/DishForm';
 import MenuView from '@/components/admin/MenuView';
+
+// Helper function to clean dish data before sending to backend
+const cleanDishData = (dish: Dish): Dish => ({
+  ...dish,
+  options: dish.options.map(option => ({
+    ...option,
+    dish_type: option.dish_type.filter(type => 
+      type && type.trim() && DISH_TYPES.includes(type.trim())
+    ),
+    allergens: option.allergens.filter(allergen =>
+      allergen && allergen.trim() && ALLERGENS.includes(allergen.trim())
+    ),
+    short_description: option.short_description?.trim() || '',
+    detailed_description: option.detailed_description?.trim() || ''
+  }))
+});
 
 export default function AdminPage() {
   const router = useRouter();
@@ -110,14 +127,20 @@ export default function AdminPage() {
     setFormState(prev => ({ ...prev, loading: true, error: null }));
 
     try {
-      console.log('💾 Saving category:', categoryData);
+      // Clean dish data before sending to prevent validation errors
+      const cleanedCategoryData: Category = {
+        ...categoryData,
+        dishes: categoryData.dishes.map(cleanDishData)
+      };
+
+      console.log('💾 Saving category:', cleanedCategoryData);
       let response;
       if (formState.isEditing && formState.selectedCategory) {
         // Update existing category (implement if needed)
-        response = await adminApi.addCategory({ categoryData });
+        response = await adminApi.addCategory({ categoryData: cleanedCategoryData });
       } else {
         // Add new category
-        response = await adminApi.addCategory({ categoryData });
+        response = await adminApi.addCategory({ categoryData: cleanedCategoryData });
       }
 
       console.log('📡 Category save response:', response);
@@ -154,18 +177,21 @@ export default function AdminPage() {
     setFormState(prev => ({ ...prev, loading: true, error: null }));
 
     try {
+      // Clean dish data before sending to prevent validation errors
+      const cleanedDishData = cleanDishData(dishData);
+      
       let response;
       if (formState.isEditing && formState.selectedDish) {
         // Update existing dish
         response = await adminApi.updateDish({
           dishId: formState.selectedDish,
-          dishData,
+          dishData: cleanedDishData,
         });
       } else {
         // Add new dish
         response = await adminApi.addDish({
           categoryId,
-          dishData,
+          dishData: cleanedDishData,
         });
       }
 
