@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import OrderNowButton from '@/components/OrderNowButton';
 
 export default function SpecialOffersPage() {
   const offers = [
@@ -74,12 +75,15 @@ export default function SpecialOffersPage() {
                     </div>
                   ))}
                 </div>
-                <Link
+                <OrderNowButton
                   href="/order"
-                  className="inline-block w-full text-center px-6 py-3 bg-orange-600 text-white rounded-lg font-semibold hover:bg-orange-700 transition-colors"
-                >
-                  PLACE AN ORDER NOW
-                </Link>
+                  text="PLACE AN ORDER NOW"
+                  size="lg"
+                  variant="primary"
+                  color="orange"
+                  fullWidth
+                  glowEffect
+                />
               </div>
             </div>
           </div>
@@ -104,12 +108,15 @@ export default function SpecialOffersPage() {
                     </div>
                   ))}
                 </div>
-                <Link
+                <OrderNowButton
                   href="/order"
-                  className="inline-block w-full text-center px-6 py-3 bg-orange-600 text-white rounded-lg font-semibold hover:bg-orange-700 transition-colors"
-                >
-                  PLACE AN ORDER NOW
-                </Link>
+                  text="PLACE AN ORDER NOW"
+                  size="lg"
+                  variant="primary"
+                  color="orange"
+                  fullWidth
+                  glowEffect
+                />
               </div>
             </div>
             
@@ -152,12 +159,15 @@ export default function SpecialOffersPage() {
                     </div>
                   ))}
                 </div>
-                <Link
+                <OrderNowButton
                   href="/order"
-                  className="inline-block w-full text-center px-6 py-3 bg-orange-600 text-white rounded-lg font-semibold hover:bg-orange-700 transition-colors"
-                >
-                  PLACE AN ORDER NOW
-                </Link>
+                  text="PLACE AN ORDER NOW"
+                  size="lg"
+                  variant="primary"
+                  color="orange"
+                  fullWidth
+                  glowEffect
+                />
               </div>
             </div>
           </div>

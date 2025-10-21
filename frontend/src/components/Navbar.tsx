@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import OrderNowButton from './OrderNowButton';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -79,12 +80,12 @@ export default function Navbar() {
             >
               Contact
             </Link>
-            <Link 
-              href="/order" 
-              className="px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors font-medium"
-            >
-              Order Now
-            </Link>
+            <OrderNowButton
+              href="/order"
+              size="md"
+              variant="primary"
+              color="orange"
+            />
           </div>
 
           {/* Mobile menu button */}
@@ -156,13 +157,15 @@ export default function Navbar() {
             >
               Contact
             </Link>
-            <Link 
-              href="/order" 
-              onClick={closeMobileMenu}
-              className="block px-3 py-2 rounded-md text-base font-medium bg-orange-600 text-white hover:bg-orange-700 transition-colors"
-            >
-              Order Now
-            </Link>
+            <div onClick={closeMobileMenu}>
+              <OrderNowButton
+                href="/order"
+                size="md"
+                variant="primary"
+                color="orange"
+                fullWidth
+              />
+            </div>
           </div>
           </div>
         )}
