@@ -352,11 +352,6 @@ function OptionForm({ option, index, onUpdate, onRemove, disabled }: OptionFormP
     onUpdate(field, value);
   };
 
-  const handleArrayChange = (field: string, e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.split(',').map(item => item.trim()).filter(item => item);
-    onUpdate(field, value);
-  };
-
   const handleNutritionChange = (field: keyof Nutrition, value: number) => {
     onUpdate('nutrition', {
       ...option.nutrition,

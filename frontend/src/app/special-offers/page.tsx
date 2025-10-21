@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import OrderNowButton from '@/components/OrderNowButton';
 import OrderModal from '@/components/OrderModal';
 

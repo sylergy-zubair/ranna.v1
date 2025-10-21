@@ -252,6 +252,7 @@ export default function AdminPage() {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDeleteCategory = async (categoryId: string, categoryName: string) => {
     setFormState(prev => ({ ...prev, loading: true, error: null }));
 

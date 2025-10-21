@@ -162,7 +162,7 @@ export default function OrderNowButton({
 
   if (href && !disabled && !openModal) {
     return (
-      <Link href={href} className={buttonClasses} {...(props as any)}>
+      <Link href={href} className={buttonClasses}>
         {content}
       </Link>
     );
