@@ -35,7 +35,16 @@ async function apiCall<T>(endpoint: string, options: RequestInit = {}): Promise<
     const data = await response.json();
     
     if (!response.ok) {
-      throw new Error(data.message || data.error || `HTTP ${response.status}`);
+      // Log the full error response for debugging
+      console.error('API Error Response:', data);
+      console.error('Response Status:', response.status);
+      
+      // Include validation details if available
+      const errorMessage = data.details ? 
+        `${data.message || data.error || 'Validation error'}: ${data.details.join(', ')}` :
+        data.message || data.error || `HTTP ${response.status}`;
+      
+      throw new Error(errorMessage);
     }
 
     return data;
@@ -58,6 +67,8 @@ export const adminApi = {
 
   // Add new dish
   addDish: async (request: CreateDishRequest): Promise<AdminApiResponse> => {
+    // Debug: Log the request data to see what dish types are being sent
+    console.log('AddDish request:', JSON.stringify(request, null, 2));
     return apiCall('/admin/menu/dish', {
       method: 'POST',
       body: JSON.stringify(request),
@@ -66,6 +77,8 @@ export const adminApi = {
 
   // Update dish
   updateDish: async (request: UpdateDishRequest): Promise<AdminApiResponse> => {
+    // Debug: Log the request data to see what dish types are being sent
+    console.log('UpdateDish request:', JSON.stringify(request, null, 2));
     return apiCall('/admin/menu/dish', {
       method: 'PUT',
       body: JSON.stringify(request),

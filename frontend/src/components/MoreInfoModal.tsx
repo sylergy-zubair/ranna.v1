@@ -185,12 +185,12 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-gray-50 border-t border-gray-200 p-6">
+        {/*<div className="sticky bottom-0 bg-gray-50 border-t border-gray-200 p-6">
           <div className="flex justify-between items-center">
             <div className="text-lg font-semibold text-gray-800">
-              {formatPrice(selectedOption.price)}
+              Price: {formatPrice(selectedOption.price)}
             </div>
-            <div className="flex space-x-3">
+            {/*<div className="flex space-x-3">
               <button
                 onClick={onClose}
                 className="px-4 py-2 text-gray-600 hover:text-gray-800 font-medium"
@@ -202,7 +202,7 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
               </button>
             </div>
           </div>
-        </div>
+        </div>*/}
       </div>
     </div>
   );

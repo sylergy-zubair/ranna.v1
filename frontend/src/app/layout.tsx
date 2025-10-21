@@ -23,11 +23,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/img/Ranna_fav.png" />
-        <link rel="shortcut icon" href="/img/Ranna_fav.png" />
-        <link rel="apple-touch-icon" href="/img/Ranna_fav.png" />
-      </head>
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <ConditionalLayout>
           {children}

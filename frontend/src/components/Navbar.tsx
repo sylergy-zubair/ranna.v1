@@ -30,8 +30,8 @@ export default function Navbar() {
             <Image
               src="/img/Ranna_new_LOGO-For-Sign.png"
               alt="Ranna Logo"
-              width={120}
-              height={40}
+              width={154}
+              height={99}
               className="h-10 w-auto"
               priority
             />

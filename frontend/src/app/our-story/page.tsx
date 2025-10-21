@@ -1,94 +1,115 @@
+import Image from 'next/image';
+import Link from 'next/link';
+
 export default function OurStoryPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div>
       {/* Header */}
-      <section className="bg-white py-12">
+      <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Our Story</h1>
-          <p className="text-xl text-gray-600">The journey of authentic Indian flavors</p>
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 italic">
+            Being your appetite to life with <span className="italic">Ranna</span>
+          </h1>
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">Our Story</h2>
         </div>
       </section>
 
-      {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="prose prose-lg mx-auto">
-          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">The Beginning</h2>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              Welcome to Ranna, where every dish tells a story of tradition, family, and the rich culinary heritage of India. 
-              Our journey began with a simple dream: to share the authentic flavors of Indian cuisine with the world.
-            </p>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              Founded in the heart of our community, Ranna was born from generations of culinary expertise and a deep passion 
-              for bringing people together through the universal language of food.
-            </p>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Our Philosophy</h2>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              At Ranna, we believe that great food starts with great ingredients. We carefully source the finest spices, 
-              freshest vegetables, and highest quality meats to create dishes that honor traditional recipes while meeting 
-              modern standards of excellence.
-            </p>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              Every recipe in our kitchen has been passed down through generations, refined with love, and prepared with 
-              the same care and attention that you would find in a traditional Indian home.
-            </p>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Our Commitment</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Quality</h3>
-                <p className="text-gray-700 leading-relaxed">
-                  We use only the finest ingredients and traditional cooking methods to ensure every dish meets our high standards.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Authenticity</h3>
-                <p className="text-gray-700 leading-relaxed">
-                  Our recipes stay true to their origins, preserving the authentic flavors that make Indian cuisine so special.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Community</h3>
-                <p className="text-gray-700 leading-relaxed">
-                  We believe food brings people together and are proud to be part of our local community.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Innovation</h3>
-                <p className="text-gray-700 leading-relaxed">
-                  While staying true to tradition, we embrace modern techniques to enhance quality and service.
-                </p>
+      {/* Image-Text Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Image */}
+            <div className="order-2 lg:order-1">
+              <div className="relative h-96 w-full bg-gray-200 rounded-lg overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-orange-100 to-red-100">
+                  <span className="text-2xl text-gray-600 font-semibold">Our Story Image</span>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-lg shadow-lg p-8 text-center">
-            <h2 className="text-2xl font-bold mb-4">Join Our Story</h2>
-            <p className="text-lg mb-6">
-              Be part of the Ranna family and experience the authentic taste of India.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/menu"
-                className="px-6 py-3 bg-white text-orange-600 rounded-lg font-semibold hover:bg-orange-50 transition-colors"
-              >
-                View Our Menu
-              </a>
-              <a
-                href="/contact"
-                className="px-6 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition-colors"
-              >
-                Get In Touch
-              </a>
+            
+            {/* Text */}
+            <div className="order-1 lg:order-2">
+              <div className="text-gray-700 leading-relaxed space-y-6 text-lg">
+                <p>
+                  At Ranna, we blend age-old Indian traditions with modern creativity to bring you a memorable dining experience. Every dish is prepared with genuine care, fresh ingredients, and a deep respect for flavour.
+                </p>
+                
+                <p>
+                  The word Ranna originated from Bangladesh and means &apos;cooking&apos;. In 2013, two friends came together and decided that Ranna was the straight-to-the-point name to represent their vision and cuisine culture.
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </main>
+      </section>
+
+      {/* Text-Image Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Text */}
+            <div className="order-1 lg:order-1">
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">Our Vision</h2>
+              <div className="text-gray-700 leading-relaxed space-y-6 text-lg">
+                <p>
+                  We are actively building our reputation across London as a brand recognised for delivering the authentic taste of India to people&apos;s homes.
+                </p>
+                
+                <p>
+                  Over the next decade, we see that growing even further on the strength of our excellence, reliability, and cultural connection.
+                </p>
+                
+                <p>
+                  We have a community of loyal customers, dedicated staff, and shared purpose, bringing about lasting moments over great food.
+                </p>
+              </div>
+            </div>
+            
+            {/* Image */}
+            <div className="order-2 lg:order-2">
+              <div className="relative h-96 w-full bg-gray-200 rounded-lg overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-red-100 to-orange-100">
+                  <span className="text-2xl text-gray-600 font-semibold">Our Vision Image</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Image-Text Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Image */}
+            <div className="order-2 lg:order-1">
+              <div className="relative h-96 w-full bg-gray-200 rounded-lg overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-orange-100 to-red-100">
+                  <span className="text-2xl text-gray-600 font-semibold">Our Mission Image</span>
+                </div>
+              </div>
+            </div>
+            
+            {/* Text */}
+            <div className="order-1 lg:order-2">
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">Our Mission</h2>
+              <div className="text-gray-700 leading-relaxed space-y-6 text-lg">
+                <p>
+                  We want to earn the title of your kitchen away from home - bringing the vibrant flavours of authentic Indian cuisine to our community with a steadfast commitment to quality, cleanliness, outstanding customer service, and timeliness.
+                </p>
+                
+                <p>
+                  Our seamless takeaway and dining experience, where each plate reflects our passion for great food and respect for our customers&apos; time, is already highly rated. We aim to always serve with care, fresh ingredients, and a dedication to getting everything right.
+                </p>
+                
+                <p>
+                  We welcome your suggestions on how we can continue to improve at <strong>customerservice@ranna.co.uk</strong>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

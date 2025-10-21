@@ -6,7 +6,7 @@ const isVercel = process.env.VERCEL === '1';
 
 if (!isVercel) {
   mongoose.set('bufferCommands', false);
-  mongoose.set('bufferMaxEntries', 0);
+  // bufferMaxEntries is no longer a valid option in newer Mongoose versions
 }
 
 const connectDB = async (retries = 5, delay = 3000) => {
@@ -39,8 +39,7 @@ const connectDB = async (retries = 5, delay = 3000) => {
       serverSelectionTimeoutMS: options.serverSelectionTimeoutMS,
       connectTimeoutMS: options.connectTimeoutMS,
       ssl: options.ssl,
-      bufferCommands: !isVercel ? 'false (global)' : 'default',
-      bufferMaxEntries: !isVercel ? '0 (global)' : 'default'
+      bufferCommands: !isVercel ? 'false (global)' : 'default'
     });
 
     const conn = await mongoose.connect(mongoUri, options);
