@@ -1,7 +1,12 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import OrderNowButton from '@/components/OrderNowButton';
+import OrderModal from '@/components/OrderModal';
 
 export default function SpecialOffersPage() {
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const offers = [
     {
       title: "One-Time 25% Discount",
@@ -76,13 +81,14 @@ export default function SpecialOffersPage() {
                   ))}
                 </div>
                 <OrderNowButton
-                  href="/order"
                   text="PLACE AN ORDER NOW"
                   size="lg"
                   variant="primary"
                   color="orange"
                   fullWidth
                   glowEffect
+                  openModal={true}
+                  onModalOpen={() => setIsOrderModalOpen(true)}
                 />
               </div>
             </div>
@@ -109,13 +115,14 @@ export default function SpecialOffersPage() {
                   ))}
                 </div>
                 <OrderNowButton
-                  href="/order"
                   text="PLACE AN ORDER NOW"
                   size="lg"
                   variant="primary"
                   color="orange"
                   fullWidth
                   glowEffect
+                  openModal={true}
+                  onModalOpen={() => setIsOrderModalOpen(true)}
                 />
               </div>
             </div>
@@ -160,13 +167,14 @@ export default function SpecialOffersPage() {
                   ))}
                 </div>
                 <OrderNowButton
-                  href="/order"
                   text="PLACE AN ORDER NOW"
                   size="lg"
                   variant="primary"
                   color="orange"
                   fullWidth
                   glowEffect
+                  openModal={true}
+                  onModalOpen={() => setIsOrderModalOpen(true)}
                 />
               </div>
             </div>
@@ -191,6 +199,11 @@ export default function SpecialOffersPage() {
           </div>
         </div>
       </section>
+      
+      <OrderModal 
+        isOpen={isOrderModalOpen} 
+        onClose={() => setIsOrderModalOpen(false)} 
+      />
     </div>
   );
 }

@@ -25,6 +25,10 @@ export interface OrderNowButtonProps extends Omit<ButtonHTMLAttributes<HTMLButto
   disabled?: boolean;
   loading?: boolean;
   
+  // Modal functionality
+  openModal?: boolean;
+  onModalOpen?: () => void;
+  
   // Styling effects
   fullWidth?: boolean;
   rounded?: boolean;
@@ -97,6 +101,8 @@ export default function OrderNowButton({
   iconPosition = 'right',
   href,
   onClick,
+  openModal = false,
+  onModalOpen,
   disabled = false,
   loading = false,
   fullWidth = false,
@@ -146,7 +152,15 @@ export default function OrderNowButton({
     </>
   );
 
-  if (href && !disabled) {
+  const handleClick = () => {
+    if (openModal && onModalOpen) {
+      onModalOpen();
+    } else if (onClick) {
+      onClick();
+    }
+  };
+
+  if (href && !disabled && !openModal) {
     return (
       <Link href={href} className={buttonClasses} {...(props as any)}>
         {content}
@@ -157,7 +171,7 @@ export default function OrderNowButton({
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={handleClick}
       disabled={disabled || loading}
       className={buttonClasses}
       {...props}

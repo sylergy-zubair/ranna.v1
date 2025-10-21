@@ -5,10 +5,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import OrderNowButton from './OrderNowButton';
+import OrderModal from './OrderModal';
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
   const isActive = (path: string) => {
     return pathname === path;
@@ -23,7 +25,8 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white shadow-lg border-b border-gray-200 z-50">
+    <>
+      <nav className="fixed top-0 left-0 right-0 bg-white shadow-lg border-b border-gray-200 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -81,10 +84,11 @@ export default function Navbar() {
               Contact
             </Link>
             <OrderNowButton
-              href="/order"
               size="md"
               variant="primary"
               color="orange"
+              openModal={true}
+              onModalOpen={() => setIsOrderModalOpen(true)}
             />
           </div>
 
@@ -157,19 +161,27 @@ export default function Navbar() {
             >
               Contact
             </Link>
-            <div onClick={closeMobileMenu}>
-              <OrderNowButton
-                href="/order"
-                size="md"
-                variant="primary"
-                color="orange"
-                fullWidth
-              />
-            </div>
+            <OrderNowButton
+              size="md"
+              variant="primary"
+              color="orange"
+              fullWidth
+              openModal={true}
+              onModalOpen={() => {
+                closeMobileMenu();
+                setIsOrderModalOpen(true);
+              }}
+            />
           </div>
           </div>
         )}
       </div>
     </nav>
+    
+    <OrderModal 
+      isOpen={isOrderModalOpen} 
+      onClose={() => setIsOrderModalOpen(false)} 
+    />
+    </>
   );
 }
