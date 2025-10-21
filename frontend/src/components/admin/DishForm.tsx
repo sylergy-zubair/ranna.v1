@@ -476,15 +476,18 @@ function OptionForm({ option, index, onUpdate, onRemove, disabled }: OptionFormP
 
       <div className="mt-4">
         <label className="block text-sm font-medium text-gray-700 mb-1">Ingredients</label>
-        <input
-          type="text"
-          value={option.ingredients.join(', ')}
-          onChange={(e) => handleArrayChange('ingredients', e)}
+        <textarea
+          value={Array.isArray(option.ingredients) ? option.ingredients.join(', ') : option.ingredients || ''}
+          onChange={(e) => {
+            // Convert the text to an array for storage, but treat it as a single text block
+            const ingredientsText = e.target.value;
+            handleChange('ingredients', [ingredientsText]);
+          }}
           className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
-          placeholder="Rice, Chicken, Spices"
+          rows={3}
+          placeholder="List all ingredients used in this dish option..."
           disabled={disabled}
         />
-        <p className="text-xs text-gray-500 mt-1">Separate with commas</p>
       </div>
 
       <div className="mt-4">

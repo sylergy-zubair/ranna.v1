@@ -107,15 +107,10 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
               {/* Ingredients */}
               <div>
                 <h5 className="text-lg font-medium text-gray-700 mb-3">Ingredients</h5>
-                <div className="flex flex-wrap gap-2">
-                  {selectedOption.ingredients.map((ingredient, idx) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
-                    >
-                      {ingredient}
-                    </span>
-                  ))}
+                <div className="text-gray-700 leading-relaxed">
+                  {Array.isArray(selectedOption.ingredients) 
+                    ? selectedOption.ingredients.join(', ') 
+                    : selectedOption.ingredients || 'No ingredients listed'}
                 </div>
               </div>
 
