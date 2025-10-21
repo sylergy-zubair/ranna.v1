@@ -5,6 +5,7 @@ const getAllowedOrigins = () => {
   const allowedOrigins = [
     process.env.FRONTEND_URL,
     'https://ranna-v1.vercel.app',
+    'https://ranna-v1-8357.vercel.app', // Add the specific deployment URL
     'http://localhost:3000',
     'http://localhost:3001'
   ].filter(Boolean); // Remove undefined values
@@ -26,8 +27,8 @@ const corsOptions = {
       return callback(null, true);
     }
 
-    // Allow Vercel preview deployments
-    if (origin && origin.includes('.vercel.app')) {
+    // Allow Vercel preview deployments and any .vercel.app domain
+    if (origin && (origin.includes('.vercel.app') || origin.includes('vercel.app'))) {
       console.log('Allowing Vercel app:', origin);
       return callback(null, true);
     }
@@ -38,8 +39,7 @@ const corsOptions = {
       return callback(null, true);
     } else {
       console.log('Origin NOT allowed:', origin, 'Allowed origins:', allowedOrigins);
-      // Temporarily allow all origins for debugging
-      return callback(null, true);
+      return callback(new Error('Not allowed by CORS'), false);
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],

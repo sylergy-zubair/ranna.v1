@@ -42,22 +42,31 @@ app.use(corsMiddleware);
 // Handle all OPTIONS requests via middleware to avoid path-to-regexp issues
 app.use((req, res, next) => {
   if (req.method === 'OPTIONS') {
-    console.log('Handling OPTIONS request for:', req.path);
+    console.log('Handling OPTIONS request for:', req.path, 'Origin:', req.headers.origin);
     const origin = req.headers.origin;
     const allowedOrigins = [
       process.env.FRONTEND_URL,
       'https://ranna-v1.vercel.app',
+      'https://ranna-v1-8357.vercel.app', // Add the specific deployment URL
       'http://localhost:3000',
       'http://localhost:3001'
     ].filter(Boolean);
 
-    if (!origin || allowedOrigins.includes(origin) || (origin && origin.includes('.vercel.app'))) {
+    // Allow if no origin, or if origin is in allowed list, or if it's a Vercel domain
+    const shouldAllow = !origin || 
+                       allowedOrigins.includes(origin) || 
+                       (origin && (origin.includes('.vercel.app') || origin.includes('vercel.app')));
+    
+    if (shouldAllow) {
+      console.log('OPTIONS request allowed for origin:', origin);
       res.setHeader('Access-Control-Allow-Origin', origin || '*');
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
       res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma');
       res.setHeader('Access-Control-Allow-Credentials', 'true');
       res.setHeader('Access-Control-Max-Age', '86400');
       return res.status(200).end();
+    } else {
+      console.log('OPTIONS request blocked for origin:', origin);
     }
   }
   next();
