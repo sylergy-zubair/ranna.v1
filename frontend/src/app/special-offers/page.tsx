@@ -37,6 +37,14 @@ export default function SpecialOffersPage() {
         "• Offer ends: 31st December 2026",
         "• Further T&Cs apply (see below)"
       ]
+    },
+    {
+      title: "Ranna Rewards",
+      content: "Create an account when placing your order and start collecting points straight away.Each order automatically adds points to your balance, and you can redeem them at any time. Please note that each branch runs its own points system.",
+      details: [
+        "• Available for dine-in, collection, and delivery",
+        "• Further T&Cs apply (see below)"
+          ]
     }
   ];
 
@@ -58,10 +66,12 @@ export default function SpecialOffersPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Image */}
             <div className="order-2 lg:order-1">
-              <div className="relative h-96 w-full bg-gray-200 rounded-lg overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-orange-100 to-red-100">
-                  <span className="text-2xl text-gray-600 font-semibold">Special Offer 1 Image</span>
-                </div>
+              <div className="relative h-full w-full rounded-lg overflow-hidden">
+                <img
+                  src="/data/img/Ranna25Discount.webp"
+                  alt="25% Discount Offer"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
             
@@ -128,10 +138,12 @@ export default function SpecialOffersPage() {
             
             {/* Image */}
             <div className="order-2 lg:order-2">
-              <div className="relative h-96 w-full bg-gray-200 rounded-lg overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-red-100 to-orange-100">
-                  <span className="text-2xl text-gray-600 font-semibold">Special Offer 2 Image</span>
-                </div>
+              <div className="relative h-full w-full bg-gray-200 rounded-lg overflow-hidden">
+              <img
+                  src="/data/img/VIPLoyalty.webp"
+                  alt="22% VIP Discount Offer"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
@@ -144,10 +156,12 @@ export default function SpecialOffersPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Image */}
             <div className="order-2 lg:order-1">
-              <div className="relative h-96 w-full bg-gray-200 rounded-lg overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-orange-100 to-red-100">
-                  <span className="text-2xl text-gray-600 font-semibold">Special Offer 3 Image</span>
-                </div>
+              <div className="relative h-full w-full bg-gray-200 rounded-lg overflow-hidden">
+              <img
+                  src="/data/img/Ranna10Discount.webp"
+                  alt="10% Online Discount Offer"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
             
@@ -174,6 +188,51 @@ export default function SpecialOffersPage() {
                   glowEffect
                   openModal={true}
                   onModalOpen={() => setIsOrderModalOpen(true)}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Text-Image Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Text */}
+            <div className="order-1 lg:order-1">
+              <div className="bg-gray-50 rounded-lg shadow-lg p-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">{offers[3].title}</h3>
+                <p className="text-gray-700 mb-6 leading-relaxed">
+                  {offers[3].content}
+                </p>
+                <div className="mb-6">
+                  {offers[3].details.map((detail, detailIndex) => (
+                    <div key={detailIndex} className="text-gray-600 text-sm mb-2">
+                      {detail}
+                    </div>
+                  ))}
+                </div>
+                <OrderNowButton
+                  text="PLACE AN ORDER NOW"
+                  size="lg"
+                  variant="primary"
+                  color="orange"
+                  fullWidth
+                  glowEffect
+                  openModal={true}
+                  onModalOpen={() => setIsOrderModalOpen(true)}
+                />
+              </div>
+            </div>
+            
+            {/* Image */}
+            <div className="order-2 lg:order-2">
+              <div className="relative h-full w-full bg-gray-200 rounded-lg overflow-hidden">
+              <img
+                  src="/data/img/RannaRewards.webp"
+                  alt="Ranna Rewards Offer"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
