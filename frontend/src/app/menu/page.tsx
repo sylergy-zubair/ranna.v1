@@ -141,11 +141,13 @@ export default function MenuPage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Filter Panel */}
           <div className="lg:col-span-1">
-            <FilterPanel
-              filters={filters}
-              onFiltersChange={updateFilters}
-              availableOptions={availableOptions}
-            />
+            <div className="sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto">
+              <FilterPanel
+                filters={filters}
+                onFiltersChange={updateFilters}
+                availableOptions={availableOptions}
+              />
+            </div>
           </div>
 
           {/* Dishes Grid */}
