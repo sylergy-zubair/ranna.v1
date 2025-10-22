@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import FAQ from '@/components/FAQ';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -379,6 +380,9 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <FAQ />
     </div>
   );
 }
