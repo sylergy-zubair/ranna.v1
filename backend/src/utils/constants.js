@@ -19,7 +19,7 @@ const CONSTANTS = {
   },
 
   // Filter options
-  SPICE_LEVELS: [1, 2, 3, 4],
+  SPICE_LEVELS: [1, 2, 3, 4, 5],
   DISH_TYPES: [
     'Vegetarian',
     'Vegan', 

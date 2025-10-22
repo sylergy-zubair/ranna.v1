@@ -35,6 +35,8 @@ export const ALLERGENS = [
   'Molluscs'
 ];
 
+export const SPICE_LEVELS = [1, 2, 3, 4, 5];
+
 export const CALORIE_RANGES = [
   '0-100', 
   '100-200', 

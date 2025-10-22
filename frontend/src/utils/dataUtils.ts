@@ -191,9 +191,11 @@ export function filterDishes(dishes: (Dish & { category: string; description: st
 // Get spice level display info
 export function getSpiceLevelInfo(level: number) {
   const spiceInfo = {
-    1: { label: 'Mild', color: 'text-green-600', bgColor: 'bg-green-100' },
+    1: { label: 'None', color: 'text-green-600', bgColor: 'bg-green-100' },
     2: { label: 'Medium', color: 'text-yellow-600', bgColor: 'bg-yellow-100' },
-    3: { label: 'Hot', color: 'text-red-600', bgColor: 'bg-red-100' }
+    3: { label: 'Hot', color: 'text-red-600', bgColor: 'bg-red-100' },
+    4: { label: 'Very Hot', color: 'text-red-700', bgColor: 'bg-red-200' },
+    5: { label: 'Extreme', color: 'text-red-800', bgColor: 'bg-red-300' }
   };
   return spiceInfo[level as keyof typeof spiceInfo] || spiceInfo[1];
 }

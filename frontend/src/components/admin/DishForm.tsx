@@ -237,10 +237,11 @@ export default function DishForm({
                 required
                 disabled={loading}
               >
-                <option value={1}>1 - Mild</option>
+                <option value={1}>1 - None</option>
                 <option value={2}>2 - Medium</option>
                 <option value={3}>3 - Hot</option>
-                <option value={4}>4 - Extra Hot</option>
+                <option value={4}>4 - Very Hot</option>
+                <option value={5}>5 - Extreme</option>
               </select>
             </div>
           </div>

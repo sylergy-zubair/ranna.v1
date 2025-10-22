@@ -5,9 +5,11 @@ interface SpiceLevelFilterProps {
 
 export default function SpiceLevelFilter({ value, onChange }: SpiceLevelFilterProps) {
   const spiceLevels = [
-    { level: 1, label: 'Mild', chilis: 1 },
+    { level: 1, label: 'None', chilis: 1 },
     { level: 2, label: 'Medium', chilis: 2 },
-    { level: 3, label: 'Hot', chilis: 3 }
+    { level: 3, label: 'Hot', chilis: 3 },
+    { level: 4, label: 'Very Hot', chilis: 4 },
+    { level: 5, label: 'Extreme', chilis: 5 }
   ];
 
   return (
@@ -35,15 +37,22 @@ export default function SpiceLevelFilter({ value, onChange }: SpiceLevelFilterPr
             </div>
             <div className="flex items-center space-x-1">
               {/* Chili Images */}
-              {Array.from({ length: chilis }, (_, index) => (
+              {level === 1 ? (
                 <img
-                  key={index}
-                  src="/data/img/image.png"
-                  alt="chili"
+                  src="/data/img/no-chili.png"
+                  alt="no chili"
                   className="w-4 h-4"
                 />
-              ))}
-            
+              ) : (
+                Array.from({ length: chilis }, (_, index) => (
+                  <img
+                    key={index}
+                    src="/data/img/image.png"
+                    alt="chili"
+                    className="w-4 h-4"
+                  />
+                ))
+              )}
             </div>
           </label>
         ))}
