@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import CustomerReviews from '@/components/CustomerReviews';
+import ReviewCarousel from '@/components/ReviewCarousel';
 import FindUsSection from '@/components/FindUsSection';
 
 export default function Home() {
@@ -114,8 +114,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Customer Reviews */}
-      <CustomerReviews />
+      {/* Customer Reviews Carousel */}
+      <ReviewCarousel />
 
       {/* Find Us Section */}
       <FindUsSection />
