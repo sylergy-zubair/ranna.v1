@@ -53,10 +53,26 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <section className="bg-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Contact Us</h1>
-          <p className="text-xl text-gray-600">We&apos;d love to hear from you</p>
+      <section className="bg-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-start">
+          <h1 className="text-5xl font-bold text-black">Contact Us</h1>
+          <p className="text-xl text-gray-600 ">Have a question or a bit of feedback? We're always happy to listen.</p>
+          <p className="text-lg text-gray-500">Drop us a line and we'll do our best to help.</p>
+        </div>
+      </section>
+
+ {/* Embedded Store Locator */}
+ <section className="bg-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">        
+          
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <iframe
+              src="https://c1842afadfb9404ba403ddc7e96b0d10.elf.site"
+              className="w-full h-[800px] border-0"
+              title="Store Locator"
+              allow="geolocation"
+            />
+          </div>
         </div>
       </section>
 
@@ -67,7 +83,7 @@ export default function ContactPage() {
             {/* Contact Form */}
             <div>
             <div className="bg-white rounded-lg shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
+              <h1 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h1>
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Name Field */}
@@ -295,24 +311,7 @@ export default function ContactPage() {
         </div>
       </main>
 
-      {/* Embedded Store Locator */}
-      <section className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Find Our Locations</h2>
-            <p className="text-lg text-gray-600">Use our interactive store locator to find the nearest Ranna restaurant</p>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <iframe
-              src="https://c1842afadfb9404ba403ddc7e96b0d10.elf.site"
-              className="w-full h-[800px] border-0"
-              title="Store Locator"
-              allow="geolocation"
-            />
-          </div>
-        </div>
-      </section>
+     
 
       {/* FAQ Section */}
       <FAQ />

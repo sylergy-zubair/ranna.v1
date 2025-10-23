@@ -141,7 +141,7 @@ export default function MenuPage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Filter Panel */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto">
+            <div className="sticky top-28 max-h-[calc(100vh-120px)] overflow-y-auto">
               <FilterPanel
                 filters={filters}
                 onFiltersChange={updateFilters}
@@ -153,7 +153,7 @@ export default function MenuPage() {
           {/* Dishes Grid */}
           <div className="lg:col-span-3">
             {/* Fixed Category and Menu Header */}
-            <div className="sticky top-24 bg-gray-50 z-10 pb-4 -mx-4 px-4">
+            <div className="sticky top-28 bg-gray-50 z-10 pb-4 -mx-4 px-4">
               <div className="mb-6">
                 
                 <p className="text-gray-600 mb-4">

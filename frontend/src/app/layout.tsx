@@ -1,9 +1,19 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Poppins, Gabarito } from 'next/font/google'
 import './globals.css'
 import ConditionalLayout from '@/components/ConditionalLayout'
 
-const inter = Inter({ subsets: ['latin'] })
+const poppins = Poppins({ 
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-poppins'
+})
+
+const gabarito = Gabarito({ 
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-gabarito'
+})
 
 export const metadata: Metadata = {
   title: 'Ranna - Authentic Indian Cuisine',
@@ -23,7 +33,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} min-h-screen flex flex-col`}>
+      <body className={`${poppins.className} ${gabarito.variable} min-h-screen flex flex-col`}>
         <ConditionalLayout>
           {children}
         </ConditionalLayout>

@@ -28,7 +28,7 @@ export default function ConditionalLayout({
   return (
     <>
       {!isAdminRoute && <Navbar />}
-      <main className={isAdminRoute ? 'h-screen' : 'pt-16 flex-grow'}>
+      <main className={isAdminRoute ? 'h-screen' : 'pt-20 flex-grow'}>
         {children}
       </main>
       {!isAdminRoute && <Footer />}

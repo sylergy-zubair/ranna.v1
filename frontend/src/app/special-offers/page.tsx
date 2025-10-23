@@ -138,7 +138,7 @@ export default function SpecialOffersPage() {
             
             {/* Image */}
             <div className="order-2 lg:order-2">
-              <div className="relative h-full w-full bg-gray-200 rounded-lg overflow-hidden">
+              <div className="relative h-full w-full rounded-lg overflow-hidden">
               <img
                   src="/data/img/VIPLoyalty.webp"
                   alt="22% VIP Discount Offer"
@@ -156,7 +156,7 @@ export default function SpecialOffersPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Image */}
             <div className="order-2 lg:order-1">
-              <div className="relative h-full w-full bg-gray-200 rounded-lg overflow-hidden">
+              <div className="relative h-full w-full rounded-lg overflow-hidden">
               <img
                   src="/data/img/Ranna10Discount.webp"
                   alt="10% Online Discount Offer"
@@ -228,7 +228,7 @@ export default function SpecialOffersPage() {
             
             {/* Image */}
             <div className="order-2 lg:order-2">
-              <div className="relative h-full w-full bg-gray-200 rounded-lg overflow-hidden">
+              <div className="relative h-full w-full rounded-lg overflow-hidden">
               <img
                   src="/data/img/RannaRewards.webp"
                   alt="Ranna Rewards Offer"

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -37,9 +38,16 @@ export default function Footer() {
             {/* Left Column - Brand Information */}
             <div className="md:col-span-1">
               <div className="mb-4">
-                <h2 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'cursive' }}>
-                  Ranna
-                </h2>
+                <div className="mb-2">
+                  <Image
+                    src="/img/Ranna_new_LOGO-For-Sign.png"
+                    alt="Ranna Logo"
+                    width={154}
+                    height={99}
+                    className="h-12 w-auto"
+                    priority
+                  />
+                </div>
                 <p className="text-white text-sm">Your Kitchen Away From Home</p>
               </div>
               

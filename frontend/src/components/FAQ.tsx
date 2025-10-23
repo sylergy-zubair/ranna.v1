@@ -156,8 +156,8 @@ export default function FAQ() {
     <div className="bg-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
-          <p className="text-lg text-gray-600">Find answers to common questions about Ranna</p>
+          <h1 className="text-5xl font-bold text-gray-900 mb-4">FAQ</h1>
+          <p className="text-lg text-gray-600">Have questions? Contact us and we'll be happy to help.</p>
         </div>
 
         <div className="max-w-4xl mx-auto">
