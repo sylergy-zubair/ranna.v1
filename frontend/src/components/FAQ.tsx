@@ -171,7 +171,7 @@ export default function FAQ() {
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold text-gray-900">{section.Title}</h3>
                   <svg
-                    className={`w-5 h-5 text-gray-500 transition-transform duration-200 ${
+                    className={`w-5 h-5 text-gray-500 transition-transform duration-300 ease-in-out ${
                       openSections.has(section.Title) ? 'rotate-180' : ''
                     }`}
                     fill="none"
@@ -184,8 +184,12 @@ export default function FAQ() {
               </button>
 
               {/* Questions within section */}
-              {openSections.has(section.Title) && (
-                <div className="mt-2 space-y-2">
+              <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                openSections.has(section.Title) 
+                  ? 'max-h-[2000px] opacity-100 mt-2' 
+                  : 'max-h-0 opacity-0'
+              }`}>
+                <div className="space-y-2">
                   {section.questions.map((item, questionIndex) => {
                     const questionKey = `${section.Title}-${questionIndex}`;
                     return (
@@ -197,7 +201,7 @@ export default function FAQ() {
                           <div className="flex items-center justify-between">
                             <h4 className="text-md font-medium text-gray-800">{item.question}</h4>
                             <svg
-                              className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
+                              className={`w-4 h-4 text-gray-500 transition-transform duration-300 ease-in-out ${
                                 openQuestions.has(questionKey) ? 'rotate-180' : ''
                               }`}
                               fill="none"
@@ -210,8 +214,12 @@ export default function FAQ() {
                         </button>
 
                         {/* Answer */}
-                        {openQuestions.has(questionKey) && (
-                          <div className="mt-2 ml-4 bg-gray-50 border border-gray-200 rounded-lg p-4">
+                        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                          openQuestions.has(questionKey) 
+                            ? 'max-h-[500px] opacity-100 mt-2' 
+                            : 'max-h-0 opacity-0'
+                        }`}>
+                          <div className="ml-4 bg-gray-50 border border-gray-200 rounded-lg p-4">
                             {Array.isArray(item.answer) ? (
                               <ul className="space-y-2">
                                 {item.answer.map((point, pointIndex) => (
@@ -224,12 +232,12 @@ export default function FAQ() {
                               <p className="text-gray-700">{item.answer}</p>
                             )}
                           </div>
-                        )}
+                        </div>
                       </div>
                     );
                   })}
                 </div>
-              )}
+              </div>
             </div>
           ))}
         </div>

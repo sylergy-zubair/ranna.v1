@@ -105,45 +105,36 @@ export default function Home() {
       <section className="bg-gradient-to-r from-orange-600 to-red-600 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">Made with passion, served with pride</h1>
-        </div>
-      </section>
-
-      {/* Hero Section 2 */}
-      <section className="bg-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">Quick Heat. big flavour</h2>
+          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">The Indian flavour that keeps you coming back</h2>
+
         </div>
       </section>
 
-      {/* Hero Section 3 */}
-      <section className="bg-gray-50 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">The Indian flavour that keeps you coming back</h2>
-        </div>
-      </section>
+
 
       {/* Hero Section 4 */}
-      <section className="bg-white py-20">
+      <section className="bg-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link
               href="/menu"
-              className="px-8 py-4 bg-red-600 text-white rounded-full font-semibold hover:bg-red-700 transition-colors text-lg"
-              style={{ backgroundColor: '#FF4036' }}
+              className="px-8 py-4 border-2 text-red-600 rounded-full font-semibold hover:bg-red-600 hover:text-white transition-colors text-lg"
+              
             >
               Menu
             </Link>
             <Link
               href="/special-offers"
               className="px-8 py-4 border-2 text-red-600 rounded-full font-semibold hover:bg-red-600 hover:text-white transition-colors text-lg"
-              style={{ borderColor: '#FF4036', color: '#FF4036' }}
+              
             >
               Special Offers
             </Link>
             <Link
-              href="#"
-              className="px-8 py-4 border-2 border-gray-600 text-gray-600 rounded-full font-semibold hover:bg-gray-600 hover:text-white transition-colors text-lg"
+              href="/contact"
+              className="px-8 py-4 border-2 text-red-600 rounded-full font-semibold hover:bg-red-600 hover:text-white transition-colors text-lg"
             >
               Find Us
             </Link>
@@ -154,41 +145,48 @@ export default function Home() {
       {/* Special Offers Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">Special Offers</h2>
+          <h2 className="text-5xl font-bold text-gray-900 mb-12 text-left">Special Offers</h2>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Card 1: 25% Discount */}
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              {/* Dark background with red bottom */}
-              <div className="relative bg-gradient-to-b from-gray-900 to-red-600 h-96">             
-                
-                {/* More Info Button */}
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-                  <Link
-                    href="/special-offers"
-                    className="bg-red-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-red-700 transition-colors"
-                  >
-                    More Info
-                  </Link>
-                </div>
+            <div className="w-full">
+              <div className="relative rounded-2xl overflow-hidden mb-2">
+                <img
+                  src="/data/img/Ranna25Discount.webp"
+                  alt="25% Discount Offer"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              {/* More Info Button - Left Aligned with Image */}
+              <div className="w-full">
+                <Link
+                  href="/special-offers"
+                  className="bg-red-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-red-700 transition-colors"
+                  style={{ backgroundColor: '#FF4036' }}
+                >
+                  More Info
+                </Link>
               </div>
             </div>
 
             {/* Card 2: VIP Loyalty Membership */}
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              {/* Yellow background with orange bottom */}
-              <div className="relative bg-gradient-to-b from-yellow-400 to-orange-500 h-96">
-                              
-                
-                {/* More Info Button */}
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-                  <Link
-                    href="/special-offers"
-                    className="bg-red-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-red-700 transition-colors"
-                  >
-                    More Info
-                  </Link>
-                </div>
+            <div className="w-full">
+              <div className="relative rounded-2xl overflow-hidden mb-2">
+                <img
+                  src="/data/img/VIPLoyalty.webp"
+                  alt="VIP Loyalty Membership"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              {/* More Info Button - Left Aligned with Image */}
+              <div className="w-full">
+                <Link
+                  href="/special-offers"
+                  className="bg-red-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-red-700 transition-colors"
+                  style={{ backgroundColor: '#FF4036' }}
+                >
+                  More Info
+                </Link>
               </div>
             </div>
           </div>
