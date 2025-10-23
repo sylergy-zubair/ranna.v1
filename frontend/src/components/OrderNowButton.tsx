@@ -50,7 +50,7 @@ const sizeClasses = {
 
 const variantClasses = {
   primary: {
-    orange: 'bg-orange-600 text-white hover:bg-orange-700 border-orange-600',
+    orange: 'bg-red-600 text-white hover:bg-red-700 border-red-600',
     red: 'bg-red-600 text-white hover:bg-red-700 border-red-600',
     blue: 'bg-blue-600 text-white hover:bg-blue-700 border-blue-600',
     green: 'bg-green-600 text-white hover:bg-green-700 border-green-600',
@@ -58,7 +58,7 @@ const variantClasses = {
     white: 'bg-white text-gray-900 hover:bg-gray-50 border-white',
   },
   secondary: {
-    orange: 'bg-orange-50 text-orange-700 hover:bg-orange-100 border-orange-200',
+    orange: 'bg-red-50 text-red-700 hover:bg-red-100 border-red-200',
     red: 'bg-red-50 text-red-700 hover:bg-red-100 border-red-200',
     blue: 'bg-blue-50 text-blue-700 hover:bg-blue-100 border-blue-200',
     green: 'bg-green-50 text-green-700 hover:bg-green-100 border-green-200',
@@ -66,7 +66,7 @@ const variantClasses = {
     white: 'bg-gray-50 text-white hover:bg-gray-100 border-gray-300',
   },
   outline: {
-    orange: 'bg-transparent text-orange-600 hover:bg-orange-50 border-orange-600',
+    orange: 'bg-transparent text-red-600 hover:bg-red-50 border-red-600',
     red: 'bg-transparent text-red-600 hover:bg-red-50 border-red-600',
     blue: 'bg-transparent text-blue-600 hover:bg-blue-50 border-blue-600',
     green: 'bg-transparent text-green-600 hover:bg-green-50 border-green-600',
@@ -74,7 +74,7 @@ const variantClasses = {
     white: 'bg-transparent text-white hover:bg-white/10 border-white',
   },
   ghost: {
-    orange: 'bg-transparent text-orange-600 hover:bg-orange-50 border-transparent',
+    orange: 'bg-transparent text-red-600 hover:bg-red-50 border-transparent',
     red: 'bg-transparent text-red-600 hover:bg-red-50 border-transparent',
     blue: 'bg-transparent text-blue-600 hover:bg-blue-50 border-transparent',
     green: 'bg-transparent text-green-600 hover:bg-green-50 border-transparent',
@@ -82,8 +82,8 @@ const variantClasses = {
     white: 'bg-transparent text-white hover:bg-white/10 border-transparent',
   },
   gradient: {
-    orange: 'bg-gradient-to-r from-orange-600 to-red-600 text-white hover:from-orange-700 hover:to-red-700 border-transparent',
-    red: 'bg-gradient-to-r from-red-600 to-pink-600 text-white hover:from-red-700 hover:to-pink-700 border-transparent',
+    orange: 'bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 border-transparent',
+    red: 'bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-800 border-transparent',
     blue: 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 border-transparent',
     green: 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-700 hover:to-emerald-700 border-transparent',
     gray: 'bg-gradient-to-r from-gray-600 to-gray-700 text-white hover:from-gray-700 hover:to-gray-800 border-transparent',
@@ -125,12 +125,13 @@ export default function OrderNowButton({
     bounce && !disabled && 'hover:animate-bounce',
     pulseEffect && !disabled && 'animate-pulse',
     fullWidth && 'w-full',
-    rounded ? 'rounded-md' : 'rounded-none',
+    rounded !== false ? 'rounded-full' : 'rounded-none',
     shadow && 'shadow-lg hover:shadow-xl',
-    glowEffect && !disabled && 'hover:shadow-2xl hover:shadow-orange-500/25',
+    glowEffect && !disabled && 'hover:shadow-2xl hover:shadow-red-500/25',
   ].filter(Boolean).join(' ');
 
-  const focusRingColor = color === 'white' ? 'focus:ring-gray-500' : `focus:ring-${color}-500`;
+  const focusRingColor = color === 'white' ? 'focus:ring-gray-500' : 
+    (color === 'orange' || color === 'red') ? 'focus:ring-red-500' : `focus:ring-${color}-500`;
 
   const buttonClasses = `${baseClasses} ${sizeClass} ${variantClass} ${effectClasses} ${focusRingColor} ${className}`;
 

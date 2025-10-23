@@ -40,13 +40,14 @@ export default function DishCard({ dish, onMoreInfo }: DishCardProps) {
       <div className="flex justify-between items-center">
         <div className="flex items-baseline">
           <span className="text-sm text-gray-500 mr-1">from</span>
-          <span className="text-2xl font-bold text-orange-600">
+          <span className="text-2xl font-bold text-red-600" style={{ color: '#FF4036' }}>
             {formatPrice(dish.lowestPrice)}
           </span>
         </div>
         <button
           onClick={() => onMoreInfo(dish)}
-          className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200"
+          style={{ backgroundColor: '#FF4036' }}
         >
           More Info
         </button>

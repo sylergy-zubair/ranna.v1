@@ -350,12 +350,13 @@ export default function ContactPage() {
                 </div>
 
                 {/* Send Message Button */}
-                <button
-                  type="submit"
-                  className="w-full bg-red-600 text-white py-3 px-6 rounded-md font-semibold hover:bg-red-700 transition-colors"
-                >
-                  Send Message
-                </button>
+                 <button
+                   type="submit"
+                   className="w-full bg-red-600 text-white py-3 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors"
+                   style={{ backgroundColor: '#FF4036' }}
+                 >
+                   Send Message
+                 </button>
               </form>
             </div>
           </div>
