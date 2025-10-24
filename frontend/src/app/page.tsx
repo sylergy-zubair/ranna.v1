@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import ReviewCarousel from '@/components/ReviewCarousel';
 import FindUsSection from '@/components/FindUsSection';
 import DishCard from '@/components/DishCard';
@@ -179,11 +180,13 @@ export default function Home() {
             {/* Card 1: 25% Discount */}
             <div className="space-y-6">
               <div className="relative rounded-3xl overflow-hidden shadow-lg">
-                <img
+                <Image
                   src="/data/img/Ranna25Discount.webp"
                   alt="25% Discount Offer"
+                  width={400}
+                  height={300}
                   className="w-full h-auto object-contain"
-            />
+                />
           </div>
               {/* More Info Button */}
               <div>
@@ -200,9 +203,11 @@ export default function Home() {
             {/* Card 2: VIP Loyalty Membership */}
             <div className="space-y-6">
               <div className="relative rounded-3xl overflow-hidden shadow-lg">
-                <img
+                <Image
                   src="/data/img/VIPLoyalty.webp"
                   alt="VIP Loyalty Membership"
+                  width={400}
+                  height={300}
                   className="w-full h-auto object-contain"
                 />
               </div>

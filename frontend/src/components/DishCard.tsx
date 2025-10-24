@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { DishCardProps } from '@/types';
 import { getSpiceLevelInfo, formatPrice } from '@/utils/dataUtils';
 
@@ -9,9 +10,11 @@ export default function DishCard({ dish, onMoreInfo }: DishCardProps) {
       {/* Image */}
       <div className="w-full h-48 bg-gray-200">
         {dish.image_url ? (
-          <img
+          <Image
             src={dish.image_url}
             alt={dish.dish_title}
+            width={300}
+            height={192}
             className="w-full h-full object-cover"
           />
         ) : (

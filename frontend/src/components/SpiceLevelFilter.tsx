@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface SpiceLevelFilterProps {
   value: number | null;
   onChange: (value: number | null) => void;
@@ -38,17 +40,21 @@ export default function SpiceLevelFilter({ value, onChange }: SpiceLevelFilterPr
             <div className="flex items-center space-x-1">
               {/* Chili Images */}
               {level === 1 ? (
-                <img
+                <Image
                   src="/data/img/no-chili.png"
                   alt="no chili"
+                  width={16}
+                  height={16}
                   className="w-4 h-4"
                 />
               ) : (
                 Array.from({ length: chilis }, (_, index) => (
-                  <img
+                  <Image
                     key={index}
                     src="/data/img/image.png"
                     alt="chili"
+                    width={16}
+                    height={16}
                     className="w-4 h-4"
                   />
                 ))

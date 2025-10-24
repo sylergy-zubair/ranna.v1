@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import OrderNowButton from '@/components/OrderNowButton';
 import OrderModal from '@/components/OrderModal';
 
@@ -67,9 +68,11 @@ export default function SpecialOffersPage() {
             {/* Image */}
             <div className="order-2 lg:order-1">
               <div className="relative h-full w-full rounded-lg overflow-hidden">
-                <img
+                <Image
                   src="/data/img/Ranna25Discount.webp"
                   alt="25% Discount Offer"
+                  width={400}
+                  height={300}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -139,9 +142,11 @@ export default function SpecialOffersPage() {
             {/* Image */}
             <div className="order-2 lg:order-2">
               <div className="relative h-full w-full rounded-lg overflow-hidden">
-              <img
+              <Image
                   src="/data/img/VIPLoyalty.webp"
                   alt="22% VIP Discount Offer"
+                  width={400}
+                  height={300}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -157,9 +162,11 @@ export default function SpecialOffersPage() {
             {/* Image */}
             <div className="order-2 lg:order-1">
               <div className="relative h-full w-full rounded-lg overflow-hidden">
-              <img
+              <Image
                   src="/data/img/Ranna10Discount.webp"
                   alt="10% Online Discount Offer"
+                  width={400}
+                  height={300}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -229,9 +236,11 @@ export default function SpecialOffersPage() {
             {/* Image */}
             <div className="order-2 lg:order-2">
               <div className="relative h-full w-full rounded-lg overflow-hidden">
-              <img
+              <Image
                   src="/data/img/RannaRewards.webp"
                   alt="Ranna Rewards Offer"
+                  width={400}
+                  height={300}
                   className="w-full h-full object-cover"
                 />
               </div>
