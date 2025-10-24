@@ -5,9 +5,23 @@ import ReviewCarousel from '@/components/ReviewCarousel';
 import FindUsSection from '@/components/FindUsSection';
 import DishCard from '@/components/DishCard';
 
+interface FeaturedDish {
+  dish_id: string;
+  dish_title: string;
+  image_url: string;
+  spice_level: number;
+  options: Array<{
+    price: number;
+    short_description: string;
+  }>;
+  category: string;
+  description: string;
+  lowestPrice: number;
+}
+
 export default function Home() {
   // Featured dishes for Fan Favourites section
-  const featuredDishes = [
+  const featuredDishes: FeaturedDish[] = [
     {
       dish_id: "featured-1",
       dish_title: "Butter Chicken",
@@ -101,7 +115,7 @@ export default function Home() {
     }
   ];
 
-  const handleMoreInfo = (dish: any) => {
+  const handleMoreInfo = (dish: { dish_title: string }) => {
     // For now, just log the dish - you can implement modal later
     console.log('More info for:', dish.dish_title);
   };
@@ -227,6 +241,7 @@ export default function Home() {
               {featuredDishes.map((dish, index) => (
                 <div key={`first-${index}`} className="flex-shrink-0 mx-4">
                   <div className="w-80">
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     <DishCard dish={dish as any} onMoreInfo={handleMoreInfo} />
                   </div>
                 </div>
@@ -235,6 +250,7 @@ export default function Home() {
               {featuredDishes.map((dish, index) => (
                 <div key={`second-${index}`} className="flex-shrink-0 mx-4">
                   <div className="w-80">
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     <DishCard dish={dish as any} onMoreInfo={handleMoreInfo} />
                   </div>
                 </div>

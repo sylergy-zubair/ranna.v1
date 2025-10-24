@@ -66,7 +66,7 @@ const optionSchema = Joi.object({
 const dishSchema = Joi.object({
   dish_id: Joi.string().uuid().optional(),
   dish_title: Joi.string().required(),
-  spice_level: Joi.number().integer().min(1).max(4).required(),
+  spice_level: Joi.number().integer().min(1).max(5).required(),
   image_url: Joi.string().uri().allow('').optional(),
   options: Joi.array().items(optionSchema).min(1).required()
 });
