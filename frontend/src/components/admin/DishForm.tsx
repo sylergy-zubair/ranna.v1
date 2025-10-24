@@ -533,7 +533,7 @@ function OptionForm({ option, index, onUpdate, onRemove, disabled }: OptionFormP
               </label>
               <input
                 type="number"
-                step="0.1"
+                step="0.01"
                 min="0"
                 value={value}
                 onChange={(e) => handleNutritionChange(key as keyof Nutrition, parseFloat(e.target.value) || 0)}

@@ -52,7 +52,7 @@ const CONSTANTS = {
     'Cereals (Gluten, Rye)',
     'Cereals (Gluten, Oats)',
     'Crustaceans',
-    'Lupin',
+    'No Allergen',
     'Peanut',
     'Molluscs'
   ],
