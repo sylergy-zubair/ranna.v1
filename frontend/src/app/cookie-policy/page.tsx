@@ -27,7 +27,7 @@ export default function CookiePolicy() {
             </p>
             <p className="text-gray-700 mb-4">Our cookies help us:</p>
             <ul className="list-disc list-inside text-gray-700 space-y-1">
-              <li>Make our website work as you'd expect</li>
+              <li>Make our website work as you&apos;d expect</li>
               <li>Save you from logging in every time you visit</li>
               <li>Remember your settings during and between visits</li>
               <li>Improve the speed and security of the site</li>

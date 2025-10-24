@@ -56,8 +56,8 @@ export default function ContactPage() {
       <section className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-start">
           <h1 className="text-5xl font-bold text-black">Contact Us</h1>
-          <p className="text-xl text-gray-600 ">Have a question or a bit of feedback? We're always happy to listen.</p>
-          <p className="text-lg text-gray-500">Drop us a line and we'll do our best to help.</p>
+          <p className="text-xl text-gray-600 ">Have a question or a bit of feedback? We&apos;re always happy to listen.</p>
+          <p className="text-lg text-gray-500">Drop us a line and we&apos;ll do our best to help.</p>
         </div>
       </section>
 

@@ -167,7 +167,7 @@ export default function CareersPage() {
               Interested in working at Ranna?
             </p>
             <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-              Submit your details below, and we'll get back to you to discuss which of our teams might be a good fit for you.
+              Submit your details below, and we&apos;ll get back to you to discuss which of our teams might be a good fit for you.
             </p>
             <div className="mt-8 p-6 bg-orange-50 rounded-lg max-w-4xl mx-auto">
               <p className="text-gray-800">

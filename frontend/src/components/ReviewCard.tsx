@@ -2,7 +2,7 @@
 
 import { ReviewCardProps } from '@/types/review';
 
-export default function ReviewCard({ review, index }: ReviewCardProps) {
+export default function ReviewCard({ review }: ReviewCardProps) {
   // Skip rendering if essential data is missing
   if (!review.review || !review.name) {
     return null;

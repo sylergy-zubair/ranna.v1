@@ -32,7 +32,7 @@ export default function PrivacyPolicy() {
               <li>Ranna (South Woodford) – Derby Food Ltd</li>
             </ul>
             <p className="text-gray-700 mb-4">
-              All are registered in England & Wales. For the purposes of this policy, they are collectively referred to as "Ranna", "we", "us", or "our".
+              All are registered in England & Wales. For the purposes of this policy, they are collectively referred to as &quot;Ranna&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;.
             </p>
             <p className="text-gray-700">
               We are committed to protecting your privacy and processing your personal data in accordance with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.
@@ -182,7 +182,7 @@ export default function PrivacyPolicy() {
               <p className="text-gray-700 mb-2"><strong>Website:</strong> www.ranna.co.uk</p>
               <p className="text-gray-700 mb-4"><strong>Address:</strong> 14/2g Tiller Road, E14 8PX</p>
               <p className="text-gray-700">
-                You also have the right to complain to the Information Commissioner's Office (ICO):<br />
+                You also have the right to complain to the Information Commissioner&apos;s Office (ICO):<br />
                 Wycliffe House, Water Lane, Wilmslow, Cheshire, SK9 5AF<br />
                 www.ico.org.uk
               </p>

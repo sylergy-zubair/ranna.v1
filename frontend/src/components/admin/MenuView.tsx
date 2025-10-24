@@ -63,7 +63,7 @@ export default function MenuView({ menu }: MenuViewProps) {
                     className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
                   >
                     <div className="flex justify-between items-start mb-2">
-                      <h5 className="font-medium text-gray-900">{dish.dish_title}</h5>
+                      <h5 className="font-medium text-[24px] text-gray-900">{dish.dish_title}</h5>
                       <span className="flex space-x-1">
                         {Array.from({ length: dish.spice_level }, (_, i) => (
                           <span key={i} className="text-red-500">🌶️</span>

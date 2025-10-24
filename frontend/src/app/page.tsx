@@ -9,6 +9,7 @@ export default function Home() {
   // Featured dishes for Fan Favourites section
   const featuredDishes = [
     {
+      dish_id: "featured-1",
       dish_title: "Butter Chicken",
       image_url: "/data/img/butter-chicken.jpg",
       spice_level: 2,
@@ -21,6 +22,7 @@ export default function Home() {
       lowestPrice: 12.99
     },
     {
+      dish_id: "featured-6",
       dish_title: "Lamb Biryani",
       image_url: "/data/img/lamb-biryani.jpg", 
       spice_level: 3,
@@ -33,6 +35,7 @@ export default function Home() {
       lowestPrice: 14.99
     },
     {
+      dish_id: "featured-7",
       dish_title: "Paneer Tikka",
       image_url: "/data/img/paneer-tikka.jpg",
       spice_level: 2,
@@ -45,6 +48,7 @@ export default function Home() {
       lowestPrice: 8.99
     },
     {
+      dish_id: "featured-2",
       dish_title: "Chicken Tikka Masala",
       image_url: "/data/img/chicken-tikka-masala.jpg",
       spice_level: 2,
@@ -57,6 +61,7 @@ export default function Home() {
       lowestPrice: 13.99
     },
     {
+      dish_id: "featured-3",
       dish_title: "Dal Makhani",
       image_url: "/data/img/dal-makhani.jpg",
       spice_level: 1,
@@ -69,6 +74,7 @@ export default function Home() {
       lowestPrice: 9.99
     },
     {
+      dish_id: "featured-4",
       dish_title: "Chicken Karahi",
       image_url: "/data/img/chicken-karahi.jpg",
       spice_level: 4,
@@ -81,6 +87,7 @@ export default function Home() {
       lowestPrice: 15.99
     },
     {
+      dish_id: "featured-5",
       dish_title: "Naan Bread",
       image_url: "/data/img/naan-bread.jpg",
       spice_level: 1,
@@ -220,7 +227,7 @@ export default function Home() {
               {featuredDishes.map((dish, index) => (
                 <div key={`first-${index}`} className="flex-shrink-0 mx-4">
                   <div className="w-80">
-                    <DishCard dish={dish} onMoreInfo={handleMoreInfo} />
+                    <DishCard dish={dish as any} onMoreInfo={handleMoreInfo} />
                   </div>
                 </div>
               ))}
@@ -228,7 +235,7 @@ export default function Home() {
               {featuredDishes.map((dish, index) => (
                 <div key={`second-${index}`} className="flex-shrink-0 mx-4">
                   <div className="w-80">
-                    <DishCard dish={dish} onMoreInfo={handleMoreInfo} />
+                    <DishCard dish={dish as any} onMoreInfo={handleMoreInfo} />
                   </div>
                 </div>
               ))}

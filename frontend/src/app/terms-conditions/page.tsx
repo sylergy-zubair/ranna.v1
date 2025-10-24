@@ -9,7 +9,7 @@ export default function TermsConditions() {
             <p><strong>Ranna Terms & Conditions</strong></p>
             <p>Effective Date: 1 October 2025</p>
             <p className="text-gray-700 mt-4">
-              These Terms & Conditions ("Terms") govern the use of the Ranna website, mobile ordering, phone ordering, loyalty programme, promotions, and services operated by Kaptan Group Ltd (trading as Ranna). By placing an order, browsing our website, or using our services, you agree to be bound by these Terms.
+              These Terms & Conditions (&quot;Terms&quot;) govern the use of the Ranna website, mobile ordering, phone ordering, loyalty programme, promotions, and services operated by Kaptan Group Ltd (trading as Ranna). By placing an order, browsing our website, or using our services, you agree to be bound by these Terms.
             </p>
           </div>
         </div>
@@ -61,7 +61,7 @@ export default function TermsConditions() {
               <li>When you place an order, you will receive an Order Acknowledgement (not acceptance).</li>
               <li>A binding Contract is only formed when we dispatch your order or confirm it is ready for collection.</li>
               <li>We may decline orders at our discretion (e.g., outside delivery areas, after cut-off times, unusually large orders without notice).</li>
-              <li>Large party orders may require at least 24 hours' notice.</li>
+              <li>Large party orders may require at least 24 hours&apos; notice.</li>
             </ul>
           </section>
 
