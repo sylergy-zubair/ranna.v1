@@ -188,6 +188,20 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
             <p className="text-gray-700 leading-relaxed">{selectedOption.detailed_description}</p>
           </div>
         </div>
+
+        {/* Ingredients Section */}
+        <div className="border-t border-gray-200 p-6">
+          <div className="bg-gray-50 rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Ingredients</h3>
+            <div className="text-gray-700 leading-relaxed">
+              {selectedOption.ingredients && selectedOption.ingredients.length > 0 ? (
+                <p>{selectedOption.ingredients.join(', ')}</p>
+              ) : (
+                <p className="text-gray-500 italic">No ingredients information available</p>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

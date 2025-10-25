@@ -124,12 +124,31 @@ export default function Home() {
     return (
     <div>
       {/* Hero Section 1 */}
-      <section className="bg-gradient-to-r from-orange-600 to-red-600 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative text-white py-20 overflow-hidden bg-gradient-to-r from-orange-600 to-red-600">
+        {/* Video Background */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover z-0"
+          onError={(e) => console.error('Video failed to load:', e)}
+          onLoadStart={() => console.log('Video loading started')}
+          onCanPlay={() => console.log('Video can play')}
+        >
+          <source src="/data/vdo/Ranna Website Hero Video.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        
+        {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-black bg-opacity-40 z-10"></div>
+        
+        {/* Content */}
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">Made with passion, served with pride</h1>
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">Quick Heat. big flavour</h2>
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">The Indian flavour that keeps you coming back</h2>
-
+          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">Quick Heat. big flavour</h2>
+          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">The Indian flavour that keeps you coming back</h2>
         </div>
       </section>
 
@@ -182,7 +201,7 @@ export default function Home() {
                   width={400}
                   height={300}
                   className="w-full h-auto object-contain"
-                />
+            />
           </div>
               {/* More Info Button */}
               <div>
