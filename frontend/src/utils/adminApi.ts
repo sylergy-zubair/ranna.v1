@@ -1,6 +1,7 @@
 import { 
   AdminApiResponse, 
   CuisineData, 
+  Dish,
   CreateDishRequest, 
   UpdateDishRequest, 
   CreateCategoryRequest, 
@@ -63,6 +64,11 @@ export const adminApi = {
   // Get full menu for admin
   getMenu: async (): Promise<AdminApiResponse<CuisineData>> => {
     return apiCall<CuisineData>('/admin/menu');
+  },
+
+  // Get single dish by ID
+  getDish: async (dishId: string): Promise<AdminApiResponse<Dish>> => {
+    return apiCall<Dish>(`/admin/menu/dish/${dishId}`);
   },
 
   // Add new dish

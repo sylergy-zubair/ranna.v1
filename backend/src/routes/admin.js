@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {
   getMenu,
+  getDish,
   addDish,
   updateDish,
   deleteDish,
@@ -23,6 +24,9 @@ router.use(authenticateAdmin);
 
 // Admin menu routes
 router.get('/menu', getMenu);
+
+// Get single dish by ID
+router.get('/menu/dish/:dishId', validateParams(dishIdsSchema), getDish);
 
 // Add new dish to category
 router.post('/menu/dish', validateBody(addDishSchema), addDish);

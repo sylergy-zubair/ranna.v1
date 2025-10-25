@@ -98,6 +98,58 @@ const getMenu = async (req, res) => {
   }
 };
 
+// Get single dish by ID
+const getDish = async (req, res) => {
+  try {
+    const { dishId } = req.params;
+    
+    if (!dishId) {
+      return res.status(CONSTANTS.STATUS.BAD_REQUEST).json(
+        formatResponse(false, null, 'Dish ID is required')
+      );
+    }
+
+    // Ensure database connection before querying
+    await ensureConnection();
+    
+    const menu = await Menu.findOne().lean();
+    if (!menu) {
+      return res.status(CONSTANTS.STATUS.NOT_FOUND).json(
+        formatResponse(false, null, 'Menu not found')
+      );
+    }
+
+    // Find the dish across all categories
+    let foundDish = null;
+    let foundCategory = null;
+    
+    for (const category of menu.categories) {
+      const dish = category.dishes.find(d => d.dish_id === dishId);
+      if (dish) {
+        foundDish = dish;
+        foundCategory = category;
+        break;
+      }
+    }
+
+    if (!foundDish) {
+      return res.status(CONSTANTS.STATUS.NOT_FOUND).json(
+        formatResponse(false, null, 'Dish not found')
+      );
+    }
+
+    const sanitizedDish = sanitizeMongoResponse(foundDish);
+    res.status(CONSTANTS.STATUS.SUCCESS).json(
+      formatResponse(true, sanitizedDish, 'Dish retrieved successfully')
+    );
+  } catch (error) {
+    console.error('Admin getDish error:', error);
+    res.status(CONSTANTS.STATUS.INTERNAL_ERROR).json(
+      formatResponse(false, null, 'Failed to fetch dish', error.message)
+    );
+  }
+};
+
 // Add new dish to a category
 const addDish = async (req, res) => {
   try {
@@ -534,6 +586,7 @@ const clearCache = async (req, res) => {
 
 module.exports = {
   getMenu,
+  getDish,
   addDish,
   updateDish,
   deleteDish,
