@@ -45,7 +45,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-8">
             <Link 
               href="/menu" 
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${
                 isActive('/menu') 
                   ? 'text-orange-600 bg-orange-50' 
                   : 'text-gray-700 hover:text-orange-600'
@@ -55,7 +55,7 @@ export default function Navbar() {
             </Link>
             <Link 
               href="/our-story" 
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${
                 isActive('/our-story') 
                   ? 'text-orange-600 bg-orange-50' 
                   : 'text-gray-700 hover:text-orange-600'
@@ -65,7 +65,7 @@ export default function Navbar() {
             </Link>
             <Link 
               href="/special-offers" 
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${
                 isActive('/special-offers') 
                   ? 'text-orange-600 bg-orange-50' 
                   : 'text-gray-700 hover:text-orange-600'
@@ -75,7 +75,7 @@ export default function Navbar() {
             </Link>
             <Link 
               href="/contact" 
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-3 py-2 rounded-md text-md font-medium transition-colors ${
                 isActive('/contact') 
                   ? 'text-orange-600 bg-orange-50' 
                   : 'text-gray-700 hover:text-orange-600'
