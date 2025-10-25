@@ -8,10 +8,9 @@ export default function Footer() {
         
         {/* Top Section - Exclusive Offers (Full Width) */}
         <div className="py-8 border-b border-gray-600">
-          <div className="flex flex-col lg:flex-row justify-between items-center">
+          <div className="flex flex-col lg:flex-row justify-evenly items-center">
             <div className="mb-4 lg:mb-0">
-              <h3 className="text-xl font-bold mb-2">Exclusive Offers</h3>
-              <p className="text-white">
+              <p className="text-white text-sm">
                 Subscribe for exclusive vouchers, offers and money off.
               </p>
             </div>

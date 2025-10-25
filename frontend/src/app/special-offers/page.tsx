@@ -94,11 +94,8 @@ export default function SpecialOffersPage() {
                 </div>
                 <OrderNowButton
                   text="PLACE AN ORDER NOW"
-                  size="lg"
-                  variant="primary"
-                  color="orange"
-                  fullWidth
-                  glowEffect
+                  className="inline-block w-fit bg-red-600 text-white py-2 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors text-center"
+                style={{ backgroundColor: '#FF4036' }}
                   openModal={true}
                   onModalOpen={() => setIsOrderModalOpen(true)}
                 />
@@ -128,11 +125,8 @@ export default function SpecialOffersPage() {
                 </div>
                 <OrderNowButton
                   text="PLACE AN ORDER NOW"
-                  size="lg"
-                  variant="primary"
-                  color="orange"
-                  fullWidth
-                  glowEffect
+                  className="inline-block w-fit bg-red-600 text-white py-2 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors text-center"
+                style={{ backgroundColor: '#FF4036' }}
                   openModal={true}
                   onModalOpen={() => setIsOrderModalOpen(true)}
                 />
@@ -188,11 +182,8 @@ export default function SpecialOffersPage() {
                 </div>
                 <OrderNowButton
                   text="PLACE AN ORDER NOW"
-                  size="lg"
-                  variant="primary"
-                  color="orange"
-                  fullWidth
-                  glowEffect
+                  className="inline-block w-fit bg-red-600 text-white py-2 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors text-center"
+                style={{ backgroundColor: '#FF4036' }}
                   openModal={true}
                   onModalOpen={() => setIsOrderModalOpen(true)}
                 />
@@ -222,11 +213,8 @@ export default function SpecialOffersPage() {
                 </div>
                 <OrderNowButton
                   text="PLACE AN ORDER NOW"
-                  size="lg"
-                  variant="primary"
-                  color="orange"
-                  fullWidth
-                  glowEffect
+                  className="inline-block w-fit bg-red-600 text-white py-2 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors text-center"
+                  style={{ backgroundColor: '#FF4036' }}
                   openModal={true}
                   onModalOpen={() => setIsOrderModalOpen(true)}
                 />
@@ -251,11 +239,11 @@ export default function SpecialOffersPage() {
 
       {/* Terms & Conditions */}
       <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Terms & Conditions:</h2>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-start">Terms & Conditions:</h2>
           
           <div className="text-gray-700 leading-relaxed space-y-6 text-lg">
-            <div className="space-y-4">
+            <div className="space-y-2">
               <p>• Offers exclude Set Meals, Platters, and Combi Meals, seafood and drinks.</p>
               <p>• All discounts above are valid exclusively online.</p>
               <p>• Discounts cannot be combined with any other discount, including Ranna Rewards.</p>
