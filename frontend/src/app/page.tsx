@@ -142,7 +142,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link
               href="/menu"
-              className="px-8 py-4 bg-[#333333] text-white rounded-full font-semibold text-lg flex items-center gap-3"
+              className="px-8 py-2 bg-[#333333] text-white rounded-full font-semibold text-lg flex items-center gap-3"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/>
@@ -151,20 +151,16 @@ export default function Home() {
             </Link>
             <Link
               href="/special-offers"
-              className="px-8 py-4 bg-[#333333] text-white rounded-full font-semibold text-lg flex items-center gap-3"
+              className="px-8 py-2 bg-[#333333] text-white rounded-full font-semibold text-lg flex items-center gap-3"
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M5.5 7A1.5 1.5 0 0 1 4 5.5A1.5 1.5 0 0 1 5.5 4H9L11.5 2L13 4H18.5A1.5 1.5 0 0 1 20 5.5A1.5 1.5 0 0 1 18.5 7H5.5M5.5 9H18.5A1.5 1.5 0 0 1 20 10.5A1.5 1.5 0 0 1 18.5 12H13L11.5 14L10 12H5.5A1.5 1.5 0 0 1 4 10.5A1.5 1.5 0 0 1 5.5 9Z"/>
-              </svg>
+            
               Special Offers
             </Link>
             <Link
               href="/contact"
-              className="px-8 py-4 bg-[#333333] text-white rounded-full font-semibold text-lg flex items-center gap-3"
+              className="px-8 py-2 bg-[#333333] text-white rounded-full font-semibold text-lg flex items-center gap-3"
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9S10.62 6.5 12 6.5S14.5 7.62 14.5 9S13.38 11.5 12 11.5Z"/>
-              </svg>
+             
               Find Us
             </Link>
           </div>
@@ -192,7 +188,7 @@ export default function Home() {
               <div>
                 <Link
                   href="/special-offers"
-                  className="inline-block bg-red-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-red-700 transition-colors text-lg"
+                  className="inline-block bg-red-600 text-white px-8 py-2 rounded-full font-semibold hover:bg-red-700 transition-colors text-lg"
                   style={{ backgroundColor: '#FF4036' }}
                 >
                   More Info
@@ -215,7 +211,7 @@ export default function Home() {
               <div>
                 <Link
                   href="/special-offers"
-                  className="inline-block bg-red-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-red-700 transition-colors text-lg"
+                  className="inline-block bg-red-600 text-white px-8 py-2 rounded-full font-semibold hover:bg-red-700 transition-colors text-lg"
                   style={{ backgroundColor: '#FF4036' }}
                 >
                   More Info

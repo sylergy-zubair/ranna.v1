@@ -94,7 +94,7 @@ const variantClasses = {
 export default function OrderNowButton({
   variant = 'primary',
   size = 'md',
-  color = 'orange',
+  color = 'red',
   children,
   text = 'Order Now',
   icon,
