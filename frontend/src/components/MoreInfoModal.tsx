@@ -83,7 +83,7 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
 
             {/* Price */}
             <div className="bg-gray-50 rounded-lg p-4">
-              <div className="text-3xl font-bold text-orange-600">
+              <div className="text-md font-bold text-gray-600">
                 {formatPrice(selectedOption.price)}
               </div>
             </div>

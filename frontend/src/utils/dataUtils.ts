@@ -139,9 +139,30 @@ export function getAvailableFilterOptions(categories: Category[]) {
   const allDishes = categories.flatMap(cat => cat.dishes);
   const allOptions = allDishes.flatMap(dish => dish.options);
   
+  // Define the desired category order
+  const categoryOrder = [
+    'Sundries',
+    'Starters', 
+    'Tandoori Dishes',
+    'Ranna Chef Specials',
+    'Traditional Specials',
+    'Traditional Curry',
+    'Biryani',
+    'Vegetable Dishes',
+    'Rice Dishes',
+    'Bread',
+    'Set Meals/Platters',
+    'Drinks',
+    'Deserts'
+  ];
+  
+  // Get categories from data and sort them according to the desired order
+  const availableCategories = categories.map(cat => cat.category);
+  const orderedCategories = categoryOrder.filter(cat => availableCategories.includes(cat));
+  
   return {
     dishTypes: DISH_TYPES, // Use predefined dish types instead of extracting from data
-    categories: categories.map(cat => cat.category),
+    categories: orderedCategories,
     allergens: ALLERGENS, // Use predefined allergens instead of extracting from data
     calorieRanges: getUniqueValues(allOptions, 'calorie_range') || CALORIE_RANGES
   };
