@@ -8,10 +8,10 @@ interface SpiceLevelFilterProps {
 export default function SpiceLevelFilter({ value, onChange }: SpiceLevelFilterProps) {
   const spiceLevels = [
     { level: 1, label: 'None', chilis: 1 },
-    { level: 2, label: 'Medium', chilis: 2 },
-    { level: 3, label: 'Hot', chilis: 3 },
-    { level: 4, label: 'Very Hot', chilis: 4 },
-    { level: 5, label: 'Extreme', chilis: 5 }
+    { level: 2, label: 'Medium', chilis: 1 },
+    { level: 3, label: 'Hot', chilis: 2 },
+    { level: 4, label: 'Very Hot', chilis: 3 },
+    { level: 5, label: 'Extreme', chilis: 4 }
   ];
 
   return (
@@ -41,7 +41,7 @@ export default function SpiceLevelFilter({ value, onChange }: SpiceLevelFilterPr
               {/* Chili Images */}
               {level === 1 ? (
                 <Image
-                  src="/data/img/no-chili.png"
+                  src="/data/img/0chili.png"
                   alt="no chili"
                   width={16}
                   height={16}

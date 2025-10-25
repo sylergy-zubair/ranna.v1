@@ -29,9 +29,29 @@ export default function DishCard({ dish, onMoreInfo }: DishCardProps) {
         {/* Header with title and spice level */}
         <div className="flex justify-between items-start mb-3">
           <h3 className="text-xl font-semibold text-gray-800">{dish.dish_title}</h3>
-          <span className={`px-2 py-1 rounded-full text-xs font-medium ${spiceInfo.bgColor} ${spiceInfo.color}`}>
-            {spiceInfo.label}
-          </span>
+          <div className="flex items-center space-x-1">
+            {/* Chili Images */}
+            {dish.spice_level === 1 ? (
+              <Image
+                src="/data/img/0chili.png"
+                alt="no chili"
+                width={16}
+                height={16}
+                className="w-4 h-4"
+              />
+            ) : (
+              Array.from({ length: dish.spice_level }, (_, index) => (
+                <Image
+                  key={index}
+                  src="/data/img/image.png"
+                  alt="chili"
+                  width={16}
+                  height={16}
+                  className="w-4 h-4"
+                />
+              ))
+            )}
+          </div>
         </div>
 
       {/* Description */}

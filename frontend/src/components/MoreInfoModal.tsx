@@ -91,9 +91,29 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
             {/* Spice Level and Allergens */}
             <div className="bg-gray-50 rounded-lg p-4">
               <div className="flex items-center space-x-4 mb-2">
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${spiceInfo.bgColor} ${spiceInfo.color}`}>
-                  {spiceInfo.label}
-                </span>
+                <div className="flex items-center space-x-1">
+                  {/* Chili Images */}
+                  {dish.spice_level === 1 ? (
+                    <Image
+                      src="/data/img/0chili.png"
+                      alt="no chili"
+                      width={16}
+                      height={16}
+                      className="w-4 h-4"
+                    />
+                  ) : (
+                    Array.from({ length: dish.spice_level }, (_, index) => (
+                      <Image
+                        key={index}
+                        src="/data/img/image.png"
+                        alt="chili"
+                        width={16}
+                        height={16}
+                        className="w-4 h-4"
+                      />
+                    ))
+                  )}
+                </div>
               </div>
               <div className="flex flex-wrap gap-2">
                 {selectedOption.allergens.map((allergen, idx) => (
