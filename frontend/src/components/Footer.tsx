@@ -107,9 +107,9 @@ export default function Footer() {
               <h3 className="text-lg font-bold mb-4">Navigation</h3>
               <ul className="space-y-2">
                 <li><Link href="/contact" className="text-white hover:text-red-500 transition-colors">Contact Us</Link></li>
-                <li><Link href="#" className="text-white hover:text-red-500 transition-colors">FAQ</Link></li>
+                <li><Link href="/contact" className="text-white hover:text-red-500 transition-colors">FAQ</Link></li>
                 <li><Link href="#" className="text-white hover:text-red-500 transition-colors">Read Reviews</Link></li>
-                <li><Link href="#" className="text-white hover:text-red-500 transition-colors">Write a Review</Link></li>
+                <li><Link href="/contact" className="text-white hover:text-red-500 transition-colors">Write a Review</Link></li>
               </ul>
             </div>
 
@@ -118,7 +118,7 @@ export default function Footer() {
               <h3 className="text-lg font-bold mb-4">Resources</h3>
               <ul className="space-y-2">
                 <li><Link href="/our-story" className="text-white hover:text-red-500 transition-colors">Our Story</Link></li>
-                <li><Link href="#" className="text-white hover:text-red-500 transition-colors">Find Us</Link></li>
+                <li><Link href="/contact" className="text-white hover:text-red-500 transition-colors">Find Us</Link></li>
                 <li><Link href="/careers" className="text-white hover:text-red-500 transition-colors">Careers</Link></li>
               </ul>
             </div>
@@ -129,7 +129,7 @@ export default function Footer() {
         <div className="border-t border-white py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-white text-sm mb-4 md:mb-0">
-              © 2025 Ranna IC
+              © 2025 Ranna
             </div>
             <div className="flex flex-wrap gap-6 text-sm">
               <Link href="/privacy-policy" className="text-white hover:text-red-500 transition-colors">Privacy policy</Link>
