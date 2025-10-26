@@ -235,13 +235,13 @@ export default function Home() {
                   </div>
                 ))}
                 {/* Duplicate set for seamless loop */}
-                {featuredDishes.map((dish, index) => (
+                {/* {featuredDishes.map((dish, index) => (
                   <div key={`second-${index}`} className="flex-shrink-0 mx-4">
                     <div className="w-80">
                       <DishCard dish={dish} onMoreInfo={handleMoreInfo} />
                     </div>
                   </div>
-                ))}
+                ))} */}
               </div>
             </div>
           ) : (
@@ -256,10 +256,7 @@ export default function Home() {
       {/* What Our Customers Say Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-left mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">What Our Customers Say</h2>
-            <p className="text-lg text-gray-600">Hear from our satisfied customers about their Ranna experience</p>
-          </div>
+          
           <ReviewCarousel />
         </div>
       </section>

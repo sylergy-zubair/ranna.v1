@@ -1,4 +1,6 @@
 
+import Image from 'next/image';
+
 export default function OurStoryPage() {
   return (
     <div>
@@ -18,10 +20,13 @@ export default function OurStoryPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Image */}
             <div className="order-2 lg:order-1">
-              <div className="relative h-96 w-full bg-gray-200 rounded-lg overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-orange-100 to-red-100">
-                  <span className="text-2xl text-gray-600 font-semibold">Our Story Image</span>
-                </div>
+              <div className="relative h-96 w-full rounded-2xl overflow-hidden">
+                <Image
+                  src="/img/33.png"
+                  alt="Our Story - Ranna Restaurant"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
             
@@ -65,10 +70,13 @@ export default function OurStoryPage() {
             
             {/* Image */}
             <div className="order-2 lg:order-2">
-              <div className="relative h-96 w-full bg-gray-200 rounded-lg overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-red-100 to-orange-100">
-                  <span className="text-2xl text-gray-600 font-semibold">Our Vision Image</span>
-                </div>
+            <div className="relative h-96 w-full rounded-2xl overflow-hidden">
+                <Image
+                  src="/img/11.png"
+                  alt="Our Story - Ranna Restaurant"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
           </div>
@@ -81,10 +89,13 @@ export default function OurStoryPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Image */}
             <div className="order-2 lg:order-1">
-              <div className="relative h-96 w-full bg-gray-200 rounded-lg overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-orange-100 to-red-100">
-                  <span className="text-2xl text-gray-600 font-semibold">Our Mission Image</span>
-                </div>
+            <div className="relative h-96 w-full rounded-2xl overflow-hidden">
+                <Image
+                  src="/img/22.png"
+                  alt="Our Story - Ranna Restaurant"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
             
