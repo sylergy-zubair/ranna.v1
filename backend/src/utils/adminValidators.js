@@ -68,6 +68,7 @@ const dishSchema = Joi.object({
   dish_title: Joi.string().required(),
   spice_level: Joi.number().integer().min(1).max(5).required(),
   image_url: Joi.string().uri().allow('').optional(),
+  is_featured: Joi.boolean().optional().default(false),
   options: Joi.array().items(optionSchema).min(1).required()
 });
 

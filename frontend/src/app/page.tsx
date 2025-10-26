@@ -1,147 +1,81 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import ReviewCarousel from '@/components/ReviewCarousel';
 import FindUsSection from '@/components/FindUsSection';
 import DishCard from '@/components/DishCard';
-
-interface FeaturedDish {
-  dish_id: string;
-  dish_title: string;
-  image_url: string;
-  spice_level: number;
-  options: Array<{
-    price: number;
-    short_description: string;
-  }>;
-  category: string;
-  description: string;
-  lowestPrice: number;
-}
+import { Dish } from '@/types';
 
 export default function Home() {
   // Featured dishes for Fan Favourites section
-  const featuredDishes: FeaturedDish[] = [
-    {
-      dish_id: "featured-1",
-      dish_title: "Butter Chicken",
-      image_url: "/data/img/butter-chicken.jpg",
-      spice_level: 2,
-      options: [{
-        price: 12.99,
-        short_description: "Creamy tomato-based curry with tender chicken pieces"
-      }],
-      category: "Curries",
-      description: "Creamy tomato-based curry with tender chicken pieces",
-      lowestPrice: 12.99
-    },
-    {
-      dish_id: "featured-6",
-      dish_title: "Lamb Biryani",
-      image_url: "/data/img/lamb-biryani.jpg", 
-      spice_level: 3,
-      options: [{
-        price: 14.99,
-        short_description: "Fragrant basmati rice with tender lamb and aromatic spices"
-      }],
-      category: "Rice Dishes",
-      description: "Fragrant basmati rice with tender lamb and aromatic spices",
-      lowestPrice: 14.99
-    },
-    {
-      dish_id: "featured-7",
-      dish_title: "Paneer Tikka",
-      image_url: "/data/img/paneer-tikka.jpg",
-      spice_level: 2,
-      options: [{
-        price: 8.99,
-        short_description: "Grilled cottage cheese with aromatic spices"
-      }],
-      category: "Starters",
-      description: "Grilled cottage cheese with aromatic spices",
-      lowestPrice: 8.99
-    },
-    {
-      dish_id: "featured-2",
-      dish_title: "Chicken Tikka Masala",
-      image_url: "/data/img/chicken-tikka-masala.jpg",
-      spice_level: 2,
-      options: [{
-        price: 13.99,
-        short_description: "Tender chicken in rich tomato and cream sauce"
-      }],
-      category: "Curries",
-      description: "Tender chicken in rich tomato and cream sauce",
-      lowestPrice: 13.99
-    },
-    {
-      dish_id: "featured-3",
-      dish_title: "Dal Makhani",
-      image_url: "/data/img/dal-makhani.jpg",
-      spice_level: 1,
-      options: [{
-        price: 9.99,
-        short_description: "Creamy black lentils with butter and cream"
-      }],
-      category: "Vegetarian",
-      description: "Creamy black lentils with butter and cream",
-      lowestPrice: 9.99
-    },
-    {
-      dish_id: "featured-4",
-      dish_title: "Chicken Karahi",
-      image_url: "/data/img/chicken-karahi.jpg",
-      spice_level: 4,
-      options: [{
-        price: 15.99,
-        short_description: "Spicy chicken curry cooked in a traditional karahi"
-      }],
-      category: "Curries",
-      description: "Spicy chicken curry cooked in a traditional karahi",
-      lowestPrice: 15.99
-    },
-    {
-      dish_id: "featured-5",
-      dish_title: "Naan Bread",
-      image_url: "/data/img/naan-bread.jpg",
-      spice_level: 1,
-      options: [{
-        price: 3.99,
-        short_description: "Freshly baked traditional Indian bread"
-      }],
-      category: "Bread",
-      description: "Freshly baked traditional Indian bread",
-      lowestPrice: 3.99
-    }
-  ];
+  const [featuredDishes, setFeaturedDishes] = useState<(Dish & { description: string; lowestPrice: number })[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleMoreInfo = (dish: { dish_title: string }) => {
-    // For now, just log the dish - you can implement modal later
-    console.log('More info for:', dish.dish_title);
+  // Fetch featured dishes from API
+  useEffect(() => {
+    const fetchFeaturedDishes = async () => {
+      try {
+        const response = await fetch('/api/v1/menu/featured');
+        const data = await response.json();
+        
+        if (data.success && data.data) {
+          // Transform featured dishes to match DishCardProps structure
+          const transformedDishes = data.data.map((dish: Dish) => ({
+            ...dish,
+            description: dish.options?.[0]?.short_description || '',
+            lowestPrice: Math.min(...(dish.options?.map((option) => option.price) || [0]))
+          }));
+          setFeaturedDishes(transformedDishes);
+        } else {
+          console.log('No featured dishes found, using fallback');
+          // Fallback to empty array if no featured dishes
+          setFeaturedDishes([]);
+        }
+      } catch (error) {
+        console.error('Error fetching featured dishes:', error);
+        setFeaturedDishes([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFeaturedDishes();
+  }, []);
+
+  // More Info Modal handlers
+  const handleMoreInfo = (dish: Dish) => {
+    // TODO: Implement modal functionality
+    console.log('More info clicked for dish:', dish.dish_title);
   };
 
-    return (
-    <div>
-      {/* Hero Section 1 */}
-      <section className="relative text-white py-20 overflow-hidden bg-gradient-to-r from-orange-600 to-red-600">
+  return (
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Video Background */}
         <video
           autoPlay
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
+          onError={(e) => {
+            console.log('Video error, using fallback background');
+            // Hide video and show fallback
+            const video = e.target as HTMLVideoElement;
+            video.style.display = 'none';
+          }}
           className="absolute inset-0 w-full h-full object-cover z-0"
-          onError={(e) => console.error('Video failed to load:', e)}
-          onLoadStart={() => console.log('Video loading started')}
-          onCanPlay={() => console.log('Video can play')}
         >
-          <source src="/data/vdo/Ranna Website Hero Video.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
+          <source src="/data/vdo/HeroVideo.mp4" type="video/mp4" />
         </video>
         
-        {/* Overlay for better text readability */}
+        {/* Fallback Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-600 via-red-600 to-red-800 z-0"></div>
+        
+        {/* Overlay */}
         <div className="absolute inset-0 bg-black bg-opacity-40 z-10"></div>
         
         {/* Content */}
@@ -203,6 +137,10 @@ export default function Home() {
                   width={400}
                   height={300}
                   className="w-full h-auto object-contain"
+                  onError={(e) => {
+                    console.log('Image failed to load:', e);
+                    // You could set a fallback image here
+                  }}
                 />
               </div>
               {/* More Info Button */}
@@ -226,7 +164,10 @@ export default function Home() {
                   width={400}
                   height={300}
                   className="w-full h-auto object-contain"
-            />
+                  onError={(e) => {
+                    console.log('Image failed to load:', e);
+                  }}
+                />
           </div>
               {/* More Info Button */}
               <div>
@@ -249,6 +190,9 @@ export default function Home() {
                   width={400}
                   height={300}
                   className="w-full h-auto object-contain"
+                  onError={(e) => {
+                    console.log('Image failed to load:', e);
+                  }}
                 />
               </div>
               {/* More Info Button */}
@@ -267,46 +211,58 @@ export default function Home() {
       </section>
 
       {/* Fan Favourites Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-left mb-12">
-            <h2 className="text-6xl font-bold text-gray-900 mb-4">Fan Favourites</h2>
-            <p className="text-xl text-gray-600">Our most loved dishes</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Fan Favourites</h2>
+            <p className="text-lg text-gray-600">Our most loved dishes, handpicked by our chefs</p>
           </div>
-
-          {/* Continuous Scrolling Dishes */}
-          <div className="relative overflow-hidden">
-            {/* Gradient overlays for smooth fade effect */}
-            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10"></div>
-            
-            {/* Scrolling Container */}
-            <div className="flex animate-scroll">
-              {/* First set of dishes */}
-              {featuredDishes.map((dish, index) => (
-                <div key={`first-${index}`} className="flex-shrink-0 mx-4">
-                  <div className="w-80">
-                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                    <DishCard dish={dish as any} onMoreInfo={handleMoreInfo} />
-                  </div>
-                </div>
-              ))}
-              {/* Duplicate set for seamless loop */}
-              {featuredDishes.map((dish, index) => (
-                <div key={`second-${index}`} className="flex-shrink-0 mx-4">
-                  <div className="w-80">
-                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                    <DishCard dish={dish as any} onMoreInfo={handleMoreInfo} />
-                  </div>
-                </div>
-              ))}
+          
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
             </div>
-          </div>
+          ) : featuredDishes.length > 0 ? (
+            <div className="relative overflow-hidden">
+              {/* Scrolling Container */}
+              <div className="flex animate-scroll">
+                {/* First set of dishes */}
+                {featuredDishes.map((dish, index) => (
+                  <div key={`first-${index}`} className="flex-shrink-0 mx-4">
+                    <div className="w-80">
+                      <DishCard dish={dish} onMoreInfo={handleMoreInfo} />
+                    </div>
+                  </div>
+                ))}
+                {/* Duplicate set for seamless loop */}
+                {featuredDishes.map((dish, index) => (
+                  <div key={`second-${index}`} className="flex-shrink-0 mx-4">
+                    <div className="w-80">
+                      <DishCard dish={dish} onMoreInfo={handleMoreInfo} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">No featured dishes available at the moment.</p>
+              <p className="text-gray-400 text-sm mt-2">Check back later for our chef&apos;s recommendations!</p>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Customer Reviews Carousel */}
-      <ReviewCarousel />
+      {/* What Our Customers Say Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-left mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">What Our Customers Say</h2>
+            <p className="text-lg text-gray-600">Hear from our satisfied customers about their Ranna experience</p>
+          </div>
+          <ReviewCarousel />
+        </div>
+      </section>
 
       {/* Find Us Section */}
       <FindUsSection />

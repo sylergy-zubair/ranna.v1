@@ -4,6 +4,7 @@ const {
   getMenu,
   getFilteredMenu,
   getFilterOptions,
+  getFeaturedDishes,
   healthCheck
 } = require('../controllers/menuController');
 const { validateQuery } = require('../middleware/validate');
@@ -20,5 +21,8 @@ router.get('/menu/filtered', validateQuery(menuQuerySchema), getFilteredMenu);
 
 // Get available filter options
 router.get('/menu/filter-options', getFilterOptions);
+
+// Get featured dishes
+router.get('/menu/featured', getFeaturedDishes);
 
 module.exports = router;

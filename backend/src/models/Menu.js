@@ -26,8 +26,9 @@ const optionSchema = new mongoose.Schema({
 const dishSchema = new mongoose.Schema({
   dish_id: { type: String, required: true },
   dish_title: { type: String, required: true },
-  spice_level: { type: Number, min: 1, max: 4 },
+  spice_level: { type: Number, min: 1, max: 5 },
   image_url: String,
+  is_featured: { type: Boolean, default: false },
   options: [optionSchema]
 }, { _id: false });
 

@@ -28,6 +28,7 @@ export interface Dish {
   dish_title: string;
   spice_level: number;
   image_url?: string;
+  is_featured?: boolean;
   options: Option[];
 }
 

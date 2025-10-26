@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { MoreInfoModalProps } from '@/types';
-import { formatPrice, getSpiceLevelInfo } from '@/utils/dataUtils';
+import { formatPrice } from '@/utils/dataUtils';
 
 export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalProps) {
   console.log('MoreInfoModal render:', { isOpen, dish: dish?.dish_title });
@@ -35,7 +35,7 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
   
   if (!isOpen || !dish) return null;
 
-  const spiceInfo = getSpiceLevelInfo(dish.spice_level);
+  // const spiceInfo = getSpiceLevelInfo(dish.spice_level);
   const selectedOption = dish.options[selectedOptionIndex];
 
   return (

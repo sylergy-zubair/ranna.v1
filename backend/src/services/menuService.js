@@ -181,10 +181,44 @@ const clearMenuCache = async () => {
   }
 };
 
+// Get featured dishes
+const getFeaturedDishes = async () => {
+  try {
+    await ensureConnection();
+    
+    const menu = await Menu.findOne().lean();
+    if (!menu) {
+      return formatResponse(false, null, 'Menu not found');
+    }
+
+    // Extract all dishes from all categories
+    const allDishes = menu.categories.flatMap(category => 
+      category.dishes.map(dish => ({
+        ...dish,
+        category: category.category
+      }))
+    );
+
+    // Filter dishes that are marked as featured
+    const featuredDishes = allDishes.filter(dish => dish.is_featured === true);
+
+    // Limit to 7 dishes maximum
+    const limitedFeaturedDishes = featuredDishes.slice(0, 7);
+
+    const sanitizedDishes = limitedFeaturedDishes.map(dish => sanitizeMongoResponse(dish));
+    
+    return formatResponse(true, sanitizedDishes, 'Featured dishes retrieved successfully');
+  } catch (error) {
+    console.error('Menu service error - getFeaturedDishes:', error);
+    return formatResponse(false, null, 'Internal server error', error.message);
+  }
+};
+
 module.exports = {
   getFullMenu,
   getFilteredMenu,
   getFilterOptions,
+  getFeaturedDishes,
   clearMenuCache,
   ensureConnection
 };

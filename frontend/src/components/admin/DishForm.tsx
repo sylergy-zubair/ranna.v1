@@ -56,6 +56,7 @@ export default function DishForm({
     dish_title: dish?.dish_title || '',
     spice_level: dish?.spice_level || 1,
     image_url: dish?.image_url || '',
+    is_featured: dish?.is_featured || false,
   });
 
   const [options, setOptions] = useState<Option[]>(dish?.options || []);
@@ -66,6 +67,7 @@ export default function DishForm({
         dish_title: dish.dish_title || '',
         spice_level: dish.spice_level || 1,
         image_url: dish.image_url || '',
+        is_featured: dish.is_featured || false,
       });
       setOptions(dish.options || []);
     } else {
@@ -74,6 +76,7 @@ export default function DishForm({
         dish_title: '',
         spice_level: 1,
         image_url: '',
+        is_featured: false,
       });
       setOptions([]);
     }
@@ -81,11 +84,17 @@ export default function DishForm({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
     
     if (type === 'number') {
       setFormData({
         ...formData,
         [name]: parseInt(value) || 0,
+      });
+    } else if (type === 'checkbox') {
+      setFormData({
+        ...formData,
+        [name]: checked,
       });
     } else {
       setFormData({
@@ -176,6 +185,7 @@ export default function DishForm({
       dish_title: formData.dish_title.trim(),
       spice_level: formData.spice_level,
       image_url: formData.image_url.trim(),
+      is_featured: formData.is_featured,
       options: cleanedOptions,
     };
 
@@ -243,6 +253,22 @@ export default function DishForm({
                 <option value={4}>4 - Very Hot</option>
                 <option value={5}>5 - Extreme</option>
               </select>
+            </div>
+
+            <div>
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="is_featured"
+                  checked={formData.is_featured || false}
+                  onChange={handleChange}
+                  className="mr-2 h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
+                  disabled={loading}
+                />
+                <span className="text-sm font-medium text-gray-700">
+                  Mark as Featured (appears in Fan Favourites section)
+                </span>
+              </label>
             </div>
           </div>
 

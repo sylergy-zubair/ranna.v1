@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   description: 'Discover authentic Indian cuisine with our interactive menu. Filter by spice level, dietary preferences, and more.',
   keywords: 'Indian food, curry, tandoori, vegetarian, vegan, restaurant menu',
   icons: {
-    icon: '/img/Ranna_fav.png',
-    shortcut: '/img/Ranna_fav.png',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
     apple: '/img/Ranna_fav.png',
   },
 }

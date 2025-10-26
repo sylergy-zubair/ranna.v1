@@ -22,14 +22,14 @@ export default function ReviewCard({ review }: ReviewCardProps) {
     ));
   };
 
-  const formatDate = () => {
-    // Generate a random date for demo purposes
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 
-                   'July', 'August', 'September', 'October', 'November', 'December'];
-    const month = months[Math.floor(Math.random() * 12)];
-    const year = 2020 + Math.floor(Math.random() * 4);
-    return `${month} ${year}`;
-  };
+  // const formatDate = () => {
+  //   // Generate a random date for demo purposes
+  //   const months = ['January', 'February', 'March', 'April', 'May', 'June', 
+  //                  'July', 'August', 'September', 'October', 'November', 'December'];
+  //   const month = months[Math.floor(Math.random() * 12)];
+  //   const year = 2020 + Math.floor(Math.random() * 4);
+  //   return `${month} ${year}`;
+  // };
 
   return (
     <div className="relative">

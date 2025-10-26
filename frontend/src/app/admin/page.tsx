@@ -13,6 +13,7 @@ import MenuView from '@/components/admin/MenuView';
 // Helper function to clean dish data before sending to backend
 const cleanDishData = (dish: Dish): Dish => ({
   ...dish,
+  is_featured: dish.is_featured || false, // Explicitly preserve is_featured
   options: dish.options.map(option => ({
     ...option,
     dish_type: option.dish_type.filter(type => 

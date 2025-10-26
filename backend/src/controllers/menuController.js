@@ -127,9 +127,30 @@ const healthCheck = async (req, res) => {
   }
 };
 
+// Get featured dishes
+const getFeaturedDishes = async (req, res) => {
+  try {
+    const result = await menuService.getFeaturedDishes();
+    
+    if (result.success) {
+      res.status(CONSTANTS.STATUS.SUCCESS).json(result);
+    } else {
+      res.status(CONSTANTS.STATUS.NOT_FOUND).json(result);
+    }
+  } catch (error) {
+    console.error('Controller error - getFeaturedDishes:', error);
+    res.status(CONSTANTS.STATUS.INTERNAL_ERROR).json({
+      success: false,
+      error: 'Internal server error',
+      message: 'Failed to retrieve featured dishes'
+    });
+  }
+};
+
 module.exports = {
   getMenu,
   getFilteredMenu,
   getFilterOptions,
+  getFeaturedDishes,
   healthCheck
 };

@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import { DishCardProps } from '@/types';
-import { getSpiceLevelInfo, formatPrice } from '@/utils/dataUtils';
+import { formatPrice } from '@/utils/dataUtils';
 
 export default function DishCard({ dish, onMoreInfo }: DishCardProps) {
-  const spiceInfo = getSpiceLevelInfo(dish.spice_level);
+  // const spiceInfo = getSpiceLevelInfo(dish.spice_level);
 
   return (
     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100 overflow-hidden">
