@@ -96,7 +96,7 @@ export default function ReviewCarousel() {
           <div className="flex animate-scroll">
             {/* First set of reviews */}
             {validReviews.map((review, index) => (
-              <div key={`first-${index}`} className="flex-shrink-0 mx-4">
+              <div key={`first-${index}`} className="flex-shrink-0 mx-4 my-2">
                 <div className="w-80">
                   <ReviewCard review={review} index={index} />
                 </div>

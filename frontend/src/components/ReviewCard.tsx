@@ -34,7 +34,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
   return (
     <div className="relative">
       {/* Review Card */}
-      <div className="bg-white rounded-lg p-6 shadow-lg max-w-md">
+      <div className="bg-white rounded-lg p-6 shadow-lg max-w-md h-80 flex flex-col">
         {/* Star Rating */}
         <div className="flex items-center mb-4">
           {renderStars(review.star)}
@@ -44,14 +44,11 @@ export default function ReviewCard({ review }: ReviewCardProps) {
         {review.title && (
           <h3 className="text-lg font-bold text-gray-900 mb-2">
             {review.title}
-            <span className="text-sm font-normal text-gray-600 italic ml-2">
-              – {formatDate()}
-            </span>
           </h3>
         )}
 
         {/* Review Text */}
-        <p className="text-gray-700 mb-6 leading-relaxed">
+        <p className="text-gray-700 mb-6 leading-relaxed flex-grow">
           {review.review}
         </p>
 
@@ -87,7 +84,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
                   rel="noopener noreferrer"
                   className="hover:text-orange-600 transition-colors"
                 >
-                  Read on Tripadvisor
+                  {review.review_url.includes('tripadvisor.com') ? 'Read on Tripadvisor' : 'Read on Google'}
                 </a>
               </div>
             )}
