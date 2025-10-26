@@ -191,9 +191,34 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-6xl font-bold text-gray-900 mb-16 text-left">Special Offers</h2>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Card 1: 25% Discount */}
-            <div className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+         
+
+             {/* Card 1:10% Online Discount*/}
+             <div className="space-y-6">
+              <div className="relative rounded-3xl overflow-hidden shadow-lg">
+                <Image
+                  src="/data/img/Ranna10Discount.webp"
+                  alt="VIP Loyalty Membership"
+                  width={400}
+                  height={300}
+                  className="w-full h-auto object-contain"
+                />
+              </div>
+              {/* More Info Button */}
+              <div>
+                <Link
+                  href="/special-offers"
+                  className="inline-block bg-red-600 text-white px-8 py-2 rounded-full font-semibold hover:bg-red-700 transition-colors text-lg"
+                  style={{ backgroundColor: '#FF4036' }}
+                >
+                  More Info
+                </Link>
+              </div>
+            </div>
+
+               {/* Card 2: 25% Discount */}
+               <div className="space-y-6">
               <div className="relative rounded-3xl overflow-hidden shadow-lg">
                 <Image
                   src="/data/img/Ranna25Discount.webp"
@@ -215,7 +240,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Card 2: VIP Loyalty Membership */}
+            {/* Card 3: VIP Loyalty Membership */}
             <div className="space-y-6">
               <div className="relative rounded-3xl overflow-hidden shadow-lg">
                 <Image
