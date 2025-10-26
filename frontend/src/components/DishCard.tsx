@@ -8,7 +8,7 @@ export default function DishCard({ dish, onMoreInfo }: DishCardProps) {
   return (
     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100 overflow-hidden">
       {/* Image */}
-      <div className="w-full h-48 bg-gray-200">
+      <div className="w-full h-48 bg-[#f5f5f5]">
         {dish.image_url ? (
           <Image
             src={dish.image_url}

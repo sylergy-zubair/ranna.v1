@@ -39,7 +39,7 @@ export default function Footer() {
               <div className="mb-4">
                 <div className="mb-2">
                   <Image
-                    src="/img/Ranna_new_LOGO-For-Sign.png"
+                    src="/data/img/Ranna_new_LOGO_white.png"
                     alt="Ranna Logo"
                     width={154}
                     height={99}

@@ -6,6 +6,25 @@ import { formatPrice, getSpiceLevelInfo } from '@/utils/dataUtils';
 export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalProps) {
   console.log('MoreInfoModal render:', { isOpen, dish: dish?.dish_title });
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  const [showFullIngredients, setShowFullIngredients] = useState(false);
+  
+  // Helper functions for text truncation
+  const truncateText = (text: string, maxLines: number = 2) => {
+    const words = text.split(' ');
+    const wordsPerLine = 8; // Approximate words per line
+    const maxWords = maxLines * wordsPerLine;
+    
+    if (words.length <= maxWords) return text;
+    return words.slice(0, maxWords).join(' ') + '...';
+  };
+
+  const shouldTruncate = (text: string, maxLines: number = 2) => {
+    const words = text.split(' ');
+    const wordsPerLine = 8;
+    const maxWords = maxLines * wordsPerLine;
+    return words.length > maxWords;
+  };
   
   // Reset selected option when modal opens
   useEffect(() => {
@@ -185,7 +204,20 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
         <div className="border-t border-gray-200 p-6">
           <div className="bg-gray-50 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Detailed Description</h3>
-            <p className="text-gray-700 leading-relaxed">{selectedOption.detailed_description}</p>
+            <p className="text-gray-700 leading-relaxed">
+              {showFullDescription 
+                ? selectedOption.detailed_description 
+                : truncateText(selectedOption.detailed_description)
+              }
+            </p>
+            {shouldTruncate(selectedOption.detailed_description) && (
+              <button
+                onClick={() => setShowFullDescription(!showFullDescription)}
+                className="mt-2 text-orange-600 hover:text-orange-700 font-medium text-sm"
+              >
+                {showFullDescription ? 'Read Less' : 'Read More'}
+              </button>
+            )}
           </div>
         </div>
 
@@ -195,7 +227,22 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Ingredients</h3>
             <div className="text-gray-700 leading-relaxed">
               {selectedOption.ingredients && selectedOption.ingredients.length > 0 ? (
-                <p>{selectedOption.ingredients.join(', ')}</p>
+                <div>
+                  <p>
+                    {showFullIngredients 
+                      ? selectedOption.ingredients.join(', ')
+                      : truncateText(selectedOption.ingredients.join(', '))
+                    }
+                  </p>
+                  {shouldTruncate(selectedOption.ingredients.join(', ')) && (
+                    <button
+                      onClick={() => setShowFullIngredients(!showFullIngredients)}
+                      className="mt-2 text-orange-600 hover:text-orange-700 font-medium text-sm"
+                    >
+                      {showFullIngredients ? 'Read Less' : 'Read More'}
+                    </button>
+                  )}
+                </div>
               ) : (
                 <p className="text-gray-500 italic">No ingredients information available</p>
               )}

@@ -152,7 +152,7 @@ export default function ContactPage() {
                   >
                     <option value="">Select...</option>
                     <option value="general">General Enquiry</option>
-                    <option value="booking">Booking</option>
+                    <option value="booking">Table Reservation</option>
                     <option value="review">Review</option>
                   </select>
                 </div>
@@ -204,8 +204,9 @@ export default function ContactPage() {
                   />
                 </div>
 
-                {/* Table Reservations Section */}
-                <div className="bg-gray-50 border-2 border-red-200 rounded-lg p-6 shadow-sm">
+                {/* Table Reservations Section - Only show when reason is "booking" */}
+                {formData.reason === 'booking' && (
+                  <div className="bg-gray-50 border-2 border-red-200 rounded-lg p-6 shadow-sm">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">
                     Please provide the following information for table reservations:
                   </h3>
@@ -214,13 +215,14 @@ export default function ContactPage() {
                     {/* Date Field */}
                     <div>
                       <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-2">
-                        Date
+                        Date *
                       </label>
                       <div className="relative">
                         <input
                           type="date"
                           id="date"
                           name="date"
+                          required={formData.reason === 'booking'}
                           value={formData.date}
                           onChange={handleChange}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 bg-gray-50"
@@ -237,13 +239,14 @@ export default function ContactPage() {
                     {/* Time Field */}
                     <div>
                       <label htmlFor="time" className="block text-sm font-medium text-gray-700 mb-2">
-                        Time
+                        Time *
                       </label>
                       <div className="relative">
                         <input
                           type="time"
                           id="time"
                           name="time"
+                          required={formData.reason === 'booking'}
                           value={formData.time}
                           onChange={handleChange}
                           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 bg-gray-50"
@@ -260,11 +263,12 @@ export default function ContactPage() {
                     {/* Location Selector */}
                     <div>
                       <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-2">
-                        Location Selector
+                        Location Selector *
                       </label>
                       <select
                         id="location"
                         name="location"
+                        required={formData.reason === 'booking'}
                         value={formData.location}
                         onChange={handleChange}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 bg-gray-50 appearance-none"
@@ -279,12 +283,13 @@ export default function ContactPage() {
                     {/* Number of Guests */}
                     <div>
                       <label htmlFor="guests" className="block text-sm font-medium text-gray-700 mb-2">
-                        Number of Guests
+                        Number of Guests *
                       </label>
                       <input
                         type="number"
                         id="guests"
                         name="guests"
+                        required={formData.reason === 'booking'}
                         min="1"
                         max="20"
                         value={formData.guests}
@@ -295,6 +300,7 @@ export default function ContactPage() {
                     </div>
                   </div>
                 </div>
+                )}
 
                 {/* Send Message Button */}
                  <button
