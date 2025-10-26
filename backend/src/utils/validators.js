@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 // Menu query validation schema
 const menuQuerySchema = Joi.object({
-  spiceLevel: Joi.number().integer().min(1).max(4).optional(),
+  spiceLevel: Joi.number().integer().min(1).max(5).optional(),
   categories: Joi.alternatives().try(
     Joi.array().items(Joi.string()),
     Joi.string()
