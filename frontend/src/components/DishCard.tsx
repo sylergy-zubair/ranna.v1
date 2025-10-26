@@ -69,7 +69,7 @@ export default function DishCard({ dish, onMoreInfo }: DishCardProps) {
         </div>
         <button
           onClick={() => onMoreInfo(dish)}
-          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200"
+          className="bg-red-600 cursor-pointer text-white px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200"
           style={{ backgroundColor: '#FF4036' }}
         >
           More Info
