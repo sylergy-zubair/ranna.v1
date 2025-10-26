@@ -12,7 +12,7 @@ export default function Home() {
   // Featured dishes for Fan Favourites section
   const [featuredDishes, setFeaturedDishes] = useState<(Dish & { description: string; lowestPrice: number })[]>([]);
   const [loading, setLoading] = useState(true);
-
+  
   // Fetch featured dishes from API
   useEffect(() => {
     const fetchFeaturedDishes = async () => {
@@ -53,38 +53,22 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Video Background */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          onError={(e) => {
-            console.log('Video error, using fallback background');
-            // Hide video and show fallback
-            const video = e.target as HTMLVideoElement;
-            video.style.display = 'none';
-          }}
-          className="absolute inset-0 w-full h-full object-cover z-0"
-        >
-          <source src="/data/vdo/HeroVideo.mp4" type="video/mp4" />
-        </video>
-        
-        {/* Fallback Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-600 via-red-600 to-red-800 z-0"></div>
-        
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black bg-opacity-40 z-10"></div>
-        
-        {/* Content */}
-        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">Made with passion, served with pride</h1>
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">Quick Heat. big flavour</h2>
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">The Indian flavour that keeps you coming back</h2>
-        </div>
-      </section>
+      <section className="relative w-full h-screen overflow-hidden">
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source src="/hero.mp4" type="video/mp4" />
+      </video>
+
+      <div className="relative z-10 flex flex-col justify-center items-start h-full text-white text-left px-8 bg-black/40">
+         <h1 className="text-[92px] font-bold mb-0 leading-tight">MADE WITH <span className="text-red-600">PASSION</span>, <br /> SERVED WITH PRIDE</h1>
+        <p className="text-[36px]">The Indian flavour that keeps you coming back</p>
+      </div>
+    </section>
 
 
 
@@ -167,7 +151,7 @@ export default function Home() {
                   onError={(e) => {
                     console.log('Image failed to load:', e);
                   }}
-                />
+            />
           </div>
               {/* More Info Button */}
               <div>
@@ -234,23 +218,16 @@ export default function Home() {
                     </div>
                   </div>
                 ))}
-                {/* Duplicate set for seamless loop */}
-                {/* {featuredDishes.map((dish, index) => (
-                  <div key={`second-${index}`} className="flex-shrink-0 mx-4">
-                    <div className="w-80">
-                      <DishCard dish={dish} onMoreInfo={handleMoreInfo} />
-                    </div>
-                  </div>
-                ))} */}
+                
               </div>
             </div>
           ) : (
             <div className="text-center py-12">
               <p className="text-gray-500 text-lg">No featured dishes available at the moment.</p>
               <p className="text-gray-400 text-sm mt-2">Check back later for our chef&apos;s recommendations!</p>
-            </div>
-          )}
-        </div>
+              </div>
+            )}
+          </div>
       </section>
 
       {/* What Our Customers Say Section */}
