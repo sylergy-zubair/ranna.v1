@@ -16,7 +16,7 @@ const ensureConnection = async () => {
   
   // If connecting, wait for it to complete
   if (mongoose.connection.readyState === 2) {
-    const timeoutDuration = isVercel ? 20000 : 15000;
+    const timeoutDuration = isVercel ? 60000 : 30000; // Increased timeout for Vercel
     await new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         reject(new Error('Connection timeout - waiting for MongoDB connection'));
@@ -48,7 +48,7 @@ const ensureConnection = async () => {
     await new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         reject(new Error('Connection not ready after connectDB - readyState: ' + mongoose.connection.readyState));
-      }, isVercel ? 10000 : 5000);
+      }, isVercel ? 30000 : 15000); // Increased timeout for Vercel
       
       mongoose.connection.once('connected', () => {
         clearTimeout(timeout);
