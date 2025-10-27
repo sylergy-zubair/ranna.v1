@@ -9,20 +9,24 @@ export async function GET() {
   try {
     console.log('Proxying featured dishes request to backend:', `${BACKEND_URL}/api/v1/menu/featured`);
     
+    // Create a timeout controller
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+    
     const response = await fetch(`${BACKEND_URL}/api/v1/menu/featured`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      signal: AbortSignal.timeout(15000),
+      signal: controller.signal,
     });
+    
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       console.error('Backend API error:', response.status, response.statusText);
-      return NextResponse.json(
-        { success: false, message: `Backend API error: ${response.status}` },
-        { status: response.status }
-      );
+      // If backend is not available, throw error to trigger fallback
+      throw new Error(`Backend API error: ${response.status}`);
     }
 
     const data = await response.json();

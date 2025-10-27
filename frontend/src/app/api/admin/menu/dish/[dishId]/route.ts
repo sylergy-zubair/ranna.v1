@@ -13,13 +13,19 @@ export async function GET(
     const { dishId } = await params;
     console.log('Proxying get dish request to backend:', `${BACKEND_URL}/api/v1/admin/menu/dish/${dishId}`);
     
+    // Create a timeout controller
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+    
     const response = await fetch(`${BACKEND_URL}/api/v1/admin/menu/dish/${dishId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      signal: AbortSignal.timeout(15000),
+      signal: controller.signal,
     });
+    
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       console.error('Backend API error:', response.status, response.statusText);
@@ -51,13 +57,19 @@ export async function DELETE(
     const { dishId } = await params;
     console.log('Proxying delete dish request to backend:', `${BACKEND_URL}/api/v1/admin/menu/dish/${dishId}`);
     
+    // Create a timeout controller
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+    
     const response = await fetch(`${BACKEND_URL}/api/v1/admin/menu/dish/${dishId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
-      signal: AbortSignal.timeout(15000),
+      signal: controller.signal,
     });
+    
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       console.error('Backend API error:', response.status, response.statusText);

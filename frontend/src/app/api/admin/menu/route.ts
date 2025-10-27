@@ -9,13 +9,19 @@ export async function GET() {
   try {
     console.log('Proxying admin menu request to backend:', `${BACKEND_URL}/api/v1/admin/menu`);
     
+    // Create a timeout controller
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+    
     const response = await fetch(`${BACKEND_URL}/api/v1/admin/menu`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      signal: AbortSignal.timeout(15000),
+      signal: controller.signal,
     });
+    
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       console.error('Backend API error:', response.status, response.statusText);

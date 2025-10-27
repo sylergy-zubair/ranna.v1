@@ -9,21 +9,24 @@ export async function GET() {
   try {
     console.log('Proxying menu request to backend:', `${BACKEND_URL}/api/v1/menu`);
     
+    // Create a timeout controller
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+    
     const response = await fetch(`${BACKEND_URL}/api/v1/menu`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      // Add timeout to prevent hanging
-      signal: AbortSignal.timeout(15000), // 15 second timeout
+      signal: controller.signal,
     });
+    
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       console.error('Backend API error:', response.status, response.statusText);
-      return NextResponse.json(
-        { success: false, message: `Backend API error: ${response.status}` },
-        { status: response.status }
-      );
+      // If backend is not available, throw error to trigger fallback
+      throw new Error(`Backend API error: ${response.status}`);
     }
 
     const data = await response.json();
@@ -32,14 +35,6 @@ export async function GET() {
     return NextResponse.json(data);
   } catch (error: unknown) {
     console.error('Error proxying to backend:', error);
-    
-    // Handle timeout errors specifically
-    if (error instanceof Error && error.name === 'AbortError') {
-      return NextResponse.json(
-        { success: false, message: 'Backend request timeout' },
-        { status: 504 }
-      );
-    }
     
     // Return mock data when backend is unavailable (both development and production)
     console.log('Returning mock data due to backend unavailability');

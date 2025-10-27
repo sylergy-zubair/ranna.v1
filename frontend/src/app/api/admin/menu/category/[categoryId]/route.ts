@@ -13,13 +13,19 @@ export async function DELETE(
     const { categoryId } = await params;
     console.log('Proxying delete category request to backend:', `${BACKEND_URL}/api/v1/admin/menu/category/${categoryId}`);
     
+    // Create a timeout controller
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+    
     const response = await fetch(`${BACKEND_URL}/api/v1/admin/menu/category/${categoryId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
-      signal: AbortSignal.timeout(15000),
+      signal: controller.signal,
     });
+    
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       console.error('Backend API error:', response.status, response.statusText);

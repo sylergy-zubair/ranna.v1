@@ -7,11 +7,13 @@ import ReviewCarousel from '@/components/ReviewCarousel';
 import FindUsSection from '@/components/FindUsSection';
 import DishCard from '@/components/DishCard';
 import { Dish } from '@/types';
+import OrderNowButton from '@/components/OrderNowButton';
 
 export default function Home() {
   // Featured dishes for Fan Favourites section
   const [featuredDishes, setFeaturedDishes] = useState<(Dish & { description: string; lowestPrice: number })[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   
   // Fetch featured dishes from API
   useEffect(() => {
@@ -51,9 +53,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-[80vh]">
       {/* Hero Section */}
-      <section className="relative w-full h-screen overflow-hidden">
+      <section className="relative w-full h-[80vh] overflow-hidden">
       <video
         className="absolute top-0 left-0 w-full h-full object-cover"
         autoPlay
@@ -67,7 +69,15 @@ export default function Home() {
       <div className="relative z-10 flex flex-col justify-center items-start h-full text-white text-left px-8 bg-black/40">
          <h1 className="text-[92px] font-bold mb-0 leading-tight">MADE WITH <span className="text-red-600">PASSION</span>, <br /> SERVED WITH PRIDE</h1>
         <p className="text-[36px]">The Indian flavour that keeps you coming back</p>
+        <OrderNowButton
+                  text="PLACE AN ORDER NOW"
+                  className="z-10 inline-block w-fit bg-red-600 text-white py-2 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors text-center"
+                style={{ backgroundColor: '#FF4036' }}
+                  openModal={true}
+                  onModalOpen={() => setIsOrderModalOpen(true)}
+                />
       </div>
+      
     </section>
 
 
