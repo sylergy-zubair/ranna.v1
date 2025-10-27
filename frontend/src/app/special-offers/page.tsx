@@ -52,12 +52,9 @@ export default function SpecialOffersPage() {
   return (
     <div>
       {/* Header */}
-      <section className="bg-white py-20">
+      <section className="bg-white py-4 mt-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8">Special Offers</h1>
-          <p className="text-xl text-gray-600 mb-8">
-            For more exclusive special offers, subscribe to our email list.
-          </p>
         </div>
       </section>
 
@@ -66,7 +63,7 @@ export default function SpecialOffersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Image */}
-            <div className="order-2 lg:order-1">
+            <div className="order-1">
               <div className="relative h-full w-full rounded-lg overflow-hidden">
                 <Image
                   src="/data/img/Ranna25Discount.webp"
@@ -110,7 +107,7 @@ export default function SpecialOffersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Text */}
-            <div className="order-1 lg:order-1">
+            <div className="order-2 lg:order-1">
               <div className="bg-gray-50 rounded-lg shadow-lg p-8">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">{offers[1].title}</h3>
                 <p className="text-gray-700 mb-6 leading-relaxed">
@@ -134,7 +131,7 @@ export default function SpecialOffersPage() {
             </div>
             
             {/* Image */}
-            <div className="order-2 lg:order-2">
+            <div className="order-1 lg:order-2">
               <div className="relative h-full w-full rounded-lg overflow-hidden">
               <Image
                   src="/data/img/VIPLoyalty.webp"
@@ -154,7 +151,7 @@ export default function SpecialOffersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Image */}
-            <div className="order-2 lg:order-1">
+            <div className="order-1">
               <div className="relative h-full w-full rounded-lg overflow-hidden">
               <Image
                   src="/data/img/Ranna10Discount.webp"
@@ -167,7 +164,7 @@ export default function SpecialOffersPage() {
             </div>
             
             {/* Text */}
-            <div className="order-1 lg:order-2">
+            <div className="order-2">
               <div className="bg-white rounded-lg shadow-lg p-8">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">{offers[2].title}</h3>
                 <p className="text-gray-700 mb-6 leading-relaxed">
@@ -198,7 +195,7 @@ export default function SpecialOffersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Text */}
-            <div className="order-1 lg:order-1">
+            <div className="order-2 lg:order-1">
               <div className="bg-gray-50 rounded-lg shadow-lg p-8">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">{offers[3].title}</h3>
                 <p className="text-gray-700 mb-6 leading-relaxed">
@@ -222,7 +219,7 @@ export default function SpecialOffersPage() {
             </div>
             
             {/* Image */}
-            <div className="order-2 lg:order-2">
+            <div className="order-1 lg:order-2">
               <div className="relative h-full w-full rounded-lg overflow-hidden">
               <Image
                   src="/data/img/RannaRewards.webp"
@@ -236,6 +233,32 @@ export default function SpecialOffersPage() {
           </div>
         </div>
       </section>
+
+{/* Top Section - Exclusive Offers (Full Width) */}
+      <section className="lg:py-16 py-8 bg-gray-50">    
+        <div className="py-8 ">
+          <div className="flex flex-col lg:flex-row justify-center lg:gap-8 gap-4 items-center px-2">
+            <div className="mb-4 lg:mb-0">
+              <p className="text-xl text-gray-600">
+              For more exclusive special offers, subscribe to our email list.
+              </p>
+            </div>
+            <div className="flex w-full lg:w-auto ">
+              <input
+                type="email"
+                placeholder="jane@email.com"
+                className="flex-1 px-4 py-2 bg-white text-gray-900 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500"
+              />
+              <button 
+                className="px-6 py-2 bg-red-600 hover:bg-red-700 rounded-r-md transition-colors font-semibold"
+                style={{ backgroundColor: '#FF4036' }}
+              >
+                Subscribe
+              </button>
+            </div>
+          </div>
+        </div>
+          </section>
 
       {/* Terms & Conditions */}
       <section className="py-16 bg-white">

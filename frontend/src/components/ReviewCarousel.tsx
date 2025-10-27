@@ -77,8 +77,8 @@ export default function ReviewCarousel() {
     <section className="bg-gray-50 py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-left mb-12">
-          <h2 className="text-6xl font-bold text-gray-900 mb-4">
+        <div className="lg:text-left text-center mb-12">
+          <h2 className="lg:text-6xl text-4xl font-bold text-gray-900 mb-4">
             What Our Customers Say
           </h2>
           <p className="text-xl text-gray-600">

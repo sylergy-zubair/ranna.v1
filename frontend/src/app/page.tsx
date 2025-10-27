@@ -68,8 +68,8 @@ export default function Home() {
       </video>
 
       <div className="relative z-10 flex flex-col justify-center items-start h-full text-white text-left max-w-7xl mx-auto px-4 pt-40 sm:px-6 lg:px-8 w-full ">
-         <h1 className="text-[92px] font-bold mb-0 leading-tight">MADE WITH <span className="text-red-600">PASSION</span>, <br /> SERVED WITH PRIDE</h1>
-        <p className="text-[36px]">The Indian flavour that keeps you coming back</p>
+         <h1 className="lg:text-[92px] text-[48px] font-bold mb-0 leading-tight">MADE WITH <span className="text-red-600">PASSION</span>, <br /> SERVED WITH PRIDE</h1>
+        <p className="lg:text-[36px] text-[24px]">The Indian flavour that keeps you coming back</p>
         <OrderNowButton
                   text="PLACE AN ORDER NOW"
                   className="z-10 cursor-pointer inline-block w-fit bg-red-600 text-white py-2 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors text-center"
@@ -87,28 +87,26 @@ export default function Home() {
       <section className="bg-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
             <Link
               href="/menu"
-              className="px-8 py-2 bg-[#333333] text-white rounded-full font-semibold text-lg flex items-center gap-3"
+              className="px-6 py-2 sm:px-8 sm:py-2 bg-[#333333] text-white rounded-full font-semibold text-base sm:text-lg flex items-center gap-2 sm:gap-3 w-32 sm:w-auto justify-center"
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/>
               </svg>
               Menu
             </Link>
             <Link
               href="/special-offers"
-              className="px-8 py-2 bg-[#333333] text-white rounded-full font-semibold text-lg flex items-center gap-3"
+              className="px-6 py-2 sm:px-8 sm:py-2 bg-[#333333] sm:text-[16px] text-[16px] text-white rounded-full font-semibold text-base flex items-center gap-2 sm:gap-3 w-40 sm:w-fit justify-center"
             >
-            
               Special Offers
             </Link>
             <Link
               href="/contact"
-              className="px-8 py-2 bg-[#333333] text-white rounded-full font-semibold text-lg flex items-center gap-3"
+              className="px-6 py-2 sm:px-8 sm:py-2 bg-[#333333] text-white rounded-full font-semibold text-base sm:text-lg flex items-center gap-2 sm:gap-3 w-32 sm:w-auto justify-center"
             >
-             
               Find Us
             </Link>
           </div>
@@ -118,7 +116,7 @@ export default function Home() {
       {/* Special Offers Section */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-6xl font-bold text-gray-900 mb-16 text-left">Special Offers</h2>
+          <h2 className="lg:text-6xl text-4xl font-bold text-gray-900 mb-16 text-center lg:text-left">Special Offers</h2>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
          
@@ -208,7 +206,7 @@ export default function Home() {
       {/* Fan Favourites Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-left mb-12">
+          <div className="lg:text-left text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Fan Favourites</h2>
             <p className="text-lg text-gray-600">Our most loved dishes, handpicked by our chefs</p>
           </div>
