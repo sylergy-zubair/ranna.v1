@@ -19,7 +19,7 @@ export default function Home() {
   useEffect(() => {
     const fetchFeaturedDishes = async () => {
       try {
-        const response = await fetch('/api/menu/featured');
+        const response = await fetch('/api/v1/menu/featured');
         const data = await response.json();
         
         if (data.success && data.data) {
@@ -53,7 +53,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-[80vh]">
+    <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative w-full h-[80vh] overflow-hidden">
       <video
@@ -66,19 +66,19 @@ export default function Home() {
         <source src="/hero.mp4" type="video/mp4" />
       </video>
 
-      <div className="relative z-10 flex flex-col justify-center items-start h-full text-white text-left px-8 bg-black/40">
+      <div className="relative z-10 flex flex-col justify-center items-start h-full text-white text-left max-w-7xl mx-auto px-4 pt-40 sm:px-6 lg:px-8 w-full ">
          <h1 className="text-[92px] font-bold mb-0 leading-tight">MADE WITH <span className="text-red-600">PASSION</span>, <br /> SERVED WITH PRIDE</h1>
         <p className="text-[36px]">The Indian flavour that keeps you coming back</p>
         <OrderNowButton
                   text="PLACE AN ORDER NOW"
-                  className="z-10 inline-block w-fit bg-red-600 text-white py-2 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors text-center"
+                  className="z-10 cursor-pointer inline-block w-fit bg-red-600 text-white py-2 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors text-center"
                 style={{ backgroundColor: '#FF4036' }}
                   openModal={true}
                   onModalOpen={() => setIsOrderModalOpen(true)}
                 />
       </div>
       
-    </section>
+      </section>
 
 
 
