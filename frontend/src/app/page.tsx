@@ -17,7 +17,7 @@ export default function Home() {
   useEffect(() => {
     const fetchFeaturedDishes = async () => {
       try {
-        const response = await fetch('/api/v1/menu/featured');
+        const response = await fetch('/api/menu/featured');
         const data = await response.json();
         
         if (data.success && data.data) {
