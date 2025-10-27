@@ -7,10 +7,10 @@ const BACKEND_URL = process.env.BACKEND_URL ||
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { categoryId: string } }
+  { params }: { params: Promise<{ categoryId: string }> }
 ) {
   try {
-    const { categoryId } = params;
+    const { categoryId } = await params;
     console.log('Proxying delete category request to backend:', `${BACKEND_URL}/api/v1/admin/menu/category/${categoryId}`);
     
     const response = await fetch(`${BACKEND_URL}/api/v1/admin/menu/category/${categoryId}`, {

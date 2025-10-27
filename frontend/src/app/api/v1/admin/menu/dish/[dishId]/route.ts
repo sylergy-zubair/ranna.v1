@@ -7,10 +7,10 @@ const BACKEND_URL = process.env.BACKEND_URL ||
 
 export async function GET(
   request: Request,
-  { params }: { params: { dishId: string } }
+  { params }: { params: Promise<{ dishId: string }> }
 ) {
   try {
-    const { dishId } = params;
+    const { dishId } = await params;
     console.log('Proxying get dish request to backend:', `${BACKEND_URL}/api/v1/admin/menu/dish/${dishId}`);
     
     const response = await fetch(`${BACKEND_URL}/api/v1/admin/menu/dish/${dishId}`, {
@@ -45,10 +45,10 @@ export async function GET(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { dishId: string } }
+  { params }: { params: Promise<{ dishId: string }> }
 ) {
   try {
-    const { dishId } = params;
+    const { dishId } = await params;
     console.log('Proxying delete dish request to backend:', `${BACKEND_URL}/api/v1/admin/menu/dish/${dishId}`);
     
     const response = await fetch(`${BACKEND_URL}/api/v1/admin/menu/dish/${dishId}`, {
