@@ -153,7 +153,7 @@ export default function MenuPage() {
           {/* Dishes Grid */}
           <div className="lg:col-span-3">
             {/* Fixed Category and Menu Header */}
-            <div className="sticky top-28 bg-gray-50 z-10 pb-4 -mx-4 px-4">
+            <div className="sticky top-20 bg-gray-50 z-10 pb-4 -mx-4 px-4">
               <div className="mb-6">
                 
                 <p className="text-gray-600 mb-4">
