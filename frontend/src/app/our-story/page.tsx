@@ -8,7 +8,7 @@ export default function OurStoryPage() {
       <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 italic">
-            Being your appetite to life with <span className="italic">Ranna</span>
+            Bring your appetite to life with <span className="italic">Ranna</span>
           </h1>
           <h2 className="text-3xl font-bold text-gray-900 mb-8">Our Story</h2>
         </div>

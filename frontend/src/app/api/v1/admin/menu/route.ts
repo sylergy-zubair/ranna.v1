@@ -7,15 +7,14 @@ const BACKEND_URL = process.env.BACKEND_URL ||
 
 export async function GET() {
   try {
-    console.log('Proxying menu request to backend:', `${BACKEND_URL}/api/v1/menu`);
+    console.log('Proxying admin menu request to backend:', `${BACKEND_URL}/api/v1/admin/menu`);
     
-    const response = await fetch(`${BACKEND_URL}/api/v1/menu`, {
+    const response = await fetch(`${BACKEND_URL}/api/v1/admin/menu`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      // Add timeout to prevent hanging
-      signal: AbortSignal.timeout(15000), // 15 second timeout
+      signal: AbortSignal.timeout(15000),
     });
 
     if (!response.ok) {
@@ -35,12 +34,13 @@ export async function GET() {
     
     // Return mock data for development/testing when backend is unavailable
     if (process.env.NODE_ENV === 'development') {
-      console.log('Returning mock data due to backend unavailability');
+      console.log('Returning mock admin data due to backend unavailability');
       return NextResponse.json({
         success: true,
         data: {
           categories: [
             {
+              category_id: "1",
               category_name: "Starters",
               dishes: [
                 {
@@ -48,6 +48,7 @@ export async function GET() {
                   dish_title: "Sample Dish",
                   spice_level: 2,
                   image_url: "/img/placeholder.jpg",
+                  is_featured: false,
                   options: [
                     {
                       option_name: "Regular",
