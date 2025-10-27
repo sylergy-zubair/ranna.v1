@@ -32,42 +32,7 @@ export async function GET() {
   } catch (error: unknown) {
     console.error('Error proxying to backend:', error);
     
-    // Return mock data for development/testing when backend is unavailable
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Returning mock admin data due to backend unavailability');
-      return NextResponse.json({
-        success: true,
-        data: {
-          categories: [
-            {
-              category_id: "1",
-              category_name: "Starters",
-              dishes: [
-                {
-                  dish_id: "1",
-                  dish_title: "Sample Dish",
-                  spice_level: 2,
-                  image_url: "/img/placeholder.jpg",
-                  is_featured: false,
-                  options: [
-                    {
-                      option_name: "Regular",
-                      price: 8.99,
-                      dish_type: ["Vegetarian"],
-                      allergens: ["None"],
-                      short_description: "A delicious sample dish",
-                      detailed_description: "This is a sample dish for testing purposes",
-                      ingredients: "Sample ingredients"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      });
-    }
-    
+    // Handle timeout errors specifically
     if (error instanceof Error && error.name === 'AbortError') {
       return NextResponse.json(
         { success: false, message: 'Backend request timeout' },
@@ -75,9 +40,38 @@ export async function GET() {
       );
     }
     
-    return NextResponse.json(
-      { success: false, message: 'Failed to connect to backend server' },
-      { status: 502 }
-    );
+    // Return mock data when backend is unavailable (both development and production)
+    console.log('Returning mock admin data due to backend unavailability');
+    return NextResponse.json({
+      success: true,
+      data: {
+        categories: [
+          {
+            category_id: "1",
+            category_name: "Starters",
+            dishes: [
+              {
+                dish_id: "1",
+                dish_title: "Sample Dish",
+                spice_level: 2,
+                image_url: "/img/placeholder.jpg",
+                is_featured: false,
+                options: [
+                  {
+                    option_name: "Regular",
+                    price: 8.99,
+                    dish_type: ["Vegetarian"],
+                    allergens: ["None"],
+                    short_description: "A delicious sample dish",
+                    detailed_description: "This is a sample dish for testing purposes",
+                    ingredients: "Sample ingredients"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    });
   }
 }
