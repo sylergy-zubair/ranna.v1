@@ -8,6 +8,7 @@ import FindUsSection from '@/components/FindUsSection';
 import DishCard from '@/components/DishCard';
 import { Dish } from '@/types';
 import OrderNowButton from '@/components/OrderNowButton';
+import OrderModal from '@/components/OrderModal';
 
 export default function Home() {
   // Featured dishes for Fan Favourites section
@@ -72,7 +73,7 @@ export default function Home() {
         <OrderNowButton
                   text="PLACE AN ORDER NOW"
                   className="z-10 cursor-pointer inline-block w-fit bg-red-600 text-white py-2 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors text-center"
-                style={{ backgroundColor: '#FF4036' }}
+                  style={{ backgroundColor: '#FF4036' }}
                   openModal={true}
                   onModalOpen={() => setIsOrderModalOpen(true)}
                 />
@@ -250,6 +251,12 @@ export default function Home() {
 
       {/* Find Us Section */}
       <FindUsSection />
+
+      {/* Order Modal */}
+      <OrderModal 
+        isOpen={isOrderModalOpen} 
+        onClose={() => setIsOrderModalOpen(false)} 
+      />
     </div>
   );
 }
