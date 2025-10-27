@@ -82,7 +82,7 @@ export default function ContactPage() {
           <div className="w-full max-w-2xl">
             {/* Contact Form */}
             <div>
-            <div className="bg-white rounded-lg shadow-lg p-8">
+            <div id="form" className="bg-white rounded-lg shadow-lg p-8">
               <h1 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h1>
               
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -320,7 +320,8 @@ export default function ContactPage() {
      
 
       {/* FAQ Section */}
-      <FAQ />
+      <section id="faq"><FAQ /></section>
+      
     </div>
   );
 }

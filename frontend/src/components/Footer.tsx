@@ -1,7 +1,13 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import OrderModal from '@/components/OrderModal';
 
 export default function Footer() {
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+
   return (
     <footer className="bg-[#333333] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -98,7 +104,18 @@ export default function Footer() {
                 <li><Link href="/" className="text-white hover:text-red-500 transition-colors">Home</Link></li>
                 <li><Link href="/menu" className="text-white hover:text-red-500 transition-colors">Our Menu</Link></li>
                 <li><Link href="/special-offers" className="text-white hover:text-red-500 transition-colors">Special Offers</Link></li>
-                <li><Link href="/order" className="text-white hover:text-red-500 transition-colors">Order Now</Link></li>
+                <li>
+                  <Link 
+                    href="/order" 
+                    className="text-white hover:text-red-500 transition-colors"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsOrderModalOpen(true);
+                    }}
+                  >
+                    Order Now
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -107,9 +124,9 @@ export default function Footer() {
               <h3 className="text-lg font-bold mb-4">Navigation</h3>
               <ul className="space-y-2">
                 <li><Link href="/contact" className="text-white hover:text-red-500 transition-colors">Contact Us</Link></li>
-                <li><Link href="/contact" className="text-white hover:text-red-500 transition-colors">FAQ</Link></li>
-                <li><Link href="#" className="text-white hover:text-red-500 transition-colors">Read Reviews</Link></li>
-                <li><Link href="/contact" className="text-white hover:text-red-500 transition-colors">Write a Review</Link></li>
+                <li><Link href="/contact#faq" className="text-white hover:text-red-500 transition-colors">FAQ</Link></li>
+                <li><Link href="/#reviews" className="text-white hover:text-red-500 transition-colors">Read Reviews</Link></li>
+                <li><Link href="/contact#form" className="text-white hover:text-red-500 transition-colors">Write a Review</Link></li>
               </ul>
             </div>
 
@@ -139,6 +156,12 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      
+      {/* Order Modal */}
+      <OrderModal 
+        isOpen={isOrderModalOpen} 
+        onClose={() => setIsOrderModalOpen(false)} 
+      />
     </footer>
   );
 }

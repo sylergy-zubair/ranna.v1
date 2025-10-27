@@ -1,8 +1,13 @@
+'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import OrderNowButton from './OrderNowButton';
+import OrderModal from '@/components/OrderModal';
+import { useState, useEffect } from 'react';
 
 export default function FindUsSection() {
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+
   return (
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -76,16 +81,22 @@ export default function FindUsSection() {
                 Order direct for freshly cooked curries with our exclusive online offers.
               </p>
               <OrderNowButton
-                text="Order Now"
-                className="inline-block w-fit bg-red-600 text-white py-2 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors text-center"
-                style={{ backgroundColor: '#FF4036' }}
-                openModal={true}
-                onModalOpen={() => {}}
-              />
+                  text="PLACE AN ORDER NOW"
+                  className="z-10 cursor-pointer inline-block w-fit bg-red-600 text-white py-2 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors text-center"
+                  style={{ backgroundColor: '#FF4036' }}
+                  openModal={true}
+                  onModalOpen={() => setIsOrderModalOpen(true)}
+                />
             </div>
           </div>
         </div>
       </div>
+      {/* Order Modal */}
+      <OrderModal 
+        isOpen={isOrderModalOpen} 
+        onClose={() => setIsOrderModalOpen(false)} 
+      />
     </section>
+    
   );
 }

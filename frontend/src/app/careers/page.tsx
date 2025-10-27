@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 export default function CareersPage() {
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     homeAddress: '',
@@ -153,6 +154,16 @@ export default function CareersPage() {
         'Responsible for fuel, insurance, and vehicle upkeep.',
         'Must comply with food handling and hygiene standards.'
       ]
+    },
+    {
+      title: 'Leaflet Distributor',
+      description: [
+        'Deliver orders under contract terms, using own vehicle.',
+        'Ensure timely delivery and safe handling of food.',
+        'Represent Ranna professionally to customers.',
+        'Responsible for fuel, insurance, and vehicle upkeep.',
+        'Must comply with food handling and hygiene standards.'
+      ]
     }
   ];
 
@@ -183,15 +194,32 @@ export default function CareersPage() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Application Form - Full Width Row */}
-        <div className="bg-white rounded-lg shadow-lg p-8 mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Career</h2>
-          <p className="text-gray-600 mb-6">
-            <strong>Current Position Available:</strong><br />
-            No Position currently available, however you can put forward your interest by filling up the form below.
-          </p>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Application Form Accordion */}
+        <div className="bg-white rounded-lg shadow-lg mb-12">
+          <button
+            onClick={() => setIsFormOpen(!isFormOpen)}
+            className="w-full flex justify-between items-center p-8 text-left hover:bg-gray-50 transition-colors"
+          >
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Apply Now</h2>
+              <p className="text-gray-600">
+                <strong>Current Position Available:</strong><br />
+                No Position currently available, however you can put forward your interest by filling up the form below.
+              </p>
+            </div>
+            <svg 
+              className={`w-6 h-6 transform transition-transform duration-200 ${isFormOpen ? 'rotate-180' : ''}`}
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          
+          {isFormOpen && (
+            <div className="px-8 pb-8 border-t border-gray-200">
+              <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Full Name */}
               <div>
@@ -287,6 +315,7 @@ export default function CareersPage() {
                   <option value="kitchen-assistant">Kitchen Assistant</option>
                   <option value="delivery-driver">Delivery Driver</option>
                   <option value="contract-delivery-driver">Contract Delivery Driver</option>
+                  <option value="leaflet-distributor">Leaflet Distributor</option>
                 </select>
               </div>
 
@@ -393,12 +422,14 @@ export default function CareersPage() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-red-600 text-white py-3 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors"
+              className="w-fit mx-auto bg-red-600 text-white py-3 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors"
               style={{ backgroundColor: '#FF4036' }}
             >
               Submit
             </button>
-          </form>
+              </form>
+            </div>
+          )}
         </div>
 
         {/* Job Positions - 2 Columns, 5 Rows Grid */}

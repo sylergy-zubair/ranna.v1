@@ -139,7 +139,7 @@ export default function Home() {
               {/* More Info Button */}
               <div>
                 <Link
-                  href="/special-offers"
+                  href="/special-offers#discount-10"
                   className="inline-block bg-red-600 text-white px-8 py-2 rounded-full font-semibold hover:bg-red-700 transition-colors text-lg"
                   style={{ backgroundColor: '#FF4036' }}
                 >
@@ -165,7 +165,7 @@ export default function Home() {
               {/* More Info Button */}
               <div>
                 <Link
-                  href="/special-offers"
+                  href="/special-offers#discount-25"
                   className="inline-block bg-red-600 text-white px-8 py-2 rounded-full font-semibold hover:bg-red-700 transition-colors text-lg"
                   style={{ backgroundColor: '#FF4036' }}
                 >
@@ -191,7 +191,7 @@ export default function Home() {
               {/* More Info Button */}
               <div>
                 <Link
-                  href="/special-offers"
+                  href="/special-offers#discount-vip"
                   className="inline-block bg-red-600 text-white px-8 py-2 rounded-full font-semibold hover:bg-red-700 transition-colors text-lg"
                   style={{ backgroundColor: '#FF4036' }}
                 >
@@ -240,7 +240,7 @@ export default function Home() {
       </section>
 
       {/* What Our Customers Say Section */}
-      <section className="py-16 bg-white">
+      <section id="reviews" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <ReviewCarousel />
