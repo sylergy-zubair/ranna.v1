@@ -55,7 +55,7 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6">
           {/* Left Column - Image */}
           <div className="space-y-4">
-            <div className="relative w-full h-80 bg-gray-200 rounded-lg overflow-hidden">
+            <div className="relative w-full h-80 bg-[#f5f5f5] rounded-lg overflow-hidden">
               {dish.image_url ? (
                 <Image
                   src={dish.image_url}

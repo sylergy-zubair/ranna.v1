@@ -3,6 +3,7 @@ import SpiceLevelFilter from './SpiceLevelFilter';
 import DishTypeFilter from './DishTypeFilter';
 import AllergenFilter from './AllergenFilter';
 import CalorieRangeFilter from './CalorieRangeFilter';
+import CategoryButtonFilter from './CategoryButtonFilter';
 
 export default function FilterPanel({ 
   filters, 
@@ -11,7 +12,7 @@ export default function FilterPanel({
 }: FilterPanelProps) {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 h-fit">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-6 top-20">
         <h2 className="text-xl font-semibold text-gray-800">Filters</h2>
         <button
           onClick={() => onFiltersChange({
@@ -50,6 +51,15 @@ export default function FilterPanel({
           options={availableOptions.calorieRanges}
           onChange={(value) => onFiltersChange({ ...filters, calorieRange: value })}
         />
+
+        {/* Category Filter - Only show on mobile */}
+        <div className="lg:hidden">
+          <CategoryButtonFilter
+            value={filters.categories}
+            options={availableOptions.categories}
+            onChange={(value) => onFiltersChange({ ...filters, categories: value })}
+          />
+        </div>
       </div>
     </div>
   );

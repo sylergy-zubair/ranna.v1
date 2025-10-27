@@ -27,6 +27,7 @@ export default function MenuPage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   
   const { filters, updateFilters } = useFilters();
 
@@ -138,9 +139,53 @@ export default function MenuPage() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Mobile Filter Dropdown */}
+        <div className="lg:hidden mb-6">
+          <div className="sticky top-24 z-20 bg-white rounded-lg shadow-md">
+            <button
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+              className="w-full flex justify-between items-center p-4 text-left hover:bg-gray-50 transition-colors"
+            >
+              <span className="font-semibold text-gray-800">
+                Filters {Object.values(filters).some(v => v && (Array.isArray(v) ? v.length > 0 : true)) && '•'}
+              </span>
+              <svg 
+                className={`w-5 h-5 transform transition-transform duration-200 ${isFilterOpen ? 'rotate-180' : ''}`}
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            
+            {isFilterOpen && (
+              <div className="px-4 pb-4 border-t border-gray-200">
+               
+                
+                <FilterPanel 
+                  filters={filters}
+                  onFiltersChange={updateFilters}
+                  availableOptions={availableOptions}
+                />
+                
+                {/* Close Button */}
+                <div className="mt-4 pt-4 border-t border-gray-200">
+                  <button
+                    onClick={() => setIsFilterOpen(false)}
+                    className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors"
+                  >
+                    Find Dishes
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Filter Panel */}
-          <div className="lg:col-span-1">
+          {/* Desktop Filter Panel - Hidden on Mobile */}
+          <div className="hidden lg:block lg:col-span-1">
             <div className="sticky top-28 max-h-[calc(100vh-120px)] overflow-y-auto">
               <FilterPanel
                 filters={filters}
@@ -163,8 +208,8 @@ export default function MenuPage() {
                   ) && ' (filtered)'}
                 </p>
                 
-                {/* Category Filter Buttons */}
-                <div className="bg-white rounded-lg p-4 shadow-sm">
+                {/* Category Filter Buttons - Hidden on mobile, shown on desktop */}
+                <div className="hidden lg:block bg-white rounded-lg p-4 shadow-sm">
                   <CategoryButtonFilter
                     value={filters.categories}
                     options={availableOptions.categories}

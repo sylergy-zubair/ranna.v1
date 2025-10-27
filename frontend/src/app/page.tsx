@@ -90,7 +90,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
             <Link
               href="/menu"
-              className="px-6 py-2 sm:px-8 sm:py-2 bg-[#333333] text-white rounded-full font-semibold text-base sm:text-lg flex items-center gap-2 sm:gap-3 w-32 sm:w-auto justify-center"
+              className="px-6 py-2 sm:px-8 sm:py-2 bg-[#333333] text-white rounded-full font-semibold text-base sm:text-lg flex items-center gap-2 sm:gap-3 w-40 sm:w-auto justify-center"
             >
               <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/>
@@ -99,13 +99,13 @@ export default function Home() {
             </Link>
             <Link
               href="/special-offers"
-              className="px-6 py-2 sm:px-8 sm:py-2 bg-[#333333] sm:text-[16px] text-[16px] text-white rounded-full font-semibold text-base flex items-center gap-2 sm:gap-3 w-40 sm:w-fit justify-center"
+              className="px-6 py-2 sm:px-8 sm:py-2 bg-[#333333] text-white rounded-full font-semibold text-base sm:text-lg flex items-center gap-2 sm:gap-3 w-40 sm:w-auto justify-center whitespace-nowrap"
             >
               Special Offers
             </Link>
             <Link
               href="/contact"
-              className="px-6 py-2 sm:px-8 sm:py-2 bg-[#333333] text-white rounded-full font-semibold text-base sm:text-lg flex items-center gap-2 sm:gap-3 w-32 sm:w-auto justify-center"
+              className="px-6 py-2 sm:px-8 sm:py-2 bg-[#333333] text-white rounded-full font-semibold text-base sm:text-lg flex items-center gap-2 sm:gap-3 w-40 sm:w-auto justify-center"
             >
               Find Us
             </Link>

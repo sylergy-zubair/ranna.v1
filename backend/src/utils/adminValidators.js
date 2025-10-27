@@ -27,7 +27,7 @@ const optionSchema = Joi.object({
     'Lamb',
     'Indian Paneer',
     'Prawn',
-    'Kng Prawn',
+    'King Prawn',
     'Fish',
     'Meat (Mutton)',
     'Gluten free',
