@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 const BACKEND_URL = process.env.BACKEND_URL || 
   (process.env.NODE_ENV === 'production' 
     ? 'https://ranna-v1.vercel.app' // Your actual backend URL
-    : 'http://localhost:5000');
+    : 'https://ranna-v1.vercel.app'); // Use production backend for local dev too
 
 export async function GET(
   request: Request,
