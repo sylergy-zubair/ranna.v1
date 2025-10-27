@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 const BACKEND_URL = process.env.BACKEND_URL || 
   (process.env.NODE_ENV === 'production' 
-    ? 'https://your-backend-url.herokuapp.com' // Replace with your actual backend URL
+    ? 'https://ranna-v1.vercel.app' // Your actual backend URL
     : 'http://localhost:5000');
 
 export async function DELETE(
