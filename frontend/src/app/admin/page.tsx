@@ -118,7 +118,7 @@ export default function AdminPage() {
     setFormState(prev => ({
       ...prev,
       selectedDish: dishId,
-      isEditing: true,
+      isEditing: dishId !== 'new' && dishId !== null,                        //isEditing: true,
       isAddingNewCategory: false,
       error: null,
     }));
