@@ -99,7 +99,6 @@ export default function Footer() {
 
             {/* Menu Links */}
             <div>
-              <h3 className="text-lg font-bold mb-4">Menu</h3>
               <ul className="space-y-2">
                 <li><Link href="/" className="text-white hover:text-red-500 transition-colors">Home</Link></li>
                 <li><Link href="/menu" className="text-white hover:text-red-500 transition-colors">Our Menu</Link></li>
@@ -121,7 +120,6 @@ export default function Footer() {
 
             {/* Navigation */}
             <div>
-              <h3 className="text-lg font-bold mb-4">Navigation</h3>
               <ul className="space-y-2">
                 <li><Link href="/contact" className="text-white hover:text-red-500 transition-colors">Contact Us</Link></li>
                 <li><Link href="/contact#faq" className="text-white hover:text-red-500 transition-colors">FAQ</Link></li>
@@ -132,7 +130,6 @@ export default function Footer() {
 
             {/* Resources */}
             <div>
-              <h3 className="text-lg font-bold mb-4">Resources</h3>
               <ul className="space-y-2">
                 <li><Link href="/our-story" className="text-white hover:text-red-500 transition-colors">Our Story</Link></li>
                 <li><Link href="/contact" className="text-white hover:text-red-500 transition-colors">Find Us</Link></li>
