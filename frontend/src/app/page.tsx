@@ -9,12 +9,15 @@ import DishCard from '@/components/DishCard';
 import { Dish } from '@/types';
 import OrderNowButton from '@/components/OrderNowButton';
 import OrderModal from '@/components/OrderModal';
+import MoreInfoModal from '@/components/MoreInfoModal';
 
 export default function Home() {
   // Featured dishes for Fan Favourites section
   const [featuredDishes, setFeaturedDishes] = useState<(Dish & { description: string; lowestPrice: number })[]>([]);
   const [loading, setLoading] = useState(true);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
+  const [isMoreInfoModalOpen, setIsMoreInfoModalOpen] = useState(false);
   
   // Fetch featured dishes from API
   useEffect(() => {
@@ -49,8 +52,13 @@ export default function Home() {
 
   // More Info Modal handlers
   const handleMoreInfo = (dish: Dish) => {
-    // TODO: Implement modal functionality
-    console.log('More info clicked for dish:', dish.dish_title);
+    setSelectedDish(dish);
+    setIsMoreInfoModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsMoreInfoModalOpen(false);
+    setSelectedDish(null);
   };
 
   return (
@@ -254,6 +262,13 @@ export default function Home() {
       <OrderModal 
         isOpen={isOrderModalOpen} 
         onClose={() => setIsOrderModalOpen(false)} 
+      />
+
+      {/* More Info Modal */}
+      <MoreInfoModal
+        dish={selectedDish}
+        isOpen={isMoreInfoModalOpen}
+        onClose={handleCloseModal}
       />
     </div>
   );
