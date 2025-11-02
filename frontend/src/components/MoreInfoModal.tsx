@@ -204,7 +204,7 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
         <div className="border-t border-gray-200 p-6">
           <div className="bg-gray-50 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Detailed Description</h3>
-            <p className="text-gray-700 leading-relaxed">
+            <p className="text-gray-700 leading-relaxed whitespace-pre-line">
               {showFullDescription 
                 ? selectedOption.detailed_description 
                 : truncateText(selectedOption.detailed_description)
