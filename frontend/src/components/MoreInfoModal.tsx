@@ -159,7 +159,7 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
 
         {/* Middle Section - Nutritional Information */}
         <div className="border-t border-gray-200 p-6">
-          <h3 className="text-xl font-bold text-gray-800 mb-6 text-center">Nutrition (per serving)</h3>
+          <h3 className="text-xl font-bold text-gray-800 mb-6 text-center">Nutrition (per 100g)</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
             <div className="text-center p-4 bg-gray-50 rounded-lg">
               <div className="text-2xl font-bold text-gray-800">{selectedOption.nutrition.energy_kj}</div>

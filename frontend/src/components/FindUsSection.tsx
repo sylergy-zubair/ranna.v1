@@ -55,7 +55,7 @@ export default function FindUsSection() {
                 Freshly prepared meals in a modern curry house atmosphere.
               </p>
               <Link
-                href="/contact"
+                href="/contact#form"
                 className="inline-block w-fit bg-red-600 text-white py-2 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors text-center"
                 style={{ backgroundColor: '#FF4036' }}
               >

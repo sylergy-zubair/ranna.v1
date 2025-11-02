@@ -76,19 +76,21 @@ export default function DishCard({ dish, onMoreInfo }: DishCardProps) {
         </button>
       </div>
 
-        {/* Option names as tags */}
-        <div className="mt-3">
-          <div className="flex flex-wrap gap-1">
-            {dish.options.map((option, index) => (
-              <span
-                key={index}
-                className="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs"
-              >
-                {option.option_name}
-              </span>
-            ))}
+        {/* Option names as tags - only show if more than 1 option */}
+        {dish.options.length > 1 && (
+          <div className="mt-3">
+            <div className="flex flex-wrap gap-1">
+              {dish.options.map((option, index) => (
+                <span
+                  key={index}
+                  className="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs"
+                >
+                  {option.option_name}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
