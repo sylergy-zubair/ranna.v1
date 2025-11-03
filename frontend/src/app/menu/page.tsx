@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, Fragment } from 'react';
 import { CuisineData, Dish } from '@/types';
 import { 
   loadCuisineData, 
@@ -234,13 +234,25 @@ export default function MenuPage() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredDishes.map((dish, index) => (
-                  <DishCard
-                    key={`${dish.dish_title}-${index}`}
-                    dish={dish}
-                    onMoreInfo={handleMoreInfo}
-                  />
-                ))}
+                {filteredDishes.map((dish, index) => {
+                  const isLastDishInCategory = 
+                    index === filteredDishes.length - 1 || 
+                    filteredDishes[index + 1].category !== dish.category;
+                  
+                  return (
+                    <Fragment key={`dish-fragment-${index}`}>
+                      <DishCard
+                        dish={dish}
+                        onMoreInfo={handleMoreInfo}
+                      />
+                      {isLastDishInCategory && index < filteredDishes.length - 1 && (
+                        <div 
+                          className="col-span-full my-6 border-b-2 border-gray-300"
+                        />
+                      )}
+                    </Fragment>
+                  );
+                })}
               </div>
             )}
           </div>
