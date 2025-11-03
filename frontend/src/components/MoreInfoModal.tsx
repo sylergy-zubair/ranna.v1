@@ -109,6 +109,20 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
 
             {/* Spice Level and Allergens */}
             <div className="bg-gray-50 rounded-lg p-4">
+              {/* Dish Types */}
+              {selectedOption.dish_type && selectedOption.dish_type.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {selectedOption.dish_type.map((type, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-700"
+                    >
+                      {type}
+                    </span>
+                  ))}
+                </div>
+              )}
+
               <div className="flex items-center space-x-4 mb-2">
                 <div className="flex items-center space-x-1">
                   {/* Chili Images */}
