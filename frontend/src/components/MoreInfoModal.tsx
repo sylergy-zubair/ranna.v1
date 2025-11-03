@@ -25,6 +25,51 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
     const maxWords = maxLines * wordsPerLine;
     return words.length > maxWords;
   };
+
+  // Helper function to bold allergens in ingredients
+  const parseIngredientsWithBoldAllergens = (ingredients: string, allergens: string[]): React.ReactNode[] => {
+    if (!ingredients) return [];
+    
+    // Filter out "None" and "No Allergen"
+    const validAllergens = allergens.filter(a => 
+      a && a !== 'None' && a !== 'No Allergen'
+    );
+    
+    if (validAllergens.length === 0) {
+      return [ingredients];
+    }
+    
+    // Split by comma and process each ingredient
+    const parts = ingredients.split(',').map((ingredient, idx) => {
+      const trimmedIngredient = ingredient.trim();
+      
+      // Check if this ingredient contains any allergen (case-insensitive)
+      const containsAllergen = validAllergens.some(allergen => {
+        // Remove parentheses and extra text from allergen names for better matching
+        const cleanAllergen = allergen.toLowerCase()
+          .replace(/\s*\(.*?\)\s*/g, '') // Remove parentheses content
+          .trim();
+        const cleanIngredient = trimmedIngredient.toLowerCase();
+        
+        // Check if ingredient contains the allergen word
+        return cleanIngredient.includes(cleanAllergen) || 
+               cleanIngredient.includes(allergen.toLowerCase());
+      });
+      
+      return (
+        <span key={idx}>
+          {idx > 0 && ', '}
+          {containsAllergen ? (
+            <strong className="font-bold">{trimmedIngredient}</strong>
+          ) : (
+            trimmedIngredient
+          )}
+        </span>
+      );
+    });
+    
+    return parts;
+  };
   
   // Reset selected option when modal opens
   useEffect(() => {
@@ -244,8 +289,14 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
                 <div>
                   <p>
                     {showFullIngredients 
-                      ? selectedOption.ingredients.join(', ')
-                      : truncateText(selectedOption.ingredients.join(', '))
+                      ? parseIngredientsWithBoldAllergens(
+                          selectedOption.ingredients.join(', '), 
+                          selectedOption.allergens
+                        )
+                      : parseIngredientsWithBoldAllergens(
+                          truncateText(selectedOption.ingredients.join(', ')), 
+                          selectedOption.allergens
+                        )
                     }
                   </p>
                   {shouldTruncate(selectedOption.ingredients.join(', ')) && (
