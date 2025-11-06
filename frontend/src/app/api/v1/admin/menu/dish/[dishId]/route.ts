@@ -11,17 +11,26 @@ export async function GET(
 ) {
   try {
     const { dishId } = await params;
+    // Get Authorization header from incoming request
+    const authHeader = request.headers.get('authorization');
+    
     console.log('Proxying get dish request to backend:', `${BACKEND_URL}/api/v1/admin/menu/dish/${dishId}`);
     
     // Create a timeout controller
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
     
+    // Build headers object, including Authorization if present
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+    if (authHeader) {
+      headers['Authorization'] = authHeader;
+    }
+    
     const response = await fetch(`${BACKEND_URL}/api/v1/admin/menu/dish/${dishId}`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       signal: controller.signal,
     });
     
@@ -55,17 +64,26 @@ export async function DELETE(
 ) {
   try {
     const { dishId } = await params;
+    // Get Authorization header from incoming request
+    const authHeader = request.headers.get('authorization');
+    
     console.log('Proxying delete dish request to backend:', `${BACKEND_URL}/api/v1/admin/menu/dish/${dishId}`);
     
     // Create a timeout controller
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
     
+    // Build headers object, including Authorization if present
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+    if (authHeader) {
+      headers['Authorization'] = authHeader;
+    }
+    
     const response = await fetch(`${BACKEND_URL}/api/v1/admin/menu/dish/${dishId}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       signal: controller.signal,
     });
     

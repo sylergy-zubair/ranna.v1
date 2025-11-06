@@ -5,19 +5,28 @@ const BACKEND_URL = process.env.BACKEND_URL ||
     ? 'https://ranna-v1.vercel.app' // Your actual backend URL
     : 'https://ranna-v1.vercel.app'); // Use production backend for local dev too
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    // Get Authorization header from incoming request
+    const authHeader = request.headers.get('authorization');
+    
     console.log('Proxying admin menu request to backend:', `${BACKEND_URL}/api/v1/admin/menu`);
     
     // Create a timeout controller
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
     
+    // Build headers object, including Authorization if present
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+    if (authHeader) {
+      headers['Authorization'] = authHeader;
+    }
+    
     const response = await fetch(`${BACKEND_URL}/api/v1/admin/menu`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       signal: controller.signal,
     });
     

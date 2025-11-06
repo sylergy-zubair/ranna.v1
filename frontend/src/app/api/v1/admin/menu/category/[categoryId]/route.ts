@@ -11,17 +11,26 @@ export async function DELETE(
 ) {
   try {
     const { categoryId } = await params;
+    // Get Authorization header from incoming request
+    const authHeader = request.headers.get('authorization');
+    
     console.log('Proxying delete category request to backend:', `${BACKEND_URL}/api/v1/admin/menu/category/${categoryId}`);
     
     // Create a timeout controller
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
     
+    // Build headers object, including Authorization if present
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+    if (authHeader) {
+      headers['Authorization'] = authHeader;
+    }
+    
     const response = await fetch(`${BACKEND_URL}/api/v1/admin/menu/category/${categoryId}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       signal: controller.signal,
     });
     

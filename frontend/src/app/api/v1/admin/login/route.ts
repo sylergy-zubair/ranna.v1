@@ -8,26 +8,17 @@ const BACKEND_URL = process.env.BACKEND_URL ||
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    // Get Authorization header from incoming request
-    const authHeader = request.headers.get('authorization');
-    
-    console.log('Proxying create category request to backend:', `${BACKEND_URL}/api/v1/admin/menu/category`);
+    console.log('Proxying admin login request to backend:', `${BACKEND_URL}/api/v1/admin/login`);
     
     // Create a timeout controller
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
     
-    // Build headers object, including Authorization if present
-    const headers: HeadersInit = {
-      'Content-Type': 'application/json',
-    };
-    if (authHeader) {
-      headers['Authorization'] = authHeader;
-    }
-    
-    const response = await fetch(`${BACKEND_URL}/api/v1/admin/menu/category`, {
+    const response = await fetch(`${BACKEND_URL}/api/v1/admin/login`, {
       method: 'POST',
-      headers,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(body),
       signal: controller.signal,
     });
@@ -36,8 +27,9 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       console.error('Backend API error:', response.status, response.statusText);
+      const errorData = await response.json().catch(() => ({ message: 'Login failed' }));
       return NextResponse.json(
-        { success: false, message: `Backend API error: ${response.status}` },
+        { success: false, message: errorData.message || `Backend API error: ${response.status}` },
         { status: response.status }
       );
     }
@@ -49,9 +41,18 @@ export async function POST(request: Request) {
   } catch (error: unknown) {
     console.error('Error proxying to backend:', error);
     
+    // Handle timeout errors specifically
+    if (error instanceof Error && error.name === 'AbortError') {
+      return NextResponse.json(
+        { success: false, message: 'Backend request timeout' },
+        { status: 504 }
+      );
+    }
+    
     return NextResponse.json(
-      { success: false, message: 'Failed to connect to backend server' },
-      { status: 502 }
+      { success: false, message: 'Connection error. Please check if the backend is running.' },
+      { status: 500 }
     );
   }
 }
+

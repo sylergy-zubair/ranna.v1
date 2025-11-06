@@ -8,17 +8,26 @@ const BACKEND_URL = process.env.BACKEND_URL ||
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    // Get Authorization header from incoming request
+    const authHeader = request.headers.get('authorization');
+    
     console.log('Proxying create dish request to backend:', `${BACKEND_URL}/api/v1/admin/menu/dish`);
     
     // Create a timeout controller
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
     
+    // Build headers object, including Authorization if present
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+    if (authHeader) {
+      headers['Authorization'] = authHeader;
+    }
+    
     const response = await fetch(`${BACKEND_URL}/api/v1/admin/menu/dish`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify(body),
       signal: controller.signal,
     });
@@ -50,17 +59,26 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
+    // Get Authorization header from incoming request
+    const authHeader = request.headers.get('authorization');
+    
     console.log('Proxying update dish request to backend:', `${BACKEND_URL}/api/v1/admin/menu/dish`);
     
     // Create a timeout controller
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
     
+    // Build headers object, including Authorization if present
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+    if (authHeader) {
+      headers['Authorization'] = authHeader;
+    }
+    
     const response = await fetch(`${BACKEND_URL}/api/v1/admin/menu/dish`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify(body),
       signal: controller.signal,
     });
