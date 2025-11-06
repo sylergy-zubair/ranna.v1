@@ -20,7 +20,7 @@ export default function Footer() {
                 Subscribe for exclusive vouchers, offers and money off.
               </p>
             </div>
-            <div className="flex w-full lg:w-auto">
+            <div className="flex w-auto">
               <input
                 type="email"
                 placeholder="jane@email.com"
