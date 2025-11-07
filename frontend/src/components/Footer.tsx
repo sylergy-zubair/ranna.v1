@@ -153,6 +153,17 @@ export default function Footer() {
                 <li><Link href="/our-story" className="text-white hover:text-red-500 transition-colors">Our Story</Link></li>
                 <li><Link href="/contact" className="text-white hover:text-red-500 transition-colors">Find Us</Link></li>
                 <li><Link href="/careers" className="text-white hover:text-red-500 transition-colors">Careers</Link></li>
+                <li>
+                  <a
+                    href="https://pub-1df565ef59df448a9e0f5e4226f6265a.r2.dev/RANNA%20DINE%20MENU%202025%20V2%20final_compressed.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download
+                    className="inline-block w-fit bg-red-600 text-white py-2 px-4 rounded-full font-medium hover:bg-red-700 transition-colors text-center"
+                  >
+                    Download Menu
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
