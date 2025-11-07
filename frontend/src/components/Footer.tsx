@@ -14,24 +14,27 @@ export default function Footer() {
         
         {/* Top Section - Exclusive Offers (Full Width) */}
         <div className="py-8 border-b border-gray-600">
-          <div className="flex flex-col lg:flex-row justify-evenly items-center">
-            <div className="mb-4 lg:mb-0">
+          <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4 lg:gap-6">
+            <div className="text-center lg:text-left">
               <p className="text-white text-sm">
                 Subscribe for exclusive vouchers, offers and money off.
               </p>
             </div>
-            <div className="flex w-auto">
-              <input
-                type="email"
-                placeholder="jane@email.com"
-                className="flex-1 px-4 py-2 bg-white text-gray-900 rounded-l-md focus:outline-none focus:ring-2 focus:ring-red-500"
-              />
-              <button 
-                className="px-6 py-2 bg-red-600 hover:bg-red-700 rounded-r-md transition-colors font-semibold"
-                style={{ backgroundColor: '#FF4036' }}
-              >
-                Subscribe
-              </button>
+            <div className="w-full max-w-md mx-auto lg:mx-0">
+              <form className="flex flex-col sm:flex-row gap-3 sm:gap-0">
+                <input
+                  type="email"
+                  placeholder="jane@email.com"
+                  className="flex-1 px-4 py-2 bg-white text-gray-900 rounded-md sm:rounded-l-md sm:rounded-r-none focus:outline-none focus:ring-2 focus:ring-red-500"
+                />
+                <button 
+                  type="submit"
+                  className="px-6 py-2 bg-red-600 hover:bg-red-700 rounded-md sm:rounded-l-none sm:rounded-r-md transition-colors font-semibold flex-shrink-0"
+                  style={{ backgroundColor: '#FF4036' }}
+                >
+                  Subscribe
+                </button>
+              </form>
             </div>
           </div>
         </div>
