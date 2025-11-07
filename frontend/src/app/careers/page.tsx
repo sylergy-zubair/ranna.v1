@@ -224,6 +224,8 @@ export default function CareersPage() {
                 className="space-y-6"
               >
                 <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_subject" value="Ranna – Careers Form" />
                 <input type="hidden" name="_next" value="https://www.ranna.co.uk/careers?submitted=true" />
                 <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
                 <input type="hidden" name="daysSelected" value={formData.daysAvailable.join(', ')} />

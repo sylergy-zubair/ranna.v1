@@ -78,6 +78,8 @@ export default function ContactPage() {
                 className="space-y-6"
               >
                 <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_subject" value="Ranna – Contact Form" />
                 <input type="hidden" name="_next" value="https://www.ranna.co.uk/contact?submitted=true" />
                 <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
                 <input type="hidden" name="rating" value={formData.rating} />

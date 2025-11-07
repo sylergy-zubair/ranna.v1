@@ -284,21 +284,19 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
         <div className="border-t border-gray-200 p-6">
           <div className="bg-gray-50 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Ingredients</h3>
-            <div className="text-gray-700 leading-relaxed">
+            <div className="text-gray-700 leading-relaxed whitespace-pre-line">
               {selectedOption.ingredients && selectedOption.ingredients.length > 0 ? (
                 <div>
-                  <p>
-                    {showFullIngredients 
-                      ? parseIngredientsWithBoldAllergens(
-                          selectedOption.ingredients.join(', '), 
-                          selectedOption.allergens
-                        )
-                      : parseIngredientsWithBoldAllergens(
-                          truncateText(selectedOption.ingredients.join(', ')), 
-                          selectedOption.allergens
-                        )
-                    }
-                  </p>
+                  {showFullIngredients 
+                    ? parseIngredientsWithBoldAllergens(
+                        selectedOption.ingredients.join('\n'), 
+                        selectedOption.allergens
+                      )
+                    : parseIngredientsWithBoldAllergens(
+                        truncateText(selectedOption.ingredients.join('\n')), 
+                        selectedOption.allergens
+                      )
+                  }
                   {shouldTruncate(selectedOption.ingredients.join(', ')) && (
                     <button
                       onClick={() => setShowFullIngredients(!showFullIngredients)}
