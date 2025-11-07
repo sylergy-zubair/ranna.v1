@@ -16,6 +16,7 @@ export default function CareersPage() {
     daysAvailable: [] as string[],
     transportMode: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -40,23 +41,20 @@ export default function CareersPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Application submitted:', formData);
-    alert('Thank you for your application! We will get back to you soon.');
-    // Reset form
-    setFormData({
-      fullName: '',
-      homeAddress: '',
-      phone: '',
-      email: '',
-      experience: '',
-      branch: '',
-      position: '',
-      timeAvailable: '',
-      daysAvailable: [],
-      transportMode: ''
-    });
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    if (!formData.timeAvailable) {
+      e.preventDefault();
+      alert('Please select your availability.');
+      return;
+    }
+
+    if (formData.timeAvailable === 'part-time' && formData.daysAvailable.length === 0) {
+      e.preventDefault();
+      alert('Please select the days you are available for part-time work.');
+      return;
+    }
+
+    setIsSubmitting(true);
   };
 
   const jobPositions = [
@@ -219,7 +217,17 @@ export default function CareersPage() {
           
           {isFormOpen && (
             <div className="px-8 pb-8 border-t border-gray-200">
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form
+                action="https://formsubmit.co/hr@ranna.co.uk"
+                method="POST"
+                onSubmit={handleSubmit}
+                className="space-y-6"
+              >
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_next" value="https://www.ranna.co.uk/careers?submitted=true" />
+                <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
+                <input type="hidden" name="daysSelected" value={formData.daysAvailable.join(', ')} />
+                <input type="hidden" name="transportModeSelected" value={formData.transportMode} />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Full Name */}
               <div>
@@ -331,6 +339,7 @@ export default function CareersPage() {
                         value={option.toLowerCase().replace(' ', '-')}
                         checked={formData.timeAvailable === option.toLowerCase().replace(' ', '-')}
                         onChange={handleChange}
+                        required={option === 'Part Time'}
                         className="mr-3"
                       />
                       <span className="text-gray-700">{option}</span>
@@ -425,7 +434,7 @@ export default function CareersPage() {
               className="w-fit mx-auto bg-red-600 text-white py-3 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors"
               style={{ backgroundColor: '#FF4036' }}
             >
-              Submit
+              {isSubmitting ? 'Thank you!' : 'Submit'}
             </button>
               </form>
             </div>

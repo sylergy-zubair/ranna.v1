@@ -24,30 +24,16 @@ export default function ContactPage() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Validate rating for reviews
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     if (formData.reason === 'review' && !formData.rating) {
+      e.preventDefault();
       alert('Please select a star rating for your review.');
       return;
     }
-    
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! We will get back to you soon.');
-    setFormData({ 
-      name: '', 
-      email: '', 
-      phone: '', 
-      reason: '', 
-      message: '', 
-      date: '', 
-      time: '', 
-      location: '', 
-      guests: '',
-      rating: ''
-    });
+
+    setIsSubmitting(true);
   };
 
   return (
@@ -85,10 +71,19 @@ export default function ContactPage() {
             <div id="form" className="bg-white rounded-lg shadow-lg p-8">
               <h1 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h1>
               
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form
+                action="https://formsubmit.co/customerservice@ranna.co.uk"
+                method="POST"
+                onSubmit={handleSubmit}
+                className="space-y-6"
+              >
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_next" value="https://www.ranna.co.uk/contact?submitted=true" />
+                <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
+                <input type="hidden" name="rating" value={formData.rating} />
                 {/* Name Field */}
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                     Name *
                   </label>
                   <input
@@ -114,7 +109,7 @@ export default function ContactPage() {
                       id="email"
                       name="email"
                       required
-                      value={formData.email}
+                    value={formData.email}
                       onChange={handleChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 bg-gray-50"
                       placeholder="youremail@email.com"
@@ -308,7 +303,7 @@ export default function ContactPage() {
                    className="w-fit bg-red-600 text-white py-2 px-6 rounded-full font-semibold hover:bg-red-700 transition-colors"
                    style={{ backgroundColor: '#FF4036' }}
                  >
-                   Send Message
+                   {isSubmitting ? 'Thank you!' : 'Send Message'}
                  </button>
               </form>
             </div>

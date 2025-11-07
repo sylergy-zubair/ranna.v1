@@ -7,6 +7,7 @@ import OrderModal from '@/components/OrderModal';
 
 export default function SpecialOffersPage() {
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const offers = [
     {
       title: "One-Time 25% Discount",
@@ -243,18 +244,33 @@ export default function SpecialOffersPage() {
               For more exclusive special offers, subscribe to our email list.
               </p>
             </div>
-            <div className="flex w-full lg:w-auto ">
-              <input
-                type="email"
-                placeholder="jane@email.com"
-                className="flex-1 px-4 py-2 bg-white text-gray-900 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500"
-              />
-              <button 
-                className="px-6 py-2 bg-red-600 hover:bg-red-700 rounded-r-md transition-colors font-semibold"
-                style={{ backgroundColor: '#FF4036' }}
+            <div className="w-full max-w-md mx-auto lg:mx-0">
+              <form
+                action="https://formsubmit.co/marketing@ranna.co.uk"
+                method="POST"
+                className="flex flex-col lg:flex-row lg:gap-0 gap-3 "
+                onSubmit={() => setFormSubmitted(true)}
               >
-                Subscribe
-              </button>
+                {/* FormSubmit configuration fields */}
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_next" value="https://www.ranna.co.uk/special-offers?submitted=true" />
+                <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
+
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="jane@email.com"
+                  className="flex-1 px-4 py-2 bg-white text-gray-900 rounded-md sm:rounded-l-md sm:rounded-r-none border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500"
+                />
+                <button 
+                  type="submit"
+                  className="px-6 py-2 lg:cursor-pointer bg-red-600 hover:bg-red-700 rounded-md sm:rounded-l-none sm:rounded-r-md transition-colors font-semibold flex-shrink-0"
+                  style={{ backgroundColor: '#FF4036' }}
+                >
+                  {formSubmitted ? 'Thank you!' : 'Subscribe'}
+                </button>
+              </form>
             </div>
           </div>
         </div>

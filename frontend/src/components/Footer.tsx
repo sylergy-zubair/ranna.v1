@@ -7,6 +7,7 @@ import OrderModal from '@/components/OrderModal';
 
 export default function Footer() {
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   return (
     <footer className="bg-[#333333] text-white">
@@ -21,9 +22,20 @@ export default function Footer() {
               </p>
             </div>
             <div className="w-full max-w-md mx-auto lg:mx-0">
-              <form className="flex flex-col sm:flex-row gap-3 sm:gap-0">
+              <form
+                action="https://formsubmit.co/marketing@ranna.co.uk"
+                method="POST"
+                className="flex flex-col sm:flex-row gap-3 sm:gap-0"
+                onSubmit={() => setIsSubscribed(true)}
+              >
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_next" value="https://www.ranna.co.uk/?subscribed=true" />
+                <input type="text" name="_honey" className="hidden" tabIndex={-1} autoComplete="off" />
+
                 <input
                   type="email"
+                  name="email"
+                  required
                   placeholder="jane@email.com"
                   className="flex-1 px-4 py-2 bg-white text-gray-900 rounded-md sm:rounded-l-md sm:rounded-r-none focus:outline-none focus:ring-2 focus:ring-red-500"
                 />
@@ -32,7 +44,7 @@ export default function Footer() {
                   className="px-6 py-2 bg-red-600 hover:bg-red-700 rounded-md sm:rounded-l-none sm:rounded-r-md transition-colors font-semibold flex-shrink-0"
                   style={{ backgroundColor: '#FF4036' }}
                 >
-                  Subscribe
+                  {isSubscribed ? 'Thank you!' : 'Subscribe'}
                 </button>
               </form>
             </div>
