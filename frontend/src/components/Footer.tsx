@@ -4,9 +4,11 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import OrderModal from '@/components/OrderModal';
+import { useCookieConsent } from '@/context/CookieConsentContext';
 
 export default function Footer() {
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const { openPreferences } = useCookieConsent();
   const [isSubscribed, setIsSubscribed] = useState(false);
 
   return (
@@ -156,7 +158,7 @@ export default function Footer() {
 
         {/* Bottom Section - Copyright and Legal Links */}
         <div className="border-t border-white py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-white text-sm mb-4 md:mb-0">
               © 2025 Ranna
             </div>
@@ -164,6 +166,13 @@ export default function Footer() {
               <Link href="/privacy-policy" className="text-white hover:text-red-500 transition-colors">Privacy policy</Link>
               <Link href="/terms-conditions" className="text-white hover:text-red-500 transition-colors">Terms & Conditions</Link>
               <Link href="/cookie-policy" className="text-white hover:text-red-500 transition-colors">Cookies Policy</Link>
+              <button
+                type="button"
+                onClick={openPreferences}
+                className="text-white hover:text-red-500 transition-colors underline-offset-4 decoration-dotted"
+              >
+                Cookie settings
+              </button>
             </div>
           </div>
         </div>
