@@ -159,7 +159,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     download
-                    className="inline-block w-fit bg-red-600 text-white py-2 px-4 rounded-full font-medium hover:bg-red-700 transition-colors text-center"
+                    className="text-white hover:text-red-500 transition-colors"
                   >
                     Download Menu
                   </a>
