@@ -1,16 +1,17 @@
 interface CategoryButtonFilterProps {
-  value: string[];
+  activeCategory: string | null;
   options: string[];
-  onChange: (value: string[]) => void;
+  onSelect: (category: string | null) => void;
 }
 
-export default function CategoryButtonFilter({ value, options, onChange }: CategoryButtonFilterProps) {
+export default function CategoryButtonFilter({ activeCategory, options, onSelect }: CategoryButtonFilterProps) {
   const toggleOption = (option: string) => {
-    if (value.includes(option)) {
-      onChange(value.filter(item => item !== option));
-    } else {
-      onChange([...value, option]);
+    if (activeCategory === option) {
+      onSelect(null);
+      return;
     }
+
+    onSelect(option);
   };
 
   return (
@@ -20,8 +21,8 @@ export default function CategoryButtonFilter({ value, options, onChange }: Categ
           <button
             key={option}
             onClick={() => toggleOption(option)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              value.includes(option)
+            className={`px-4 py-2 rounded-full text-sm cursor-pointer font-medium transition-colors ${
+              activeCategory === option
                 ? 'bg-orange-500 text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}

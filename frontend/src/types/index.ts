@@ -68,6 +68,8 @@ export interface FilterPanelProps {
     allergens: string[];
     calorieRanges: string[];
   };
+  activeCategory: string | null;
+  onCategorySelect: (category: string | null) => void;
 }
 
 export interface MoreInfoModalProps {

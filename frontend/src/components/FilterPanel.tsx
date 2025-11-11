@@ -8,7 +8,9 @@ import CategoryButtonFilter from './CategoryButtonFilter';
 export default function FilterPanel({ 
   filters, 
   onFiltersChange, 
-  availableOptions 
+  availableOptions,
+  activeCategory,
+  onCategorySelect,
 }: FilterPanelProps) {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 h-fit">
@@ -55,9 +57,11 @@ export default function FilterPanel({
         {/* Category Filter - Only show on mobile */}
         <div className="lg:hidden">
           <CategoryButtonFilter
-            value={filters.categories}
+            activeCategory={activeCategory}
             options={availableOptions.categories}
-            onChange={(value) => onFiltersChange({ ...filters, categories: value })}
+            onSelect={(category) => {
+              onCategorySelect(category);
+            }}
           />
         </div>
       </div>

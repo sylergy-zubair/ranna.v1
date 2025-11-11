@@ -28,6 +28,7 @@ export default function MenuPage() {
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   
   const { filters, updateFilters } = useFilters();
 
@@ -102,11 +103,38 @@ export default function MenuPage() {
     setSelectedDish(null);
   };
 
+  const getCategoryAnchorId = (category: string) =>
+    `category-${category.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '').toLowerCase()}`;
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
+  };
+
+  const scrollToCategory = (category: string) => {
+    const categoryId = getCategoryAnchorId(category);
+    const element = document.getElementById(categoryId);
+
+    if (element) {
+      const offset = 100;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const handleCategorySelect = (category: string | null) => {
+    setActiveCategory(category);
+
+    if (category) {
+      scrollToCategory(category);
+    }
   };
 
   // Loading state
@@ -174,6 +202,8 @@ export default function MenuPage() {
                   filters={filters}
                   onFiltersChange={updateFilters}
                   availableOptions={availableOptions}
+                  activeCategory={activeCategory}
+                  onCategorySelect={handleCategorySelect}
                 />
                 
                 {/* Close Button */}
@@ -192,15 +222,17 @@ export default function MenuPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Desktop Filter Panel - Hidden on Mobile */}
-          <div className="hidden lg:block lg:col-span-1">
-            <div className="sticky top-28 max-h-[calc(100vh-120px)] overflow-y-auto">
-              <FilterPanel
-                filters={filters}
-                onFiltersChange={updateFilters}
-                availableOptions={availableOptions}
-              />
+            <div className="hidden lg:block lg:col-span-1">
+              <div className="sticky top-28 max-h-[calc(100vh-120px)] overflow-y-auto">
+                <FilterPanel
+                  filters={filters}
+                  onFiltersChange={updateFilters}
+                  availableOptions={availableOptions}
+                  activeCategory={activeCategory}
+                  onCategorySelect={handleCategorySelect}
+                />
+              </div>
             </div>
-          </div>
 
           {/* Dishes Grid */}
           <div className="lg:col-span-3">
@@ -218,9 +250,9 @@ export default function MenuPage() {
                 {/* Category Filter Buttons - Hidden on mobile, shown on desktop */}
                 <div className="hidden lg:block bg-white rounded-lg p-4 shadow-sm">
                   <CategoryButtonFilter
-                    value={filters.categories}
+                    activeCategory={activeCategory}
                     options={availableOptions.categories}
-                    onChange={(value) => updateFilters({ ...filters, categories: value })}
+                    onSelect={handleCategorySelect}
                   />
                 </div>
               </div>
@@ -238,13 +270,21 @@ export default function MenuPage() {
                   const isLastDishInCategory = 
                     index === filteredDishes.length - 1 || 
                     filteredDishes[index + 1].category !== dish.category;
+                  const isFirstDishInCategory =
+                    index === 0 ||
+                    filteredDishes[index - 1]?.category !== dish.category;
+                  const categoryId = isFirstDishInCategory
+                    ? getCategoryAnchorId(dish.category)
+                    : undefined;
                   
                   return (
                     <Fragment key={`dish-fragment-${index}`}>
-                      <DishCard
-                        dish={dish}
-                        onMoreInfo={handleMoreInfo}
-                      />
+                      <div id={categoryId}>
+                        <DishCard
+                          dish={dish}
+                          onMoreInfo={handleMoreInfo}
+                        />
+                      </div>
                       {isLastDishInCategory && index < filteredDishes.length - 1 && (
                         <div 
                           className="col-span-full my-6 border-b-2 border-gray-300"

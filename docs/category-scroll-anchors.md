@@ -19,9 +19,11 @@ This document describes **Approach 1: Simple Scroll Anchors** for implementing s
 
 ### Step 1: Add Scroll Function to Menu Page
 
-Add a scroll function in `frontend/src/app/menu/page.tsx` after the `scrollToTop` function:
+Add category scroll helpers in `frontend/src/app/menu/page.tsx` after the modal handlers:
 
 ```typescript
+const [activeCategory, setActiveCategory] = useState<string | null>(null);
+
 const scrollToCategory = (category: string) => {
   // Create a safe ID from category name (replace spaces/special chars)
   const categoryId = `category-${category.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '').toLowerCase()}`;
@@ -37,6 +39,14 @@ const scrollToCategory = (category: string) => {
       top: offsetPosition,
       behavior: 'smooth'
     });
+  }
+};
+
+const handleCategorySelect = (category: string | null) => {
+  setActiveCategory(category);
+
+  if (category) {
+    scrollToCategory(category);
   }
 };
 ```
@@ -87,35 +97,27 @@ Modify the dishes rendering section to add an ID to the first dish of each categ
 
 ### Step 3: Modify CategoryButtonFilter Component
 
-Update `frontend/src/components/CategoryButtonFilter.tsx` to accept an optional scroll callback:
+Update `frontend/src/components/CategoryButtonFilter.tsx` to manage a single active category:
 
 ```typescript
 interface CategoryButtonFilterProps {
-  value: string[];
+  activeCategory: string | null;
   options: string[];
-  onChange: (value: string[]) => void;
-  onCategoryClick?: (category: string) => void; // NEW
+  onSelect: (category: string | null) => void;
 }
 
 export default function CategoryButtonFilter({ 
-  value, 
+  activeCategory, 
   options, 
-  onChange,
-  onCategoryClick 
+  onSelect,
 }: CategoryButtonFilterProps) {
   const toggleOption = (option: string) => {
-    const isAdding = !value.includes(option);
-    
-    if (isAdding) {
-      onChange([...value, option]);
-      // Scroll only when adding a category (recommended approach)
-      if (onCategoryClick) {
-        onCategoryClick(option);
-      }
-    } else {
-      // Just remove, no scroll
-      onChange(value.filter(item => item !== option));
+    if (activeCategory === option) {
+      onSelect(null);
+      return;
     }
+
+    onSelect(option);
   };
 
   return (
@@ -126,7 +128,7 @@ export default function CategoryButtonFilter({
             key={option}
             onClick={() => toggleOption(option)}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              value.includes(option)
+              activeCategory === option
                 ? 'bg-orange-500 text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}
@@ -146,10 +148,9 @@ In `frontend/src/app/menu/page.tsx`, update the CategoryButtonFilter usage:
 
 ```typescript
 <CategoryButtonFilter
-  value={filters.categories}
+  activeCategory={activeCategory}
   options={availableOptions.categories}
-  onChange={(value) => updateFilters({ ...filters, categories: value })}
-  onCategoryClick={scrollToCategory} // NEW
+  onSelect={handleCategorySelect}
 />
 ```
 
@@ -173,136 +174,29 @@ const handleCategoryClick = (category: string) => {
 
 **Option B:** Use double-click or separate "Go to" button for scrolling.
 
-## Conflict with Multiple Category Selection
+## Category Selection Behavior
 
-⚠️ **Important Consideration**: Since users can select multiple categories simultaneously, there are potential conflicts when combining scroll behavior with filter toggling.
+⚠️ **Important Consideration**: The category filter now behaves as a **single-choice selector**. Users can only have one category active at a time; clicking the active category clears the selection.
 
-### Conflict Scenarios
-
-1. **Adding a Category**: 
-   - User clicks an unselected category → adds it and scrolls to it
-   - Problem: Other selected categories may have dishes before/after, so the scroll may not show all visible dishes
-
-2. **Removing a Category**: 
-   - User clicks a selected category → deselects it
-   - Question: Should it scroll? Where should it scroll to?
-
-3. **Multiple Selections**: 
-   - User has "Starters" and "Main Course" selected
-   - User clicks "Desserts" → scrolls to Desserts
-   - Problem: Starters and Main Course dishes are still visible, but user scrolled to Desserts
-
-### Recommended Solutions
-
-#### Option 1: Scroll Only When Adding (Recommended) ✅
-
-Scroll only when adding a category filter. When removing, don't scroll.
-
-**Implementation:**
+### Implementation
 
 ```typescript
 const toggleOption = (option: string) => {
-  const isAdding = !value.includes(option);
-  
-  if (isAdding) {
-    onChange([...value, option]);
-    // Scroll when adding
-    if (onCategoryClick) {
-      onCategoryClick(option);
-    }
-  } else {
-    // Just remove, no scroll
-    onChange(value.filter(item => item !== option));
+  if (activeCategory === option) {
+    onSelect(null); // Deselect current category
+    return;
   }
+
+  onSelect(option); // Select only this category
 };
 ```
 
-**Pros:**
-- Intuitive: Adding a filter scrolls to show it
-- Removing doesn't need scroll (dishes are already visible)
-- Avoids conflicts with multiple selections
+### Implications
 
-**Cons:**
-- Inconsistent behavior (sometimes scrolls, sometimes doesn't)
-
-#### Option 2: Always Scroll to Clicked Category
-
-Always scroll to the clicked category, regardless of whether it's being added or removed.
-
-**Implementation:**
-
-```typescript
-const toggleOption = (option: string) => {
-  if (value.includes(option)) {
-    onChange(value.filter(item => item !== option));
-  } else {
-    onChange([...value, option]);
-  }
-  
-  // Always scroll to clicked category
-  if (onCategoryClick) {
-    onCategoryClick(option);
-  }
-};
-```
-
-**Pros:**
-- Consistent behavior (always scrolls)
-- Predictable user experience
-
-**Cons:**
-- May scroll away from other selected categories
-- Can be jarring when deselecting
-
-#### Option 3: Separate Scroll Action
-
-Keep filter toggle separate from scroll action. Add a "Go to" icon/button next to each category that only scrolls (doesn't toggle filter).
-
-**Pros:**
-- Clear separation of concerns
-- No conflicts between filtering and scrolling
-- Users have explicit control
-
-**Cons:**
-- More UI complexity
-- Requires additional UI elements
-
-#### Option 4: Scroll to First Selected Category
-
-When multiple categories are selected, scroll to the first one in the list.
-
-**Implementation:**
-
-```typescript
-const handleCategoryToggle = (category: string) => {
-  const newCategories = value.includes(category)
-    ? value.filter(item => item !== category)
-    : [...value, category];
-  
-  updateFilters({ ...filters, categories: newCategories });
-  
-  // Scroll to first selected category
-  if (newCategories.length > 0 && onCategoryClick) {
-    onCategoryClick(newCategories[0]);
-  }
-};
-```
-
-**Pros:**
-- Always scrolls to a relevant category
-- Works with multiple selections
-
-**Cons:**
-- May not scroll to the category user just clicked
-- Less intuitive
-
-### Recommendation
-
-**Use Option 1 (Scroll Only When Adding)** because:
-- ✅ Most intuitive user experience
-- ✅ Adding a filter naturally wants to see those dishes
-- ✅ Removing doesn't need scroll (dishes are already visible)
-- ✅ Avoids conflicts with multiple selections
+- ✅ Eliminates conflicts introduced by multi-select behavior
+- ✅ Scroll handling becomes straightforward—always scroll to the chosen category when it’s selected
+- ✅ Deselecting a category simply clears the filter without scrolling
+- ❌ Users cannot view multiple categories simultaneously (by design)
 
 ## Edge Cases to Consider
 
@@ -313,10 +207,8 @@ const handleCategoryToggle = (category: string) => {
 
 ## Testing Checklist
 
-- [ ] Click unselected category button adds filter and scrolls to first dish of that category
-- [ ] Click selected category button removes filter and does NOT scroll (recommended approach)
-- [ ] Multiple categories selected: clicking new category scrolls correctly
-- [ ] Multiple categories selected: removing one doesn't scroll
+- [ ] Clicking a category selects only that category and scrolls to its first dish
+- [ ] Clicking the same category again clears the filter and leaves the scroll position unchanged
 - [ ] Scroll offset accounts for sticky header
 - [ ] Works on mobile devices
 - [ ] Handles categories with special characters in names
@@ -335,7 +227,7 @@ const handleCategoryToggle = (category: string) => {
 ❌ **No section headers**: Categories don't have visible headers  
 ❌ **Less obvious**: Users might not realize they've scrolled to a category  
 ❌ **First dish only**: Scrolls to first dish, not a dedicated section header  
-❌ **Multiple selection conflicts**: When multiple categories are selected, scrolling may not show all visible dishes (see "Conflict with Multiple Category Selection" section above)  
+❌ **Single-category view**: Users cannot view multiple categories at once  
 
 ## Future Enhancements
 
