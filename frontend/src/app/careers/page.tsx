@@ -223,7 +223,7 @@ export default function CareersPage() {
                 onSubmit={handleSubmit}
                 className="space-y-6"
               >
-                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_captcha" value="true" />
                 <input type="hidden" name="_template" value="table" />
                 <input type="hidden" name="_subject" value="Ranna – Careers Form" />
                 <input type="hidden" name="_next" value="https://www.ranna.co.uk/careers?submitted=true" />

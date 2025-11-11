@@ -30,7 +30,7 @@ export default function Footer() {
                 className="flex flex-col sm:flex-row gap-3 sm:gap-0"
                 onSubmit={() => setIsSubscribed(true)}
               >
-                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_captcha" value="true" />
                 <input type="hidden" name="_template" value="table" />
                 <input type="hidden" name="_subject" value="Ranna – Footer Subscription Form" />
                 <input type="hidden" name="_next" value="https://www.ranna.co.uk/?subscribed=true" />

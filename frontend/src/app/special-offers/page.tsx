@@ -252,7 +252,7 @@ export default function SpecialOffersPage() {
                 onSubmit={() => setFormSubmitted(true)}
               >
                 {/* FormSubmit configuration fields */}
-                <input type="hidden" name="_captcha" value="false" />                
+                <input type="hidden" name="_captcha" value="true" />                
                 <input type="hidden" name="_template" value="table" />
                 <input type="hidden" name="_subject" value="Ranna – Special Offers Form" />
                 <input type="hidden" name="_next" value="https://www.ranna.co.uk/special-offers?submitted=true" />
