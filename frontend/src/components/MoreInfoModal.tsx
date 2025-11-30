@@ -171,7 +171,7 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
               <div className="flex items-center space-x-4 mb-2">
                 <div className="flex items-center space-x-1">
                   {/* Chili Images */}
-                  {dish.spice_level === 1 ? (
+                  {dish.spice_level <= 1 ? (
                     <Image
                       src="/data/img/0chili.png"
                       alt="no chili"
@@ -180,7 +180,7 @@ export default function MoreInfoModal({ dish, isOpen, onClose }: MoreInfoModalPr
                       className="w-4 h-4"
                     />
                   ) : (
-                    Array.from({ length: dish.spice_level }, (_, index) => (
+                    Array.from({ length: dish.spice_level - 1 }, (_, index) => (
                       <Image
                         key={index}
                         src="/data/img/image.png"

@@ -31,7 +31,7 @@ export default function DishCard({ dish, onMoreInfo }: DishCardProps) {
           <h3 className="text-xl font-semibold text-gray-800">{dish.dish_title}</h3>
           <div className="flex items-center space-x-1">
             {/* Chili Images */}
-            {dish.spice_level === 1 ? (
+            {dish.spice_level <= 1 ? (
               <Image
                 src="/data/img/0chili.png"
                 alt="no chili"
@@ -40,7 +40,7 @@ export default function DishCard({ dish, onMoreInfo }: DishCardProps) {
                 className="w-4 h-4"
               />
             ) : (
-              Array.from({ length: dish.spice_level }, (_, index) => (
+              Array.from({ length: dish.spice_level - 1 }, (_, index) => (
                 <Image
                   key={index}
                   src="/data/img/image.png"
